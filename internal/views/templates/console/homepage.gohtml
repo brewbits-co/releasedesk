@@ -1,0 +1,93 @@
+{{ define "content" }}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/misc.HomepageData*/ -}}
+    <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white sm:rounded-xl">
+        {{- range .Products }}
+            {{template "product-line" . }}
+        {{- end }}
+    </ul>
+
+    <div class="mt-10 mb-10">
+      <div class="text-center">
+        <img class="mx-auto w-48 text-gray-400" src="./assets/product-example.png" alt="product-example"/>
+        <h3 class="mt-2 text-sm font-semibold text-gray-900">
+          Products are containers for your apps
+        </h3>
+        <p class="mt-1 text-sm text-gray-500">
+          Apps in a product share features such as Announcements, Analytics and a customizable
+          Download Portal.
+      </div>
+
+      <div class="mt-6">
+        <product-creation-drawer/>
+      </div>
+    </div>
+{{ end }}
+
+{{ define "product-line" }}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/domains/product.Product*/ -}}
+    <a href="./dashboard/{{ .Slug }}">
+      <li class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
+        <div class="flex min-w-0 gap-x-4">
+          <span class="inline-flex size-12 items-center justify-center rounded-md bg-indigo-800">
+            <span class="text-sm font-medium text-white" translate="no">MY</span>
+          </span>
+          <div class="min-w-0 flex-auto">
+            <p class="text-md font-medium leading-6 text-gray-900" translate="no">
+                {{ .Name }}
+            </p>
+            <p class="mt-1 flex text-sm leading-5 text-gray-500">
+              {{if .PlatformAvailability.HasAndroid}}
+              <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-gray-200 mr-1" translate="no">
+                <i class="fa-brands fa-android"></i> Android
+              </span>
+              {{end}}
+              {{if .PlatformAvailability.HasIOS}}
+              <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-gray-800 ring-1 ring-inset ring-gray-200 mr-1" translate="no">
+                <i class="fa-brands fa-apple"></i> iOS
+              </span>
+              {{end}}
+              {{if .PlatformAvailability.HasWindows}}
+              <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-sky-500 ring-1 ring-inset ring-gray-200 mr-1" translate="no">
+                <i class="fa-brands fa-windows"></i> Windows
+              </span>
+              {{end}}
+              {{if .PlatformAvailability.HasLinux}}
+              <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-amber-500 ring-1 ring-inset ring-gray-200 mr-1" translate="no">
+                <i class="fa-brands fa-linux"></i> Linux
+              </span>
+              {{end}}
+              {{if .PlatformAvailability.HasMacOS}}
+              <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-blue-500 ring-1 ring-inset ring-gray-200 mr-1" translate="no">
+                <i class="macos"></i> macOS
+              </span>
+              {{end}}
+              {{if .PlatformAvailability.HasOther}}
+                <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-gray-700 ring-1 ring-inset ring-gray-200 mr-1">
+                <i class="fa-solid fa-file-code"></i> Other
+              </span>
+              {{end}}
+            </p>
+          </div>
+        </div>
+        <div class="flex shrink-0 items-center gap-x-4">
+          <div class="hidden sm:flex sm:flex-col sm:items-end">
+            <p class="text-xs leading-6 text-gray-800 flex mb-1">
+                {{ if .Private }}
+                  <i class="fa-solid fa-lock w-3 h-3 mt-1 mr-1"></i> Private
+                {{ else }}
+                  <i class="fa-solid fa-globe w-3 h-3 mt-1 mr-1"></i> Public
+                {{ end }}
+            </p>
+
+            <p class="text-xs leading-5 text-gray-500">
+              Updated
+              <time title="{{.Auditable.UpdatedAt}}" datetime="{{.Auditable.UpdatedAt}}">
+                  {{.Auditable.UpdatedAtFormatted}}
+              </time>
+            </p>
+          </div>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </li>
+    </a>
+{{ end }}

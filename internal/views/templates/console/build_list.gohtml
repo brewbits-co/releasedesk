@@ -1,0 +1,63 @@
+{{ define "content" }}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/build.BuildListData*/ -}}
+    <div class="border-b border-gray-200 pb-5 sm:flex sm:items-center sm:justify-between">
+        <h3 class="text-xl font-semibold text-gray-900 flex gap-x-2">
+            <span class="flex size-8 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-white text-1 font-medium">
+                {{ if eq .CurrentApp.AppPlatform "Android" }}<i
+                        class="fa-brands fa-android text-green-600"></i>{{ end }}
+                {{ if eq .CurrentApp.AppPlatform "iOS" }}<i class="fa-brands fa-apple text-gray-800"></i>{{ end }}
+                {{ if eq .CurrentApp.AppPlatform "Windows" }}<i class="fa-brands fa-windows text-sky-500"></i>{{ end }}
+                {{ if eq .CurrentApp.AppPlatform "Linux" }}<i class="fa-brands fa-linux text-amber-500"></i>{{ end }}
+                {{ if eq .CurrentApp.AppPlatform "macOS" }}<i class="macos"></i>{{ end }}
+                {{ if eq .CurrentApp.AppPlatform "Other" }}<i class="fa-solid fa-file-code text-gray-700"></i>{{ end }}
+            </span>
+            Builds
+        </h3>
+        <div class="mt-3 sm:ml-4 sm:mt-0">
+            <build-upload-drawer slug="{{.CurrentProductData.ProductSlug}}"
+                                 platform="{{.CurrentApp.AppPlatform}}"></build-upload-drawer>
+        </div>
+    </div>
+
+    <div class="overflow-hidden rounded-lg bg-white shadow mt-4">
+        <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
+            <tr>
+                <th scope="col"
+                    class="py-3.5 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-700 sm:pl-6">
+                    Number
+                </th>
+                <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium uppercase tracking-wide text-gray-700">
+                    Version
+                </th>
+                <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium uppercase tracking-wide text-gray-700">
+                    Uploaded At
+                </th>
+                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <span class="sr-only">Edit</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+            {{- range .Builds }}
+                <tr>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">#{{.Number}}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{.Version}}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{.Auditable.CreatedAtFormatted}}</td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <a href="/dashboard/{{$.CurrentApp.ProductSlug}}/apps/{{$.CurrentApp.AppPlatform}}/builds/{{.Number}}"
+                           class="text-indigo-900 hover:text-indigo-800">View</a>
+                    </td>
+                </tr>
+            {{else}}
+                <tr>
+                    <td colspan="4" class="text-center px-4 py-4">
+                        <i class="fa-solid fa-square-binary mx-auto text-5xl text-gray-300"></i>
+                        <p class="text-sm/6 text-gray-600">No builds</p>
+                    </td>
+                </tr>
+            {{- end }}
+            </tbody>
+        </table>
+    </div>
+{{ end }}

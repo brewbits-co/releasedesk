@@ -1,0 +1,42 @@
+root = "."
+tmp_dir = "_tmp"
+
+[build]
+  args_bin = []
+  bin = "./_tmp/releasedesk-server"
+  cmd = "go build -o ./_tmp/releasedesk-server github.com/brewbits-co/releasedesk/cmd/releasedesk-server"
+  delay = 500
+  exclude_dir = ["_tmp", "_data", "docs", "scripts", "web", "website"]
+  exclude_file = []
+  exclude_regex = ["_test.go"]
+  exclude_unchanged = false
+  follow_symlink = false
+  full_bin = ""
+  include_dir = []
+  include_ext = ["go", "tpl", "tmpl", "html", "gohtml", "js", "css"]
+  include_file = []
+  kill_delay = "0s"
+  log = "build-errors.log"
+  post_cmd = []
+  pre_cmd = []
+  rerun = false
+  rerun_delay = 500
+  send_interrupt = false
+  stop_on_error = true
+
+[log]
+  main_only = false
+  time = false
+
+[misc]
+  clean_on_exit = false
+
+# Enable live-reloading on the browser.
+[proxy]
+  enabled = true
+  proxy_port = 8090
+  app_port = 8080
+
+[screen]
+  clear_on_rebuild = false
+  keep_scroll = true

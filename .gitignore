@@ -56,3 +56,5 @@ go.work
 /_data/
 /cmd/releasedesk-server/assets/
 /web/node_modules/
+/tmp/build-errors.log
+/web/tmp/build-errors.log

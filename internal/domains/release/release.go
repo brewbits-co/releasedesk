@@ -1,0 +1,49 @@
+package release
+
+import (
+	"github.com/brewbits-co/releasedesk/internal/values"
+	"github.com/brewbits-co/releasedesk/pkg/fields"
+	"github.com/brewbits-co/releasedesk/pkg/hooks"
+	"github.com/brewbits-co/releasedesk/pkg/validator"
+)
+
+type ReleaseStatus string
+
+const (
+	Draft       ReleaseStatus = "Draft"
+	Published   ReleaseStatus = "Published"
+	Deprecated  ReleaseStatus = "Deprecated"
+	Unpublished ReleaseStatus = "Unpublished"
+	Scheduled   ReleaseStatus = "Scheduled"
+)
+
+func NewRelease(info BasicInfo) Release {
+	info.Auditable = fields.NewAuditable()
+	return Release{
+		BaseHooks:     hooks.BaseHooks{},
+		BaseValidator: validator.BaseValidator{},
+		BasicInfo:     info,
+	}
+}
+
+type BasicInfo struct {
+	fields.Auditable
+	// ID is the unique identifier of a Release.
+	ID int `db:"ID"`
+	// ProductID is the identifier of the product that this Release belongs.
+	ProductID int `db:"ProductID"`
+	// Version specifies the version of the Release.
+	Version string `db:"Version"`
+	// TargetChannel
+	TargetChannel int `db:"TargetChannel"`
+	// TargetPlatform
+	TargetPlatform values.Platform `db:"TargetPlatform"`
+	// Status
+	Status ReleaseStatus `db:"Status"`
+}
+
+type Release struct {
+	hooks.BaseHooks
+	validator.BaseValidator
+	BasicInfo
+}

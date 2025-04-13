@@ -1,0 +1,434 @@
+{{ define "body" }}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/product.CurrentProductData*/ -}}
+    <div>
+        <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+        <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
+            <!--
+              Off-canvas menu backdrop, show/hide based on off-canvas menu state.
+
+              Entering: "transition-opacity ease-linear duration-300"
+                From: "opacity-0"
+                To: "opacity-100"
+              Leaving: "transition-opacity ease-linear duration-300"
+                From: "opacity-100"
+                To: "opacity-0"
+            -->
+            <div class="fixed inset-0 bg-gray-900/80" aria-hidden="true"></div>
+
+            <div class="fixed inset-0 flex">
+                <!--
+                  Off-canvas menu, show/hide based on off-canvas menu state.
+
+                  Entering: "transition ease-in-out duration-300 transform"
+                    From: "-translate-x-full"
+                    To: "translate-x-0"
+                  Leaving: "transition ease-in-out duration-300 transform"
+                    From: "translate-x-0"
+                    To: "-translate-x-full"
+                -->
+                <div class="relative mr-16 flex w-full max-w-xs flex-1">
+                    <!--
+                      Close button, show/hide based on off-canvas menu state.
+
+                      Entering: "ease-in-out duration-300"
+                        From: "opacity-0"
+                        To: "opacity-100"
+                      Leaving: "ease-in-out duration-300"
+                        From: "opacity-100"
+                        To: "opacity-0"
+                    -->
+                    <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
+                        <button type="button" class="-m-2.5 p-2.5">
+                            <span class="sr-only">Close sidebar</span>
+                            <svg class="size-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor"
+                                 aria-hidden="true" data-slot="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Sidebar component, swap this element with another sidebar if you like -->
+                    <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-900 px-6 pb-4">
+                        <div class="flex h-16 shrink-0 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47 40" fill="white"
+                                 class="block h-8 w-8">
+                                <path fill="#fff"
+                                      d="M23.5 6.5C17.5 6.5 13.75 9.5 12.25 15.5C14.5 12.5 17.125 11.375 20.125 12.125C21.8367 12.5529 23.0601 13.7947 24.4142 15.1692C26.6202 17.4084 29.1734 20 34.75 20C40.75 20 44.5 17 46 11C43.75 14 41.125 15.125 38.125 14.375C36.4133 13.9471 35.1899 12.7053 33.8357 11.3308C31.6297 9.09158 29.0766 6.5 23.5 6.5ZM12.25 20C6.25 20 2.5 23 1 29C3.25 26 5.875 24.875 8.875 25.625C10.5867 26.0529 11.8101 27.2947 13.1642 28.6693C15.3702 30.9084 17.9234 33.5 23.5 33.5C29.5 33.5 33.25 30.5 34.75 24.5C32.5 27.5 29.875 28.625 26.875 27.875C25.1633 27.4471 23.9399 26.2053 22.5858 24.8307C20.3798 22.5916 17.8266 20 12.25 20Z"/>
+                                <defs>
+                                    <linearGradient id="%%GRADIENT_ID%%" x1="33.999" x2="1" y1="16.181" y2="16.181"
+                                                    gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="%%GRADIENT_TO%%"/>
+                                        <stop offset="1" stop-color="%%GRADIENT_FROM%%"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <nav class="flex flex-1 flex-col">
+                            <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                                <li>
+                                    <ul role="list" class="-mx-2 space-y-1">
+                                        <li>
+                                            <!-- Current: "bg-indigo-950 text-white", Default: "text-indigo-200 hover:text-white hover:bg-indigo-800" -->
+                                            <a href="/dashboard/{{.ProductSlug}}"
+                                               class="group flex gap-x-3 rounded-md bg-indigo-950 p-2 text-sm/6 font-semibold text-white">
+                                                <svg class="size-6 shrink-0 text-white" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5"
+                                                     stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+                                                </svg>
+                                                Overview
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/dashboard/{{.ProductSlug}}/feeds"
+                                               class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                     fill="currentColor" class="size-6">
+                                                    <path fill-rule="evenodd"
+                                                          d="M9.315 7.584C12.195 3.883 16.695 1.5 21.75 1.5a.75.75 0 0 1 .75.75c0 5.056-2.383 9.555-6.084 12.436A6.75 6.75 0 0 1 9.75 22.5a.75.75 0 0 1-.75-.75v-4.131A15.838 15.838 0 0 1 6.382 15H2.25a.75.75 0 0 1-.75-.75 6.75 6.75 0 0 1 7.815-6.666ZM15 6.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z"
+                                                          clip-rule="evenodd"/>
+                                                    <path d="M5.26 17.242a.75.75 0 1 0-.897-1.203 5.243 5.243 0 0 0-2.05 5.022.75.75 0 0 0 .625.627 5.243 5.243 0 0 0 5.022-2.051.75.75 0 1 0-1.202-.897 3.744 3.744 0 0 1-3.008 1.51c0-1.23.592-2.323 1.51-3.008Z"/>
+                                                </svg>
+                                                Releases
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/dashboard/{{.ProductSlug}}/distribution-groups"
+                                               class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                                <svg class="size-6 shrink-0 text-indigo-200 group-hover:text-white"
+                                                     fill="none"
+                                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                     aria-hidden="true"
+                                                     data-slot="icon">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/>
+                                                </svg>
+                                                Distribution Groups
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/dashboard/{{.ProductSlug}}/announcements"
+                                               class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                     fill="currentColor"
+                                                     aria-hidden="true"
+                                                     class="text-indigo-200 group-hover:text-white h-6 w-6 shrink-0">
+                                                    <path d="M13.92 3.845a19.361 19.361 0 01-6.3 1.98C6.765 5.942 5.89 6 5 6a4 4 0 00-.504 7.969 15.974 15.974 0 001.271 3.341c.397.77 1.342 1 2.05.59l.867-.5c.726-.42.94-1.321.588-2.021-.166-.33-.315-.666-.448-1.004 1.8.358 3.511.964 5.096 1.78A17.964 17.964 0 0015 10c0-2.161-.381-4.234-1.08-6.155zM15.243 3.097A19.456 19.456 0 0116.5 10c0 2.431-.445 4.758-1.257 6.904l-.03.077a.75.75 0 001.401.537 20.902 20.902 0 001.312-5.745 1.999 1.999 0 000-3.545 20.902 20.902 0 00-1.312-5.745.75.75 0 00-1.4.537l.029.077z"></path>
+                                                </svg>
+                                                Announcements
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/dashboard/{{.ProductSlug}}/feeds"
+                                               class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white"
+                                               translate="no">
+                                                <i class="fa-solid fa-rss"></i>
+                                                Feeds
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/dashboard/{{.ProductSlug}}/analytics"
+                                               class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                     stroke-width="1.5"
+                                                     stroke="currentColor" aria-hidden="true"
+                                                     class="text-indigo-200 group-hover:text-white h-6 w-6 shrink-0">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"></path>
+                                                </svg>
+                                                Analytics
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <div class="text-sm/6 font-semibold text-indigo-200">Applications</div>
+                                    <ul role="list" class="-mx-2 mt-2 space-y-1">
+                                        <li>
+                                            <!-- Current: "bg-indigo-950 text-white", Default: "text-indigo-200 hover:text-white hover:bg-indigo-800" -->
+                                            <a href="#"
+                                               class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                                <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-700 bg-indigo-800 text-[0.625rem] font-medium text-white">H</span>
+                                                <span class="truncate">Heroicons</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                               class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                                <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-700 bg-indigo-800 text-[0.625rem] font-medium text-white">T</span>
+                                                <span class="truncate">Tailwind Labs</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"
+                                               class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                                <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-indigo-700 bg-indigo-800 text-[0.625rem] font-medium text-white">W</span>
+                                                <span class="truncate">Workcation</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="mt-auto">
+                                    <a href="/dashboard/{{.ProductSlug}}/settings"
+                                       class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                        <svg class="size-6 shrink-0 text-indigo-200 group-hover:text-white" fill="none"
+                                             viewBox="0 0 24 24"
+                                             stroke-width="1.5" stroke="currentColor" aria-hidden="true"
+                                             data-slot="icon">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                        </svg>
+                                        Settings
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Static sidebar for desktop -->
+        <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+            <!-- Sidebar component, swap this element with another sidebar if you like -->
+            <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-900 px-6 pb-4">
+                <a href="/homepage" class="flex h-16 shrink-0 items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47 40" fill="white" class="block h-8 w-8">
+                        <path fill="#fff"
+                              d="M23.5 6.5C17.5 6.5 13.75 9.5 12.25 15.5C14.5 12.5 17.125 11.375 20.125 12.125C21.8367 12.5529 23.0601 13.7947 24.4142 15.1692C26.6202 17.4084 29.1734 20 34.75 20C40.75 20 44.5 17 46 11C43.75 14 41.125 15.125 38.125 14.375C36.4133 13.9471 35.1899 12.7053 33.8357 11.3308C31.6297 9.09158 29.0766 6.5 23.5 6.5ZM12.25 20C6.25 20 2.5 23 1 29C3.25 26 5.875 24.875 8.875 25.625C10.5867 26.0529 11.8101 27.2947 13.1642 28.6693C15.3702 30.9084 17.9234 33.5 23.5 33.5C29.5 33.5 33.25 30.5 34.75 24.5C32.5 27.5 29.875 28.625 26.875 27.875C25.1633 27.4471 23.9399 26.2053 22.5858 24.8307C20.3798 22.5916 17.8266 20 12.25 20Z"/>
+                        <defs>
+                            <linearGradient id="%%GRADIENT_ID%%" x1="33.999" x2="1" y1="16.181" y2="16.181"
+                                            gradientUnits="userSpaceOnUse">
+                                <stop stop-color="%%GRADIENT_TO%%"/>
+                                <stop offset="1" stop-color="%%GRADIENT_FROM%%"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </a>
+                <nav class="flex flex-1 flex-col">
+                    <ul role="list" class="flex flex-1 flex-col gap-y-7">
+                        <li>
+                            <ul role="list" class="-mx-2 space-y-1">
+                                <li>
+                                    <!-- Current: "bg-indigo-950 text-white", Default: "text-indigo-200 hover:text-white hover:bg-indigo-800" -->
+                                    <a href="/dashboard/{{.ProductSlug}}"
+                                       class="group flex gap-x-3 rounded-md bg-indigo-950 p-2 text-sm/6 font-semibold text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                             class="size-6">
+                                            <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z"/>
+                                            <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z"/>
+                                        </svg>
+                                        Overview
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/dashboard/{{.ProductSlug}}/releases"
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                             class="size-6">
+                                            <path fill-rule="evenodd"
+                                                  d="M9.315 7.584C12.195 3.883 16.695 1.5 21.75 1.5a.75.75 0 0 1 .75.75c0 5.056-2.383 9.555-6.084 12.436A6.75 6.75 0 0 1 9.75 22.5a.75.75 0 0 1-.75-.75v-4.131A15.838 15.838 0 0 1 6.382 15H2.25a.75.75 0 0 1-.75-.75 6.75 6.75 0 0 1 7.815-6.666ZM15 6.75a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z"
+                                                  clip-rule="evenodd"/>
+                                            <path d="M5.26 17.242a.75.75 0 1 0-.897-1.203 5.243 5.243 0 0 0-2.05 5.022.75.75 0 0 0 .625.627 5.243 5.243 0 0 0 5.022-2.051.75.75 0 1 0-1.202-.897 3.744 3.744 0 0 1-3.008 1.51c0-1.23.592-2.323 1.51-3.008Z"/>
+                                        </svg>
+                                        Releases
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/dashboard/{{.ProductSlug}}/distribution-groups"
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                             class="size-6">
+                                            <path fill-rule="evenodd"
+                                                  d="M8.25 6.75a3.75 3.75 0 1 1 7.5 0 3.75 3.75 0 0 1-7.5 0ZM15.75 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM2.25 9.75a3 3 0 1 1 6 0 3 3 0 0 1-6 0ZM6.31 15.117A6.745 6.745 0 0 1 12 12a6.745 6.745 0 0 1 6.709 7.498.75.75 0 0 1-.372.568A12.696 12.696 0 0 1 12 21.75c-2.305 0-4.47-.612-6.337-1.684a.75.75 0 0 1-.372-.568 6.787 6.787 0 0 1 1.019-4.38Z"
+                                                  clip-rule="evenodd"/>
+                                            <path d="M5.082 14.254a8.287 8.287 0 0 0-1.308 5.135 9.687 9.687 0 0 1-1.764-.44l-.115-.04a.563.563 0 0 1-.373-.487l-.01-.121a3.75 3.75 0 0 1 3.57-4.047ZM20.226 19.389a8.287 8.287 0 0 0-1.308-5.135 3.75 3.75 0 0 1 3.57 4.047l-.01.121a.563.563 0 0 1-.373.486l-.115.04c-.567.2-1.156.349-1.764.441Z"/>
+                                        </svg>
+                                        Distribution Groups
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/dashboard/{{.ProductSlug}}/announcements"
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                             class="size-6">
+                                            <path d="M16.881 4.345A23.112 23.112 0 0 1 8.25 6H7.5a5.25 5.25 0 0 0-.88 10.427 21.593 21.593 0 0 0 1.378 3.94c.464 1.004 1.674 1.32 2.582.796l.657-.379c.88-.508 1.165-1.593.772-2.468a17.116 17.116 0 0 1-.628-1.607c1.918.258 3.76.75 5.5 1.446A21.727 21.727 0 0 0 18 11.25c0-2.414-.393-4.735-1.119-6.905ZM18.26 3.74a23.22 23.22 0 0 1 1.24 7.51 23.22 23.22 0 0 1-1.41 7.992.75.75 0 1 0 1.409.516 24.555 24.555 0 0 0 1.415-6.43 2.992 2.992 0 0 0 .836-2.078c0-.807-.319-1.54-.836-2.078a24.65 24.65 0 0 0-1.415-6.43.75.75 0 1 0-1.409.516c.059.16.116.321.17.483Z"/>
+                                        </svg>
+                                        Announcements
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/dashboard/{{.ProductSlug}}/feeds"
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white"
+                                       translate="no">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                             class="size-6">
+                                            <path fill-rule="evenodd"
+                                                  d="M3.75 4.5a.75.75 0 0 1 .75-.75h.75c8.284 0 15 6.716 15 15v.75a.75.75 0 0 1-.75.75h-.75a.75.75 0 0 1-.75-.75v-.75C18 11.708 12.292 6 5.25 6H4.5a.75.75 0 0 1-.75-.75V4.5Zm0 6.75a.75.75 0 0 1 .75-.75h.75a8.25 8.25 0 0 1 8.25 8.25v.75a.75.75 0 0 1-.75.75H12a.75.75 0 0 1-.75-.75v-.75a6 6 0 0 0-6-6H4.5a.75.75 0 0 1-.75-.75v-.75Zm0 7.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
+                                                  clip-rule="evenodd"/>
+                                        </svg>
+                                        Feeds
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/dashboard/{{.ProductSlug}}/analytics"
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                             class="size-6">
+                                            <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75ZM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 0 1-1.875-1.875V8.625ZM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 0 1 3 19.875v-6.75Z"/>
+                                        </svg>
+                                        Analytics
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div class="text-sm/6 font-semibold text-white">Applications</div>
+                            <ul role="list" class="-mx-2 mt-2 space-y-1">
+                                {{- range .Apps }}
+                                    {{template "app-menu-item" . }}
+                                {{end}}
+                            </ul>
+                        </li>
+                        <li class="mt-auto">
+                            <a href="/dashboard/{{.ProductSlug}}/settings"
+                               class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                                <svg class="size-6 shrink-0 text-indigo-200 group-hover:text-white" fill="none"
+                                     viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                </svg>
+                                Settings
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Navbar -->
+        <div class="lg:pl-72">
+            <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+                <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden">
+                    <span class="sr-only">Open sidebar</span>
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                         aria-hidden="true" data-slot="icon">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                    </svg>
+                </button>
+
+                <!-- Separator -->
+                <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true"></div>
+
+                <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+                    <div class="flex flex-1 gap-x-4 self-stretch mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 sm:pl-0 items-center">
+                        <span class="inline-flex size-8 items-center justify-center rounded-md bg-indigo-800">
+                            <span class="text-sm font-medium text-white" translate="no">MY</span>
+                        </span>
+                        <span class="relative flex flex-1 text-md font-medium text-gray-700 hover:text-gray-800"
+                              translate="no">{{.ProductName}}</span>
+
+                        <!-- Profile dropdown -->
+                        <headless-dropdown class="relative">
+                            <button type="button" class="-m-1.5 flex items-center p-1.5" id="user-menu-button"
+                                    aria-expanded="false"
+                                    aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
+                        <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                      </span>
+                                </span>
+                            </button>
+
+                            <!--
+                              Dropdown menu, show/hide based on menu state.
+
+                              Entering: "transition ease-out duration-100"
+                                From: "transform opacity-0 scale-95"
+                                To: "transform opacity-100 scale-100"
+                              Leaving: "transition ease-in duration-75"
+                                From: "transform opacity-100 scale-100"
+                                To: "transform opacity-0 scale-95"
+                            -->
+                            <div class="absolute right-0 z-10 mt-2.5 w-48 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none"
+                                 role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                                 tabindex="-1">
+                                <!-- Active: "bg-gray-50 outline-none", Not Active: "" -->
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:outline-none" role="menuitem"
+                                   tabindex="-1"
+                                   id="user-menu-item-0">Account Settings</a>
+                                <form action="/internal/logout" method="POST">
+                                <button type="submit" class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100 hover:outline-none" role="menuitem"
+                                   tabindex="-1"
+                                   id="user-menu-item-1">Sign Out</button>
+                                </form>
+                            </div>
+                        </headless-dropdown>
+                    </div>
+                </div>
+            </div>
+
+            <main class="py-10">
+                <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+                    {{ block "content" . }}{{end}}
+                </div>
+            </main>
+        </div>
+    </div>
+{{ end }}
+
+{{ define "app-menu-item" }}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/product.ProductAppContextData*/ -}}
+    <li>
+        <details class="group">
+            <summary
+                    class="flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-white hover:bg-indigo-800 hover:text-white cursor-pointer">
+                <svg class="size-5 shrink-0 text-gray-400 group-open:rotate-90" viewBox="0 0 20 20" fill="currentColor"
+                     aria-hidden="true" data-slot="icon">
+                    <path fill-rule="evenodd"
+                          d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+                          clip-rule="evenodd"/>
+                </svg>
+                <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-white text-1 font-medium">
+                    {{ if eq .AppPlatform "Android" }}<i class="fa-brands fa-android text-green-600"></i>{{ end }}
+                    {{ if eq .AppPlatform "iOS" }}<i class="fa-brands fa-apple text-gray-800"></i>{{ end }}
+                    {{ if eq .AppPlatform "Windows" }}<i class="fa-brands fa-windows text-sky-500"></i>{{ end }}
+                    {{ if eq .AppPlatform "Linux" }}<i class="fa-brands fa-linux text-amber-500"></i>{{ end }}
+                    {{ if eq .AppPlatform "macOS" }}<i class="macos"></i>{{ end }}
+                    {{ if eq .AppPlatform "Other" }}<i class="fa-solid fa-file-code text-gray-700"></i>{{ end }}
+                    </span>
+                <span class="truncate select-none" translate="no">{{.AppName}}</span>
+            </summary>
+            <ul class="mt-1 px-2" id="sub-menu-1">
+                <li>
+                    <a href="/dashboard/{{.ProductSlug}}/apps/{{.AppPlatform}}/details"
+                       class="group flex gap-x-3 rounded-md p-2 ml-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                            <path fill-rule="evenodd"
+                                  d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z"
+                                  clip-rule="evenodd"/>
+                        </svg>
+                        App Details
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/{{.ProductSlug}}/apps/{{.AppPlatform}}/builds"
+                       class="group flex gap-x-3 rounded-md p-2 ml-2 text-sm/6 font-semibold text-indigo-200 hover:bg-indigo-800 hover:text-white" translate="no">
+                        <i class="fa-solid fa-square-binary text-2xl"></i>
+                        Builds
+                    </a>
+                </li>
+            </ul>
+        </details>
+    </li>
+{{ end }}
