@@ -62,7 +62,7 @@ export class ProductCreationDrawer extends LitElement {
     return html`
       <div class="text-center">
         <button type="button"
-                class="inline-flex items-center rounded-md bg-indigo-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-900"
+                class="inline-flex items-center rounded-md bg-violet-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-900"
                 @click="${() => this.showDrawer = true}">
           <i class="fa-solid fa-layer-group"></i>&nbsp;&nbsp;Create Your Product
         </button>
@@ -82,7 +82,7 @@ export class ProductCreationDrawer extends LitElement {
                 <input type="text"
                        name="Name"
                        id="Name"
-                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-800 sm:text-sm/6"
+                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-800 sm:text-sm/6"
                        maxlength="255"
                        autocomplete="off"
                        required>
@@ -95,7 +95,7 @@ export class ProductCreationDrawer extends LitElement {
                        name="Slug"
                        id="Slug"
                        @input="${this.handleSlugChange}"
-                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-800 sm:text-sm/6"
+                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-800 sm:text-sm/6"
                        maxlength="255"
                        autocomplete="off"
                        required>
@@ -109,7 +109,7 @@ export class ProductCreationDrawer extends LitElement {
                           name="Description"
                           rows="4"
                           autocomplete="off"
-                          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-800 sm:text-sm/6"></textarea>
+                          class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-800 sm:text-sm/6"></textarea>
               </div>
             </div>
             <fieldset>
@@ -122,7 +122,7 @@ export class ProductCreationDrawer extends LitElement {
                            value="false"
                            aria-describedby="privacy-public-description"
                            type="radio"
-                           class="size-4 border-gray-300 text-indigo-800 focus:ring-indigo-800"
+                           class="size-4 border-gray-300 text-violet-800 focus:ring-violet-800"
                            checked>
                   </div>
                   <div class="pl-7 text-sm/6">
@@ -141,7 +141,7 @@ export class ProductCreationDrawer extends LitElement {
                              value="true"
                              aria-describedby="privacy-private-to-project-description"
                              type="radio"
-                             class="size-4 border-gray-300 text-indigo-800 focus:ring-indigo-800">
+                             class="size-4 border-gray-300 text-violet-800 focus:ring-violet-800">
                     </div>
                     <div class="pl-7 text-sm/6">
                       <label for="privacy-private-to-project" class="font-medium text-gray-900">Private</label>
@@ -174,7 +174,7 @@ export class ProductCreationDrawer extends LitElement {
           </button>
           <button type="submit"
                   form="product-creation-form"
-                  class="ml-4 inline-flex justify-center rounded-md bg-indigo-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800">
+                  class="ml-4 inline-flex justify-center rounded-md bg-violet-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-800">
             Save
           </button>
         </span>

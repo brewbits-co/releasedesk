@@ -76,7 +76,7 @@ export class BuildUploadDrawer extends LitElement {
     override render() {
         return html`
             <button type="button"
-                    class="inline-flex items-center rounded-md bg-indigo-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-900"
+                    class="inline-flex items-center rounded-md bg-violet-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-900"
                     @click="${() => this.showDrawer = true}">
                 <i class="fa-solid fa-upload"></i>&nbsp;&nbsp;Upload
             </button>
@@ -94,7 +94,7 @@ export class BuildUploadDrawer extends LitElement {
                                 <input type="text"
                                        name="Number"
                                        id="Number"
-                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-800 sm:text-sm/6"
+                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-800 sm:text-sm/6"
                                        maxlength="255"
                                        autocomplete="off"
                                        required>
@@ -106,7 +106,7 @@ export class BuildUploadDrawer extends LitElement {
                                 <input type="text"
                                        name="Version"
                                        id="Version"
-                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-800 sm:text-sm/6"
+                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-800 sm:text-sm/6"
                                        maxlength="255"
                                        autocomplete="off"
                                        required>
@@ -128,7 +128,7 @@ export class BuildUploadDrawer extends LitElement {
                                                            // @ts-ignore 
                                                            this.extensionsByPlatform[this.platform].join(',')
                                                    }"
-                                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-800 sm:text-sm/6"
+                                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-800 sm:text-sm/6"
                                                    maxlength="255"
                                                    autocomplete="off">
                                             <p class="text-xs/5 text-gray-600">Upload ${
@@ -159,7 +159,7 @@ export class BuildUploadDrawer extends LitElement {
           </button>
           <button type="submit"
                   form="build-upload-form"
-                  class="ml-4 inline-flex justify-center rounded-md bg-indigo-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800">
+                  class="ml-4 inline-flex justify-center rounded-md bg-violet-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-800">
             Upload
           </button>
         </span>

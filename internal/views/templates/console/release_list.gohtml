@@ -18,7 +18,7 @@
                 {{- range .Channels }}
                     {{ if eq .ID $.CurrentChannelID }}
                         <a href="#"
-                           class="whitespace-nowrap border-b-2 border-indigo-500 px-1 pb-4 text-sm font-medium text-indigo-600"
+                           class="whitespace-nowrap border-b-2 border-violet-500 px-1 pb-4 text-sm font-medium text-violet-600"
                            aria-current="page">
                             {{.Name}}
                         </a>
@@ -107,7 +107,7 @@
                     </td>
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <a href="/dashboard/{{$.CurrentProductData.ProductSlug}}/releases/{{.ID}}"
-                           class="text-indigo-900 hover:text-indigo-800">View</a>
+                           class="text-violet-900 hover:text-violet-800">View</a>
                     </td>
                 </tr>
             {{else}}

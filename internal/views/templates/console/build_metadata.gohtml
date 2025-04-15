@@ -42,7 +42,7 @@
             <div class="grid grid-cols-1 sm:hidden">
                 <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
                 <select aria-label="Select a tab"
-                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600">
+                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-violet-600">
                     <option>Applied</option>
                     <option>Phone Screening</option>
                     <option selected>Interview</option>
@@ -59,13 +59,13 @@
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
                 <nav class="-mb-px flex space-x-8">
-                    <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+                    <!-- Current: "border-violet-500 text-violet-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
                     <a href="/dashboard/{{.CurrentProductData.ProductSlug}}/apps/{{.CurrentApp.AppPlatform}}/builds/{{.Build.BasicInfo.Number}}"
                        class="whitespace-nowrap border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                         Summary
                     </a>
                     <a href="#"
-                       class="whitespace-nowrap border-b-2 border-indigo-500 px-1 pb-4 text-sm font-medium text-indigo-600"
+                       class="whitespace-nowrap border-b-2 border-violet-500 px-1 pb-4 text-sm font-medium text-violet-600"
                        aria-current="page">
                        Build Info
                     </a>

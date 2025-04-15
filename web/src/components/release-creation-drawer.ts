@@ -64,7 +64,7 @@ export class ReleaseCreationDrawer extends LitElement {
         return html`
             <div class="text-center">
                 <button type="button"
-                        class="inline-flex items-center rounded-md bg-indigo-900 gap-x-2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-900"
+                        class="inline-flex items-center rounded-md bg-violet-900 gap-x-2 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-900"
                         @click="${() => this.showDrawer = true}">
                     <i class="fa-solid fa-rocket"></i> Create
                 </button>
@@ -83,7 +83,7 @@ export class ReleaseCreationDrawer extends LitElement {
                                 <input type="text"
                                        name="Version"
                                        id="Version"
-                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-800 sm:text-sm/6"
+                                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-800 sm:text-sm/6"
                                        maxlength="255"
                                        autocomplete="off"
                                        required>
@@ -93,7 +93,7 @@ export class ReleaseCreationDrawer extends LitElement {
                             <label for="TargetChannel" class="block text-sm/6 font-medium text-gray-900">Channel</label>
                             <div class="mt-2 grid grid-cols-1">
                                 <select id="TargetChannel" name="TargetChannel"
-                                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-violet-600 sm:text-sm/6">
                                     ${map(this.channels, (channel) => html`
                                         <option translate="no" value="${channel.ID}">${channel.Name}</option>
                                     `)}
@@ -104,7 +104,7 @@ export class ReleaseCreationDrawer extends LitElement {
                             <label for="TargetPlatform" class="block text-sm/6 font-medium text-gray-900">Target Platform</label>
                             <div class="mt-2 grid grid-cols-1">
                                 <select id="TargetPlatform" name="TargetPlatform"
-                                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+                                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-violet-600 sm:text-sm/6">
                                     <option value="">All Platforms</option>
                                     <option translate="no">Android</option>
                                     <option translate="no">iOS</option>
@@ -136,7 +136,7 @@ export class ReleaseCreationDrawer extends LitElement {
           </button>
           <button type="submit"
                   form="product-creation-form"
-                  class="ml-4 inline-flex justify-center rounded-md bg-indigo-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800">
+                  class="ml-4 inline-flex justify-center rounded-md bg-violet-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-800">
             Save
           </button>
         </span>

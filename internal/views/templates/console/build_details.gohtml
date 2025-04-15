@@ -42,7 +42,7 @@
             <div class="grid grid-cols-1 sm:hidden">
                 <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
                 <select aria-label="Select a tab"
-                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600">
+                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-violet-600">
                     <option>Applied</option>
                     <option>Phone Screening</option>
                     <option selected>Interview</option>
@@ -59,9 +59,9 @@
             <!-- Tabs at small breakpoint and up -->
             <div class="hidden sm:block">
                 <nav class="-mb-px flex space-x-8">
-                    <!-- Current: "border-indigo-500 text-indigo-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
+                    <!-- Current: "border-violet-500 text-violet-600", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
                     <a href="#"
-                       class="whitespace-nowrap border-b-2 border-indigo-500 px-1 pb-4 text-sm font-medium text-indigo-600"
+                       class="whitespace-nowrap border-b-2 border-violet-500 px-1 pb-4 text-sm font-medium text-violet-600"
                        aria-current="page">
                         Summary
                     </a>
@@ -80,13 +80,13 @@
                 <div class="py-4 px-4">
                     <p class="text-sm/6 font-medium text-gray-400">Number of Downloads</p>
                     <p class="mt-2 flex items-baseline gap-x-2">
-                        <span class="text-xl font-semibold tracking-tight text-indigo-900">0</span>
+                        <span class="text-xl font-semibold tracking-tight text-violet-900">0</span>
                     </p>
                 </div>
                 <div class="py-4 px-4">
                     <p class="text-sm/6 font-medium text-gray-400">Uploaded At</p>
                     <p class="mt-2 flex items-baseline gap-x-2">
-                        <span class="text-xl font-semibold tracking-tight text-indigo-900">{{ .Build.BasicInfo.Auditable.CreatedAtFormatted }}</span>
+                        <span class="text-xl font-semibold tracking-tight text-violet-900">{{ .Build.BasicInfo.Auditable.CreatedAtFormatted }}</span>
                     </p>
                 </div>
             </div>
@@ -115,13 +115,13 @@
                           clip-rule="evenodd"/>
                 </svg>
                 <div class="ml-4 flex min-w-0 flex-1 gap-2">
-                    <span class="truncate font-medium text-indigo-900">{{.Storable.Filename}}</span>
+                    <span class="truncate font-medium text-violet-900">{{.Storable.Filename}}</span>
                     <span class="shrink-0 text-gray-400">{{.Architecture}}</span>
                 </div>
             </div>
             <div class="ml-4 shrink-0">
                 <a href="/internal/artifacts/{{.Hashable.Sha256}}"
-                   class="font-medium text-indigo-900 hover:text-indigo-800" download>Download</a>
+                   class="font-medium text-violet-900 hover:text-violet-800" download>Download</a>
             </div>
         </div>
         <dl class="mx-4">

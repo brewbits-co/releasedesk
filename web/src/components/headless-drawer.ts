@@ -34,12 +34,12 @@ export class HeadlessDrawer extends LitElement {
               <div class="pointer-events-auto w-screen max-w-2xl transform transition ease-in-out duration-500 sm:duration-700 ${this.open ? 'translate-x-0' : 'translate-x-full'}">
                 <div class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
                   <div class="h-0 flex-1 overflow-y-auto">
-                    <div class="bg-indigo-900 px-4 py-6 sm:px-6">
+                    <div class="bg-violet-900 px-4 py-6 sm:px-6">
                       <div class="flex items-center justify-between">
                         <h2 class="text-base font-semibold text-white" id="slide-over-title">${this.headerTitle}</h2>
                         <div class="ml-3 flex h-7 items-center">
                           <button type="button"
-                                  class="relative rounded-md bg-indigo-900 text-indigo-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white" @click="${this.closeDrawer}">
+                                  class="relative rounded-md bg-violet-900 text-violet-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white" @click="${this.closeDrawer}">
                             <span class="absolute -inset-2.5"></span>
                             <span class="sr-only">Close panel</span>
                             <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -50,7 +50,7 @@ export class HeadlessDrawer extends LitElement {
                         </div>
                       </div>
                       <div class="mt-1">
-                        <p class="text-sm text-indigo-400">${this.headerSubtitle}</p>
+                        <p class="text-sm text-violet-400">${this.headerSubtitle}</p>
                       </div>
                     </div>
                     <div class="flex flex-1 flex-col justify-between">

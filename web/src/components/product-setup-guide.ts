@@ -103,7 +103,7 @@ export class ProductSetupGuide extends LitElement {
                                                 ${map(range(this.totalCustomChannels), () => html`${listItem('CustomChannels', 'Enter the channel name')}`)}
                                                 <div class="flex pt-2">
                                                     <button type="button"
-                                                            class="text-sm/6 font-semibold text-indigo-800 hover:text-indigo-700"
+                                                            class="text-sm/6 font-semibold text-violet-800 hover:text-violet-700"
                                                             @click="${this.addNewCustomChannel}">
                                                         <span aria-hidden="true">+</span> Add another channel
                                                     </button>
@@ -112,7 +112,7 @@ export class ProductSetupGuide extends LitElement {
                                     </fieldset>
                                 </div>
                                 <button type="submit"
-                                        class="rounded-md mt-4 bg-indigo-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-800">
+                                        class="rounded-md mt-4 bg-violet-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-800">
                                     Save
                                 </button>
                             </div>
@@ -135,13 +135,13 @@ const radioOption = (name: string, value: string, title: string, subtitle: strin
             </span>
         </span>
 
-        <svg class="size-5 text-indigo-800 hidden peer-checked:block" viewBox="0 0 20 20" fill="currentColor"
+        <svg class="size-5 text-violet-800 hidden peer-checked:block" viewBox="0 0 20 20" fill="currentColor"
              aria-hidden="true" data-slot="icon">
             <path fill-rule="evenodd"
                   d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
                   clip-rule="evenodd"/>
         </svg>
-        <span class="pointer-events-none absolute -inset-px rounded-lg border-2 peer-checked:border-indigo-800"
+        <span class="pointer-events-none absolute -inset-px rounded-lg border-2 peer-checked:border-violet-800"
               aria-hidden="true"></span>
     </label>
 `

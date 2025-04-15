@@ -46,7 +46,7 @@ export class LoginForm extends LitElement {
                 type="text"
                 required
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset
-                 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-900 sm:text-sm sm:leading-6 
+                 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-900 sm:text-sm sm:leading-6 
                  ${this.loginFailed ? 'ring-red-500' : 'ring-gray-300'}"
             />
           </div>
@@ -61,7 +61,7 @@ export class LoginForm extends LitElement {
                 type="password"
                 required
                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset 
-                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-900 sm:text-sm sm:leading-6 
+                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-violet-900 sm:text-sm sm:leading-6 
                 ${this.loginFailed ? 'ring-red-500' : 'ring-gray-300'}"
             />
           </div>
@@ -71,9 +71,9 @@ export class LoginForm extends LitElement {
         </span>
         <button
             type="submit"
-            class="flex w-full justify-center rounded-md bg-indigo-900 px-3 py-1.5 text-sm font-semibold leading-6 
-            text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 
-            focus-visible:outline-offset-2 focus-visible:outline-indigo-900
+            class="flex w-full justify-center rounded-md bg-violet-900 px-3 py-1.5 text-sm font-semibold leading-6 
+            text-white shadow-sm hover:bg-violet-800 focus-visible:outline focus-visible:outline-2 
+            focus-visible:outline-offset-2 focus-visible:outline-violet-900
             group-invalid:pointer-events-none group-invalid:opacity-60">
           Sign In
         </button>

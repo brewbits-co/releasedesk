@@ -1,10 +1,10 @@
 {{ define "body" }}
     {{- /*gotype: github.com/brewbits-co/releasedesk/pkg/session.SessionData*/ -}}
     <div class="min-h-full">
-      <div class="bg-indigo-900 pb-32">
-        <headless-navigation class="border-b border-indigo-600 border-opacity-25 bg-indigo-900 lg:border-none">
+      <div class="bg-violet-900 pb-32">
+        <headless-navigation class="border-b border-violet-600 border-opacity-25 bg-violet-900 lg:border-none">
           <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-            <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-indigo-950 lg:border-opacity-25">
+            <div class="relative flex h-16 items-center justify-between lg:border-b lg:border-violet-950 lg:border-opacity-25">
               <div class="flex items-center px-2 lg:px-0">
                 <div class="shrink-0">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47 40" fill="white" class="block h-8 w-8">
@@ -19,24 +19,24 @@
                 </div>
                 <div class="hidden lg:ml-10 lg:block">
                   <div class="flex space-x-4">
-                    <!-- Current: "bg-indigo-950 text-white", Default: "text-white hover:bg-indigo-800 hover:bg-opacity-75" -->
-                    <a href="#" class="rounded-md bg-indigo-950 px-3 py-2 text-sm font-medium text-white"
+                    <!-- Current: "bg-violet-950 text-white", Default: "text-white hover:bg-violet-800 hover:bg-opacity-75" -->
+                    <a href="#" class="rounded-md bg-violet-950 px-3 py-2 text-sm font-medium text-white"
                        aria-current="page">Products</a>
                     <a href="#"
-                       class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-indigo-800 hover:bg-opacity-75">Download Portal</a>
+                       class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-violet-800 hover:bg-opacity-75">Download Portal</a>
                     <a href="#"
-                       class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-indigo-800 hover:bg-opacity-75">People</a>
+                       class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-violet-800 hover:bg-opacity-75">People</a>
                     <a href="#"
-                       class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-indigo-800 hover:bg-opacity-75">Administration</a>
+                       class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-violet-800 hover:bg-opacity-75">Administration</a>
                   </div>
                 </div>
               </div>
               <div class="flex lg:hidden">
                 <!-- Mobile menu button -->
                 <button type="button"
-                        class="relative inline-flex items-center justify-center rounded-md bg-indigo-900 p-2
-                      text-indigo-500 hover:bg-indigo-800 hover:bg-opacity-75 hover:text-white focus:outline-none
-                      focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-900"
+                        class="relative inline-flex items-center justify-center rounded-md bg-violet-900 p-2
+                      text-violet-500 hover:bg-violet-800 hover:bg-opacity-75 hover:text-white focus:outline-none
+                      focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-violet-900"
                         aria-controls="mobile-menu" aria-expanded="false">
                   <span class="absolute -inset-0.5"></span>
                   <span class="sr-only">Open main menu</span>
@@ -59,8 +59,8 @@
                   <headless-dropdown class="relative ml-3 shrink-0">
                     <div>
                       <button type="button"
-                              class="relative flex rounded-full bg-indigo-900 text-sm text-white focus:outline-none
-                            focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-900"
+                              class="relative flex rounded-full bg-violet-900 text-sm text-white focus:outline-none
+                            focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-violet-900"
                               id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                         <span class="absolute -inset-1.5"></span>
                         <span class="sr-only">Open user menu</span>
@@ -96,17 +96,17 @@
           <!-- Mobile menu, show/hide based on menu state. -->
           <div class="lg:hidden" id="mobile-menu">
             <div class="space-y-1 px-2 pb-3 pt-2">
-              <!-- Current: "bg-indigo-950 text-white", Default: "text-white hover:bg-indigo-800 hover:bg-opacity-75" -->
-              <a href="#" class="block rounded-md bg-indigo-950 px-3 py-2 text-base font-medium text-white"
+              <!-- Current: "bg-violet-950 text-white", Default: "text-white hover:bg-violet-800 hover:bg-opacity-75" -->
+              <a href="#" class="block rounded-md bg-violet-950 px-3 py-2 text-base font-medium text-white"
                  aria-current="page">Products</a>
               <a href="#"
-                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-800 hover:bg-opacity-75">Download Portal</a>
+                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-violet-800 hover:bg-opacity-75">Download Portal</a>
               <a href="#"
-                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-800 hover:bg-opacity-75">People</a>
+                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-violet-800 hover:bg-opacity-75">People</a>
               <a href="#"
-                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-800 hover:bg-opacity-75">Administration</a>
+                 class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-violet-800 hover:bg-opacity-75">Administration</a>
             </div>
-            <div class="border-t border-indigo-950 pb-3 pt-4">
+            <div class="border-t border-violet-950 pb-3 pt-4">
               <div class="flex items-center px-5">
                 <div class="shrink-0">
                 <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
@@ -121,11 +121,11 @@
               </div>
               <div class="mt-3 space-y-1 px-2">
                 <a href="#"
-                   class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-800 hover:bg-opacity-75">Account
+                   class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-violet-800 hover:bg-opacity-75">Account
                   Settings</a>
                 <form action="/internal/logout" method="POST">
                   <button type="submit"
-                          class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-indigo-800 hover:bg-opacity-75">
+                          class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-violet-800 hover:bg-opacity-75">
                     Sign Out
                   </button>
                 </form>
