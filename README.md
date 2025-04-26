@@ -3,7 +3,7 @@
 
 ## About the Project
 
-**ReleaseDesk** is an open-source, self-hostable alternative to App Stores / AppCenter / TestFlight / etc.
+**ReleaseDesk** is an open-source, self-hostable alternative to traditional App Stores / AppCenter / TestFlight / etc.
 
 It helps you manage app releases, write meaningful release notes, and publish them across multiple channels (**beta**, **stable**, or custom ones).
 
