@@ -12,7 +12,7 @@ With **ReleaseDesk**, you can:
 - **Distribute your apps** both internally and externally through a customizable **Download Portal**
 - **Control access** using **distribution groups**
 - **Automate your CI/CD pipeline** with release workflows that:
-    - Trigger announcements (email notifications, etc.)
+    - Trigger announcements (email notifications, webhooks, etc.)
     - Integrate with your app for **in-app updates**
     - Generate update feeds in formats like **JSON**, **XML**, **Squirrel**, **Sparkle**, and more
 
