@@ -71,8 +71,10 @@ export class ProductCreationDrawer extends LitElement {
                     <i class="fa-solid fa-layer-group"></i>&nbsp;&nbsp;Create Your Product
                 </button>
             </div>
+            
+            <dialog-drawer ref="productCreationDrawer" title="ok" description="yo"></dialog-drawer>
 
-            <dialog id="productCreationDrawer"
+            <dialog id="productCredationDrawer"
                     class="relative z-10 opacity-0 transition-opacity duration-300 ease-in-out open:opacity-100"
                     aria-labelledby="slide-over-title" role="dialog"
                     aria-modal="true">

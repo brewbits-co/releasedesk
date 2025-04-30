@@ -1,5 +1,6 @@
 import 'vanilla-headless'
 
+import './components/web_ui/dialog-drawer'
 import './components/error-alert'
 import './components/headless-drawer'
 
