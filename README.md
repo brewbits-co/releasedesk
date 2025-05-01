@@ -1,4 +1,9 @@
-<h1 align="center">ReleaseDesk</h1>
+<h1 align="center" style="border-bottom: none">
+    <a href="https://signoz.io" target="_blank">
+        <img alt="SigNoz" src="https://github.com/user-attachments/assets/17d97874-a835-4159-9d05-3a5a9eb53efd" width="80" height="80">
+    </a>
+    <br>ReleaseDesk
+</h1>
 <p align="center">An open-source & self-hostable app distribution tool.</p>
 
 ## About the Project
