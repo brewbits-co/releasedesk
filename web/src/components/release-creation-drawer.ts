@@ -100,21 +100,6 @@ export class ReleaseCreationDrawer extends LitElement {
                                 </select>
                             </div>
                         </div>
-                        <div>
-                            <label for="TargetPlatform" class="block text-sm/6 font-medium text-gray-900">Target Platform</label>
-                            <div class="mt-2 grid grid-cols-1">
-                                <select id="TargetPlatform" name="TargetPlatform"
-                                        class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-violet-600 sm:text-sm/6">
-                                    <option value="">All Platforms</option>
-                                    <option translate="no">Android</option>
-                                    <option translate="no">iOS</option>
-                                    <option translate="no">Windows</option>
-                                    <option translate="no">macOS</option>
-                                    <option translate="no">Linux</option>
-                                    <option>Other</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
 
                     ${this.submitFailed ? html`

@@ -169,21 +169,6 @@ export class AppCreationDrawer extends LitElement {
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="relative flex items-start">
-                                        <div class="absolute flex h-6 items-center">
-                                            <input id="Platform"
-                                                   name="Platform"
-                                                   value="Other"
-                                                   aria-describedby="privacy-private-to-project-description"
-                                                   type="radio"
-                                                   class="size-4 border-gray-300 text-violet-800 focus:ring-violet-800">
-                                        </div>
-                                        <div class="pl-7 text-sm/6">
-                                            <label for="privacy-private-to-project" class="font-medium text-gray-900">Other</label>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </fieldset>
                     </div>

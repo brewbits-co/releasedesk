@@ -8,5 +8,4 @@ const (
 	Windows Platform = "Windows"
 	MacOS   Platform = "macOS"
 	Linux   Platform = "Linux"
-	Other   Platform = "Other"
 )

@@ -63,7 +63,6 @@ func (s *service) GetCurrentProductData(slug values.Slug) (session.CurrentProduc
 		values.Windows: 3,
 		values.MacOS:   4,
 		values.Linux:   5,
-		values.Other:   6,
 	}
 
 	// Sorting based on the platform order

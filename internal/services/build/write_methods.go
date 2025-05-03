@@ -66,7 +66,6 @@ func isValidFileType(platform values.Platform, fileName string) bool {
 		values.Linux:   {".AppImage", ".deb", ".rpm", ".tgz", ".gz", ".snap", ".flatpak"},
 		values.Android: {".apk", ".aab"},
 		values.IOS:     {".ipa"},
-		values.Other:   {".zip"},
 	}
 
 	ext := filepath.Ext(fileName)

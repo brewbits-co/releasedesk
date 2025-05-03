@@ -1,7 +1,6 @@
 package release
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/brewbits-co/releasedesk/pkg/fields"
 	"github.com/brewbits-co/releasedesk/pkg/hooks"
 	"github.com/brewbits-co/releasedesk/pkg/validator"
@@ -36,8 +35,6 @@ type BasicInfo struct {
 	Version string `db:"Version"`
 	// TargetChannel
 	TargetChannel int `db:"TargetChannel"`
-	// TargetPlatform
-	TargetPlatform values.Platform `db:"TargetPlatform"`
 	// Status
 	Status ReleaseStatus `db:"Status"`
 }

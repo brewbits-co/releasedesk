@@ -42,8 +42,8 @@ func (r *releaseRepository) FindChannelsByProductID(productID int) ([]release.Ch
 func (r *releaseRepository) Save(release *release.Release) error {
 	_ = release.BeforeCreate()
 
-	q := `INSERT INTO Releases (ProductID, Version, TargetChannel, TargetPlatform, Status, CreatedAt, UpdatedAt) 
-			VALUES (:ProductID, :Version, :TargetChannel, :TargetPlatform, :Status, :CreatedAt, :UpdatedAt)`
+	q := `INSERT INTO Releases (ProductID, Version, TargetChannel, Status, CreatedAt, UpdatedAt) 
+			VALUES (:ProductID, :Version, :TargetChannel, :Status, :CreatedAt, :UpdatedAt)`
 
 	exec, err := r.db.NamedExec(q, release)
 	if err != nil {
@@ -59,7 +59,7 @@ func (r *releaseRepository) Save(release *release.Release) error {
 
 func (r *releaseRepository) FindByProductIDAndChannel(productID int, channelID int) ([]release.BasicInfo, error) {
 	// Execute the database query
-	q := `SELECT ID, ProductID, Version, TargetChannel, TargetPlatform, Status, CreatedAt, UpdatedAt 
+	q := `SELECT ID, ProductID, Version, TargetChannel, Status, CreatedAt, UpdatedAt 
 			FROM Releases WHERE ProductID = $1 AND TargetChannel = $2 ORDER BY CreatedAt DESC`
 	rows, err := r.db.Queryx(q, productID, channelID)
 	if err != nil {
