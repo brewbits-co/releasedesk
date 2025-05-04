@@ -1,6 +1,7 @@
 package release
 
 import (
+	"github.com/brewbits-co/releasedesk/internal/domains/build"
 	"github.com/brewbits-co/releasedesk/pkg/fields"
 	"github.com/brewbits-co/releasedesk/pkg/hooks"
 	"github.com/brewbits-co/releasedesk/pkg/validator"
@@ -43,4 +44,5 @@ type Release struct {
 	hooks.BaseHooks
 	validator.BaseValidator
 	BasicInfo
+	Builds []build.BasicInfo `db:"-"`
 }

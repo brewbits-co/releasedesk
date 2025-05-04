@@ -16,6 +16,8 @@ type ReleaseListData struct {
 type ReleaseSummaryData struct {
 	session.SessionData
 	session.CurrentProductData
+	release.Release
+	Channels []release.Channel
 }
 
 type ReleaseNotesData struct {

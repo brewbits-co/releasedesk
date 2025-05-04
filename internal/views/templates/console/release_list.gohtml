@@ -42,9 +42,6 @@
                     Version
                 </th>
                 <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium uppercase tracking-wide text-gray-700">
-                    Target Platforms
-                </th>
-                <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium uppercase tracking-wide text-gray-700">
                     Updated At
                 </th>
                 <th scope="col" class="px-3 py-3.5 text-left text-xs font-medium uppercase tracking-wide text-gray-700">
@@ -59,38 +56,6 @@
             {{- range .Releases }}
                 <tr>
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{.Version}}</td>
-                    <td class="whitespace-normal px-3 py-4 text-sm text-gray-500 w-80">
-{{/*                        {{ if or (eq .TargetPlatform "Android") (eq .TargetPlatform "") }}*/}}
-{{/*                            <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-green-600 ring-1 ring-inset ring-gray-200 mr-1"*/}}
-{{/*                                  translate="no">*/}}
-{{/*                              <i class="fa-brands fa-android"></i> Android*/}}
-{{/*                            </span>*/}}
-{{/*                        {{end}}*/}}
-{{/*                        {{ if or (eq .TargetPlatform "iOS") (eq .TargetPlatform "")  }}*/}}
-{{/*                            <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-gray-800 ring-1 ring-inset ring-gray-200 mr-1"*/}}
-{{/*                                  translate="no">*/}}
-{{/*                              <i class="fa-brands fa-apple"></i> iOS*/}}
-{{/*                            </span>*/}}
-{{/*                        {{end}}*/}}
-{{/*                        {{ if or (eq .TargetPlatform "Windows") (eq .TargetPlatform "")  }}*/}}
-{{/*                            <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-sky-500 ring-1 ring-inset ring-gray-200 mr-1"*/}}
-{{/*                                  translate="no">*/}}
-{{/*                              <i class="fa-brands fa-windows"></i> Windows*/}}
-{{/*                            </span>*/}}
-{{/*                        {{end}}*/}}
-{{/*                        {{ if or (eq .TargetPlatform "Linux") (eq .TargetPlatform "")  }}*/}}
-{{/*                            <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-amber-500 ring-1 ring-inset ring-gray-200 mr-1"*/}}
-{{/*                                  translate="no">*/}}
-{{/*                              <i class="fa-brands fa-linux"></i> Linux*/}}
-{{/*                            </span>*/}}
-{{/*                        {{end}}*/}}
-{{/*                        {{ if or (eq .TargetPlatform "macOS") (eq .TargetPlatform "")  }}*/}}
-{{/*                            <span class="inline-flex items-center gap-x-1.5 rounded-full px-2 py-1 text-xs font-medium text-blue-500 ring-1 ring-inset ring-gray-200 mr-1"*/}}
-{{/*                                  translate="no">*/}}
-{{/*                              <i class="macos"></i> macOS*/}}
-{{/*                            </span>*/}}
-{{/*                        {{end}}*/}}
-                    </td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{.Auditable.UpdatedAtFormatted}}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     <span class="inline-flex items-center gap-x-1.5 rounded-md bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800 mr-2">
@@ -101,7 +66,7 @@
                     </span>
                     </td>
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a href="/dashboard/{{$.CurrentProductData.ProductSlug}}/releases/{{.ID}}"
+                        <a href="/dashboard/{{$.CurrentProductData.ProductSlug}}/releases/{{.Version}}"
                            class="text-violet-900 hover:text-violet-800">View</a>
                     </td>
                 </tr>

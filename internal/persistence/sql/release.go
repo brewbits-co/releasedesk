@@ -88,3 +88,20 @@ func (r *releaseRepository) FindByProductIDAndChannel(productID int, channelID i
 
 	return releases, nil
 }
+
+func (r *releaseRepository) GetByProductIdAndVersion(productID int, version string) (release.Release, error) {
+	var releaseSummary release.Release
+
+	// Execute the database query
+	q := `SELECT ID, ProductID, Version, TargetChannel, Status, CreatedAt, UpdatedAt 
+			FROM Releases WHERE ProductID = $1 AND Version = $2 LIMIT 1`
+
+	err := r.db.QueryRowx(q, productID, version).StructScan(&releaseSummary)
+	if err != nil {
+		return release.Release{}, err
+	}
+
+	releaseSummary.Auditable.FormatAuditable()
+
+	return releaseSummary, nil
+}

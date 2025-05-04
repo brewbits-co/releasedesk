@@ -19,3 +19,12 @@ func (s *service) ListReleasesByChannel(productID int, channelID int) ([]release
 
 	return releases, nil
 }
+
+func (s *service) GetReleaseSummary(productID int, version string) (release.Release, error) {
+	releaseEntity, err := s.releaseRepo.GetByProductIdAndVersion(productID, version)
+	if err != nil {
+		return release.Release{}, err
+	}
+
+	return releaseEntity, nil
+}

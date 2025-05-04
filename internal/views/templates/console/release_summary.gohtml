@@ -4,7 +4,7 @@
         <div class="md:flex md:items-center md:justify-between">
             <div>
                 <h3 class="text-xl font-semibold text-gray-900">
-                    Release 1.0.1
+                    Release {{.Release.BasicInfo.Version}}
                 </h3>
             </div>
         </div>
@@ -29,13 +29,19 @@
                 <div class="py-4 px-4">
                     <p class="text-sm/6 font-medium text-gray-400">Number of Downloads</p>
                     <p class="mt-2 flex items-baseline gap-x-2">
-                        <span class="text-xl font-semibold tracking-tight text-violet-900">405</span>
+                        <span class="text-xl font-semibold tracking-tight text-violet-900">0</span>
                     </p>
                 </div>
                 <div class="py-4 px-4">
                     <p class="text-sm/6 font-medium text-gray-400">Created At</p>
                     <p class="mt-2 flex items-baseline gap-x-2">
-                        <span class="text-xl font-semibold tracking-tight text-violet-900">02/12/2024</span>
+                        <span class="text-xl font-semibold tracking-tight text-violet-900">{{ .Release.BasicInfo.Auditable.CreatedAtFormatted }}</span>
+                    </p>
+                </div>
+                <div class="py-4 px-4">
+                    <p class="text-sm/6 font-medium text-gray-400">Updated At</p>
+                    <p class="mt-2 flex items-baseline gap-x-2">
+                        <span class="text-xl font-semibold tracking-tight text-violet-900">{{ .Release.BasicInfo.Auditable.UpdatedAtFormatted }}</span>
                     </p>
                 </div>
             </div>
@@ -46,9 +52,10 @@
             <div class="mt-2 grid grid-cols-1">
                 <select id="country" name="country" autocomplete="country-name"
                         class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-violet-600 sm:text-sm/6">
-                    <option translate="no">Stable</option>
-                    <option translate="no">Beta</option>
-                    <option translate="no">Canary</option>
+                    {{- range .Channels }}
+                        <option translate="no" value="{{.ID}}"
+                                {{ if eq .ID $.Release.BasicInfo.TargetChannel }}selected{{end}}>{{ .Name }}</option>
+                    {{- end }}
                 </select>
                 <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
                      viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
@@ -60,7 +67,7 @@
         </div>
 
         <div class="col-span-full mt-4">
-            <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Artifacts</label>
+            <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900">Build Selection</label>
             <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                 <div class="text-center">
                     <i class="fa-solid fa-square-binary mx-auto text-5xl text-gray-300"></i>
@@ -72,6 +79,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {{ end }}

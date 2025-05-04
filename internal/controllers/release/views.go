@@ -76,9 +76,24 @@ func (c *releaseController) RenderReleaseSummary(w http.ResponseWriter, r *http.
 		log.Println(err)
 	}
 
-	data := ReleaseNotesData{
+	channels, err := c.service.GetReleaseChannels(currentProduct.ProductID)
+	if err != nil {
+		// TODO: redirect to 404 page
+		log.Println(err)
+	}
+
+	version := chi.URLParam(r, "version")
+	releaseSummary, err := c.service.GetReleaseSummary(currentProduct.ProductID, version)
+	if err != nil {
+		// TODO: redirect to 404 page
+		log.Println(err)
+	}
+
+	data := ReleaseSummaryData{
 		SessionData:        session.NewSessionData(r.Context()),
 		CurrentProductData: currentProduct,
+		Channels:           channels,
+		Release:            releaseSummary,
 	}
 
 	err = tmpl.ExecuteTemplate(w, "index.gohtml", data)
