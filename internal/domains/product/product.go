@@ -45,7 +45,6 @@ type PlatformAvailability struct {
 	HasWindows bool `db:"HasWindows"`
 	HasLinux   bool `db:"HasLinux"`
 	HasMacOS   bool `db:"HasMacOS"`
-	HasOther   bool `db:"HasOther"`
 }
 
 type Product struct {

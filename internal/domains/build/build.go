@@ -20,8 +20,8 @@ type BasicInfo struct {
 	fields.Auditable
 	// ID is the unique identifier of a Build.
 	ID int `db:"ID"`
-	// AppID is the identifier of the app that this Build belongs.
-	AppID int `db:"AppID"`
+	// PlatformID is the identifier of the platform that this Build belongs.
+	PlatformID int `db:"PlatformID"`
 	// Version specifies the version of the Build.
 	Version string `db:"Version"`
 	// Number represents a unique code or sequence number associated with the Build.

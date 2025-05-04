@@ -23,8 +23,8 @@ func (r *buildRepository) Save(build *build.Build) error {
 		return err
 	}
 
-	q := `INSERT INTO Builds (AppID, Number, Version, CreatedAt, UpdatedAt) 
-			VALUES (:AppID, :Number, :Version, :CreatedAt, :UpdatedAt)`
+	q := `INSERT INTO Builds (PlatformID, Number, Version, CreatedAt, UpdatedAt) 
+			VALUES (:PlatformID, :Number, :Version, :CreatedAt, :UpdatedAt)`
 
 	result, err := tx.NamedExec(q, build)
 	if err != nil {
@@ -71,7 +71,7 @@ func (r *buildRepository) Save(build *build.Build) error {
 
 func (r *buildRepository) FindByAppID(appID int) ([]build.BasicInfo, error) {
 	// Execute the database query
-	rows, err := r.db.Queryx("SELECT ID, AppID, Number, Version, CreatedAt, UpdatedAt FROM Builds WHERE AppID = $1 ORDER BY CreatedAt DESC", appID)
+	rows, err := r.db.Queryx("SELECT ID, PlatformID, Number, Version, CreatedAt, UpdatedAt FROM Builds WHERE PlatformID = $1 ORDER BY CreatedAt DESC", appID)
 	if err != nil {
 		return nil, err // Return an error if the query fails
 	}
@@ -102,7 +102,7 @@ func (r *buildRepository) FindByAppID(appID int) ([]build.BasicInfo, error) {
 func (r *buildRepository) GetByAppIDAndNumber(appID int, number int) (build.Build, error) {
 	var buildDetails build.Build
 
-	q := `SELECT * FROM Builds WHERE AppID = $1 AND Number = $2 LIMIT 1`
+	q := `SELECT * FROM Builds WHERE PlatformID = $1 AND Number = $2 LIMIT 1`
 
 	err := r.db.QueryRowx(q, appID, number).StructScan(&buildDetails)
 	if err != nil {

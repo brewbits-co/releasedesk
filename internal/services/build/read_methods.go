@@ -2,7 +2,7 @@ package build
 
 import "github.com/brewbits-co/releasedesk/internal/domains/build"
 
-func (s *service) GetAppBuilds(appID int) ([]build.BasicInfo, error) {
+func (s *service) GetPlatformBuilds(appID int) ([]build.BasicInfo, error) {
 	builds, err := s.buildRepo.FindByAppID(appID)
 	if err != nil {
 		return nil, err

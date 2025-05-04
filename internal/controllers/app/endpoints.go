@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/domains/app"
+	"github.com/brewbits-co/releasedesk/internal/domains/platform"
 	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/brewbits-co/releasedesk/pkg/schemas"
 	"github.com/brewbits-co/releasedesk/pkg/utils"
@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func (c *appController) HandleCreateApp(w http.ResponseWriter, r *http.Request) {
+func (c *platformController) HandleAddPlatform(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		render.Status(r, http.StatusInternalServerError)
@@ -21,26 +21,26 @@ func (c *appController) HandleCreateApp(w http.ResponseWriter, r *http.Request) 
 
 	slug := chi.URLParam(r, "slug")
 
-	var appCreationRequest app.BasicInfo
+	var platformRequest platform.BasicInfo
 
-	err = utils.NewDecoder().Decode(&appCreationRequest, r.Form)
+	err = utils.NewDecoder().Decode(&platformRequest, r.Form)
 	if err != nil {
 		render.Status(r, http.StatusInternalServerError)
 		render.PlainText(w, r, err.Error())
 		return
 	}
 
-	newApp, err := c.service.CreateApp(values.Slug(slug), appCreationRequest)
+	addedPlatform, err := c.service.AddPlatformToApp(values.Slug(slug), platformRequest)
 	if err != nil {
 		render.Status(r, http.StatusConflict)
-		render.JSON(w, r, schemas.NewErrorResponse("A app with the same identifier already exists.", []string{
-			"Ensure only one app is added per platform.",
+		render.JSON(w, r, schemas.NewErrorResponse("A platform with the same identifier already exists.", []string{
+			"Ensure only one platform is added per platform.",
 			"Review existing apps to avoid duplicates before creating a new one.",
 		}))
 		return
 	}
 
-	log.Println(newApp.ID)
+	log.Println(addedPlatform.ID)
 
 	render.Status(r, http.StatusCreated)
 }

@@ -5,14 +5,14 @@ import (
 	"net/http"
 )
 
-type AppController interface {
-	HandleCreateApp(w http.ResponseWriter, r *http.Request)
+type PlatformController interface {
+	HandleAddPlatform(w http.ResponseWriter, r *http.Request)
 }
 
-func NewAppController(service app.Service) AppController {
-	return &appController{service: service}
+func NewPlatformController(service app.Service) PlatformController {
+	return &platformController{service: service}
 }
 
-type appController struct {
+type platformController struct {
 	service app.Service
 }

@@ -120,7 +120,7 @@ func (r *productRepository) SaveSetupGuide(guide product.SetupGuide) error {
 		return err
 	}
 
-	q = "INSERT INTO Channels (Name, ProductID, Closed) VALUES (:Name, :ProductID, :Closed)"
+	q = "INSERT INTO Channels (Name, PlatformID, Closed) VALUES (:Name, :PlatformID, :Closed)"
 	for _, channel := range guide.Channels {
 		_, err := tx.NamedExec(q, channel)
 		if err != nil {
@@ -141,34 +141,29 @@ func (r *productRepository) GetPlatformAvailability(product *product.Product) er
 	q := `SELECT 
     EXISTS (
         SELECT 1 
-        FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.OS = 'Android'
+        FROM Platforms a 
+        WHERE a.PlatformID = p.ID AND a.OS = 'Android'
     ) AS HasAndroid,
     EXISTS (
         SELECT 1 
-        FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.OS = 'iOS'
+        FROM Platforms a 
+        WHERE a.PlatformID = p.ID AND a.OS = 'iOS'
     ) AS HasIOS,
     EXISTS (
         SELECT 1 
-        FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.OS = 'Windows'
+        FROM Platforms a 
+        WHERE a.PlatformID = p.ID AND a.OS = 'Windows'
     ) AS HasWindows,
     EXISTS (
         SELECT 1 
-        FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.OS = 'Linux'
+        FROM Platforms a 
+        WHERE a.PlatformID = p.ID AND a.OS = 'Linux'
     ) AS HasLinux,
     EXISTS (
         SELECT 1 
-        FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.OS = 'macOS'
-    ) AS HasMacOS,
-    EXISTS (
-        SELECT 1 
-        FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.OS = 'Other'
-    ) AS HasOther FROM Products p WHERE ID = $1`
+        FROM Platforms a 
+        WHERE a.PlatformID = p.ID AND a.OS = 'macOS'
+    ) AS HasMacOS FROM Products p WHERE ID = $1`
 
 	row := r.db.QueryRow(q, product.ID)
 
@@ -178,7 +173,6 @@ func (r *productRepository) GetPlatformAvailability(product *product.Product) er
 		&product.HasWindows,
 		&product.HasLinux,
 		&product.HasMacOS,
-		&product.HasOther,
 	)
 	if err != nil {
 		return err

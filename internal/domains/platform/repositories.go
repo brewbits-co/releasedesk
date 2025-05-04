@@ -1,4 +1,4 @@
-package app
+package platform
 
 import "github.com/brewbits-co/releasedesk/internal/values"
 

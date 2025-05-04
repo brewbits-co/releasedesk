@@ -9,20 +9,20 @@ import (
 	"path/filepath"
 )
 
-func (s *service) UploadBuild(slug values.Slug, platform values.OS, info build.BasicInfo, files map[values.Architecture]*multipart.FileHeader, Metadata map[string]string) (build.Build, error) {
+func (s *service) UploadBuild(slug values.Slug, os values.OS, info build.BasicInfo, files map[values.Architecture]*multipart.FileHeader, Metadata map[string]string) (build.Build, error) {
 	for _, header := range files {
-		validFileType := isValidFileType(platform, header.Filename)
+		validFileType := isValidFileType(os, header.Filename)
 		if !validFileType {
 			return build.Build{}, errors.New("invalid file type")
 		}
 	}
 
-	appEntity, err := s.appRepo.GetByAppSlugAndOS(slug, platform)
+	appEntity, err := s.platformRepo.GetByAppSlugAndOS(slug, os)
 	if err != nil {
 		return build.Build{}, err
 	}
 
-	info.AppID = appEntity.ID
+	info.PlatformID = appEntity.ID
 	buildEntity := build.NewBuild(info)
 	buildEntity.Metadata = Metadata
 
@@ -59,7 +59,7 @@ func (s *service) UploadBuild(slug values.Slug, platform values.OS, info build.B
 	return buildEntity, err
 }
 
-func isValidFileType(platform values.OS, fileName string) bool {
+func isValidFileType(os values.OS, fileName string) bool {
 	allowedExtensions := map[values.OS][]string{
 		values.Windows: {".appx", ".appxbundle", ".appxupload", ".msix", ".msixbundle", ".msixupload", ".exe", ".zip", ".msi"},
 		values.MacOS:   {".zip", ".app.zip", ".dmg", ".pkg"},
@@ -69,7 +69,7 @@ func isValidFileType(platform values.OS, fileName string) bool {
 	}
 
 	ext := filepath.Ext(fileName)
-	for _, allowedExt := range allowedExtensions[platform] {
+	for _, allowedExt := range allowedExtensions[os] {
 		if ext == allowedExt {
 			return true
 		}

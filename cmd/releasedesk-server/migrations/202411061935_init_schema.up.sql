@@ -43,33 +43,32 @@ CREATE TABLE Channels
 CREATE UNIQUE INDEX Channels_ProductID_Name_uindex
     ON Channels (ProductID, Name);
 
-CREATE TABLE Apps
+CREATE TABLE Platforms
 (
     ID        INTEGER PRIMARY KEY AUTOINCREMENT,
-    ProductID INTEGER
+    AppID INTEGER
         CONSTRAINT Apps_Products_ID_fk REFERENCES Products,
-    Name      TEXT     NOT NULL,
     OS  TEXT,
     CreatedAt DATETIME NOT NULL,
     UpdatedAt DATETIME NOT NULL
 );
 
 CREATE UNIQUE INDEX Apps_ProductID_OS_uindex
-    ON Apps (ProductID, OS);
+    ON Platforms (AppID, OS);
 
 CREATE TABLE Builds
 (
     ID        INTEGER PRIMARY KEY AUTOINCREMENT,
-    AppID     INTEGER
-        CONSTRAINT Builds_App_ID_fk REFERENCES Apps,
+    PlatformID     INTEGER
+        CONSTRAINT Builds_Platform_ID_fk REFERENCES Platforms,
     Number    TEXT     NOT NULL,
     Version   TEXT     NOT NULL,
     CreatedAt DATETIME NOT NULL,
     UpdatedAt DATETIME NOT NULL
 );
 
-CREATE UNIQUE INDEX Builds_AppID_Number_uindex
-    ON Builds (AppID, Number);
+CREATE UNIQUE INDEX Builds_PlatformID_Number_uindex
+    ON Builds (PlatformID, Number);
 
 CREATE TABLE BuildMetadata
 (

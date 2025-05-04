@@ -1,7 +1,7 @@
 package product
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/domains/app"
+	"github.com/brewbits-co/releasedesk/internal/domains/platform"
 	"github.com/brewbits-co/releasedesk/internal/domains/product"
 	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/brewbits-co/releasedesk/pkg/session"
@@ -26,7 +26,7 @@ type Service interface {
 }
 
 // NewProductService initializes a new instance of the product Service using the provided dependencies.
-func NewProductService(productRepo product.ProductRepository, appRepo app.PlatformRepository) Service {
+func NewProductService(productRepo product.ProductRepository, appRepo platform.PlatformRepository) Service {
 	return &service{
 		productRepo: productRepo,
 		appRepo:     appRepo,
@@ -36,5 +36,5 @@ func NewProductService(productRepo product.ProductRepository, appRepo app.Platfo
 // service implements the product.Service
 type service struct {
 	productRepo product.ProductRepository
-	appRepo     app.PlatformRepository
+	appRepo     platform.PlatformRepository
 }

@@ -28,7 +28,7 @@ func (c *buildController) RenderBuildList(w http.ResponseWriter, r *http.Request
 		log.Println(err)
 	}
 
-	builds, err := c.service.GetAppBuilds(currentApp.AppID)
+	builds, err := c.service.GetPlatformBuilds(currentApp.AppID)
 	if err != nil {
 		// TODO: redirect to error page
 		log.Println(err)

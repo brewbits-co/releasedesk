@@ -280,7 +280,7 @@
                             <div class="text-sm/6 font-semibold text-white">Applications</div>
                             <ul role="list" class="-mx-2 mt-2 space-y-1">
                                 {{- range .Apps }}
-                                    {{template "app-menu-item" . }}
+                                    {{template "platform-menu-item" . }}
                                 {{end}}
                             </ul>
                         </li>
@@ -377,7 +377,7 @@
     </div>
 {{ end }}
 
-{{ define "app-menu-item" }}
+{{ define "platform-menu-item" }}
     {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/product.ProductAppContextData*/ -}}
     <li>
         <details class="group">

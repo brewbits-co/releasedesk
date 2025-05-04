@@ -1,24 +1,24 @@
 package app
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/domains/app"
+	"github.com/brewbits-co/releasedesk/internal/domains/platform"
 	"github.com/brewbits-co/releasedesk/internal/domains/product"
 	"github.com/brewbits-co/releasedesk/internal/values"
 )
 
-func (s *service) CreateApp(slug values.Slug, info app.BasicInfo) (app.Platform, error) {
+func (s *service) AddPlatformToApp(slug values.Slug, info platform.BasicInfo) (platform.Platform, error) {
 	productEntity, err := s.productRepo.FindBySlug(slug)
 	if err != nil {
-		return app.Platform{}, product.ErrProductNotFound
+		return platform.Platform{}, product.ErrProductNotFound
 	}
 
-	info.ProductID = productEntity.ID
-	newApp := app.NewApp(info)
+	info.AppID = productEntity.ID
+	addedPlatform := platform.NewApp(info)
 
-	err = s.appRepo.Save(&newApp)
+	err = s.platformRepo.Save(&addedPlatform)
 	if err != nil {
-		return app.Platform{}, err
+		return platform.Platform{}, err
 	}
 
-	return newApp, nil
+	return addedPlatform, nil
 }

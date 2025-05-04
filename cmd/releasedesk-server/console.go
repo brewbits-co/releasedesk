@@ -35,7 +35,7 @@ func buildConsole(container *dig.Container) *http.Server {
 		authCtrl auth.AuthController,
 		miscCtrl misc.MiscController,
 		productCtrl product.ProductController,
-		appCtrl app.AppController,
+		appCtrl app.PlatformController,
 		releaseCtrl release.ReleaseController,
 		buildCtrl build.BuildController,
 	) {
@@ -65,7 +65,7 @@ func buildConsole(container *dig.Container) *http.Server {
 			r.Post("/internal/logout", authCtrl.HandleLogout)
 			r.Post("/internal/products", productCtrl.HandleCreateProduct)
 			r.Post("/internal/products/{slug}/setup", productCtrl.HandleProductSetupGuide)
-			r.Post("/internal/products/{slug}/apps", appCtrl.HandleCreateApp)
+			r.Post("/internal/products/{slug}/apps", appCtrl.HandleAddPlatform)
 			r.Post("/internal/products/{slug}/releases", releaseCtrl.HandleCreateRelease)
 			r.Post("/internal/products/{slug}/apps/{platform}/builds", buildCtrl.HandleBuildUpload)
 			r.Get("/internal/artifacts/{checksum}", buildCtrl.HandleArtifactDownload)

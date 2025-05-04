@@ -1,4 +1,4 @@
-package app
+package platform
 
 import (
 	"github.com/brewbits-co/releasedesk/internal/values"
@@ -17,10 +17,10 @@ func NewApp(info BasicInfo) Platform {
 }
 
 type BasicInfo struct {
-	// ID is the unique identifier of an app Platform.
+	// ID is the unique identifier of a Platform.
 	ID int `db:"ID"`
-	// ProductID is the identifier of the product that this Platform belongs.
-	ProductID int `db:"ProductID"`
+	// AppID is the identifier of the application that this Platform belongs.
+	AppID int `db:"PlatformID"`
 	// OS is the target operating system of the Platform.
 	OS values.OS `db:"OS"`
 }

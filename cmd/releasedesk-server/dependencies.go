@@ -31,13 +31,13 @@ func buildContainer() *dig.Container {
 	// Repositories
 	container.Provide(sql.NewUserRepository)
 	container.Provide(sql.NewProductRepository)
-	container.Provide(sql.NewAppRepository)
+	container.Provide(sql.NewPlatformRepository)
 	container.Provide(sql.NewBuildRepository)
 	container.Provide(sql.NewReleaseRepository)
 	// Services
 	container.Provide(auth.NewAuthService)
 	container.Provide(product.NewProductService)
-	container.Provide(app.NewAppService)
+	container.Provide(app.NewPlatformService)
 	container.Provide(build.NewBuildService)
 	container.Provide(release.NewReleaseService)
 	// Controllers
@@ -45,7 +45,7 @@ func buildContainer() *dig.Container {
 	container.Provide(misc.NewMiscController)
 	container.Provide(productCtrl.NewProductController)
 	container.Provide(releaseCtrl.NewReleaseController)
-	container.Provide(appCtrl.NewAppController)
+	container.Provide(appCtrl.NewPlatformController)
 	container.Provide(buildCtrl.NewBuildController)
 
 	return container

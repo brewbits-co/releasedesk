@@ -8,7 +8,7 @@ type Channel struct {
 	// ID is the unique identifier of a Channel.
 	ID int `db:"ID"`
 	// ProductID is the identifier of the product that this Channel belongs.
-	ProductID int `db:"ProductID" json:"-"`
+	ProductID int `db:"PlatformID" json:"-"`
 	// Name is a human-readable unique identifier of a Channel.
 	Name string `db:"Name"`
 	// Closed indicates whether the Channel is restricted to access only by invite, such as in a closed beta.

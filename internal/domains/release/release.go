@@ -31,7 +31,7 @@ type BasicInfo struct {
 	// ID is the unique identifier of a Release.
 	ID int `db:"ID"`
 	// ProductID is the identifier of the product that this Release belongs.
-	ProductID int `db:"ProductID"`
+	ProductID int `db:"PlatformID"`
 	// Version specifies the version of the Release.
 	Version string `db:"Version"`
 	// TargetChannel
