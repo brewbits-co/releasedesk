@@ -7,7 +7,7 @@ import (
 	"github.com/brewbits-co/releasedesk/pkg/validator"
 )
 
-func NewApp(info BasicInfo) Platform {
+func NewPlatform(info BasicInfo) Platform {
 	return Platform{
 		BaseHooks:     hooks.BaseHooks{},
 		BaseValidator: validator.BaseValidator{},
@@ -20,7 +20,7 @@ type BasicInfo struct {
 	// ID is the unique identifier of a Platform.
 	ID int `db:"ID"`
 	// AppID is the identifier of the application that this Platform belongs.
-	AppID int `db:"PlatformID"`
+	AppID int `db:"AppID"`
 	// OS is the target operating system of the Platform.
 	OS values.OS `db:"OS"`
 }

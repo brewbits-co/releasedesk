@@ -1,5 +1,5 @@
 {{ define "body" }}
-    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/product.CurrentProductData*/ -}}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/pkg/session.CurrentProductData*/ -}}
     <div>
         <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
         <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
@@ -144,7 +144,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <div class="text-sm/6 font-semibold text-violet-200">Applications</div>
+                                    <div class="text-sm/6 font-semibold text-violet-200">Platforms</div>
                                     <ul role="list" class="-mx-2 mt-2 space-y-1">
                                         <li>
                                             <!-- Current: "bg-violet-950 text-white", Default: "text-violet-200 hover:text-white hover:bg-violet-800" -->
@@ -277,9 +277,9 @@
                             </ul>
                         </li>
                         <li>
-                            <div class="text-sm/6 font-semibold text-white">Applications</div>
+                            <div class="text-sm/6 font-semibold text-white">Platforms</div>
                             <ul role="list" class="-mx-2 mt-2 space-y-1">
-                                {{- range .Apps }}
+                                {{- range .Platforms }}
                                     {{template "platform-menu-item" . }}
                                 {{end}}
                             </ul>
@@ -378,7 +378,7 @@
 {{ end }}
 
 {{ define "platform-menu-item" }}
-    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/product.ProductAppContextData*/ -}}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/pkg/session.CurrentPlatformData*/ -}}
     <li>
         <details class="group">
             <summary
@@ -390,32 +390,31 @@
                           clip-rule="evenodd"/>
                 </svg>
                 <span class="flex size-6 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-white text-1 font-medium">
-                    {{ if eq .AppPlatform "Android" }}<i class="fa-brands fa-android text-green-600"></i>{{ end }}
-                    {{ if eq .AppPlatform "iOS" }}<i class="fa-brands fa-apple text-gray-800"></i>{{ end }}
-                    {{ if eq .AppPlatform "Windows" }}<i class="fa-brands fa-windows text-sky-500"></i>{{ end }}
-                    {{ if eq .AppPlatform "Linux" }}<i class="fa-brands fa-linux text-amber-500"></i>{{ end }}
-                    {{ if eq .AppPlatform "macOS" }}<i class="macos"></i>{{ end }}
-                    {{ if eq .AppPlatform "Other" }}<i class="fa-solid fa-file-code text-gray-700"></i>{{ end }}
-                    </span>
-                <span class="truncate select-none" translate="no">{{.AppName}}</span>
+                    {{ if eq .OS "Android" }}<i class="fa-brands fa-android text-green-600"></i>{{ end }}
+                    {{ if eq .OS "iOS" }}<i class="fa-brands fa-apple text-gray-800"></i>{{ end }}
+                    {{ if eq .OS "Windows" }}<i class="fa-brands fa-windows text-sky-500"></i>{{ end }}
+                    {{ if eq .OS "Linux" }}<i class="fa-brands fa-linux text-amber-500"></i>{{ end }}
+                    {{ if eq .OS "macOS" }}<i class="macos"></i>{{ end }}
+                </span>
+                <span class="truncate select-none" translate="no">{{.OS}}</span>
             </summary>
             <ul class="mt-1 px-2" id="sub-menu-1">
                 <li>
-                    <a href="/dashboard/{{.ProductSlug}}/apps/{{.AppPlatform}}/details"
+                    <a href="/dashboard/{{.ProductSlug}}/platforms/{{.OS}}/builds"
+                       class="group flex gap-x-3 rounded-md p-2 ml-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white" translate="no">
+                        <i class="fa-solid fa-square-binary text-2xl"></i>
+                        Builds
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard/{{.ProductSlug}}/platforms/{{.OS}}/configs"
                        class="group flex gap-x-3 rounded-md p-2 ml-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                             <path fill-rule="evenodd"
                                   d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z"
                                   clip-rule="evenodd"/>
                         </svg>
-                        App Details
-                    </a>
-                </li>
-                <li>
-                    <a href="/dashboard/{{.ProductSlug}}/apps/{{.AppPlatform}}/builds"
-                       class="group flex gap-x-3 rounded-md p-2 ml-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white" translate="no">
-                        <i class="fa-solid fa-square-binary text-2xl"></i>
-                        Builds
+                        Configurations
                     </a>
                 </li>
             </ul>

@@ -13,15 +13,15 @@ type ProductController interface {
 }
 
 // NewProductController creates a new instance of productController with the provided dependencies.
-func NewProductController(service product.Service, appService platform.Service) ProductController {
+func NewProductController(service product.Service, platformService platform.Service) ProductController {
 	return &productController{
-		service:    service,
-		appService: appService,
+		service:         service,
+		platformService: platformService,
 	}
 }
 
 // productController implements the product.ProductController.
 type productController struct {
-	service    product.Service
-	appService platform.Service
+	service         product.Service
+	platformService platform.Service
 }

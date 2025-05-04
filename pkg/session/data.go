@@ -19,22 +19,21 @@ type CurrentProductData struct {
 	ProductID   int
 	ProductName string
 	ProductSlug values.Slug
-	Apps        []CurrentProductAppData
+	Platforms   []CurrentPlatformData
 }
 
-type CurrentProductAppData struct {
-	AppID       int
-	AppName     string
-	AppPlatform values.OS
+type CurrentPlatformData struct {
+	PlatformID  int
+	OS          values.OS
 	ProductSlug values.Slug
 }
 
-func NewCurrentAppData(ctx CurrentProductData, platform values.OS) CurrentProductAppData {
-	for _, appCtx := range ctx.Apps {
-		if appCtx.AppPlatform == platform {
+func NewCurrentPlatformData(ctx CurrentProductData, platform values.OS) CurrentPlatformData {
+	for _, appCtx := range ctx.Platforms {
+		if appCtx.OS == platform {
 			return appCtx
 		}
 	}
-	// Return an empty CurrentProductAppData if no match is found
-	return CurrentProductAppData{}
+	// Return an empty CurrentPlatformData if no match is found
+	return CurrentPlatformData{}
 }

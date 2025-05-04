@@ -17,12 +17,12 @@ func (s *service) UploadBuild(slug values.Slug, os values.OS, info build.BasicIn
 		}
 	}
 
-	appEntity, err := s.platformRepo.GetByAppSlugAndOS(slug, os)
+	platformEntity, err := s.platformRepo.GetByAppSlugAndOS(slug, os)
 	if err != nil {
 		return build.Build{}, err
 	}
 
-	info.PlatformID = appEntity.ID
+	info.PlatformID = platformEntity.ID
 	buildEntity := build.NewBuild(info)
 	buildEntity.Metadata = Metadata
 

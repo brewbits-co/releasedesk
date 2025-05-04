@@ -120,7 +120,7 @@ func (r *productRepository) SaveSetupGuide(guide product.SetupGuide) error {
 		return err
 	}
 
-	q = "INSERT INTO Channels (Name, PlatformID, Closed) VALUES (:Name, :PlatformID, :Closed)"
+	q = "INSERT INTO Channels (Name, ProductID, Closed) VALUES (:Name, :ProductID, :Closed)"
 	for _, channel := range guide.Channels {
 		_, err := tx.NamedExec(q, channel)
 		if err != nil {
@@ -142,27 +142,27 @@ func (r *productRepository) GetPlatformAvailability(product *product.Product) er
     EXISTS (
         SELECT 1 
         FROM Platforms a 
-        WHERE a.PlatformID = p.ID AND a.OS = 'Android'
+        WHERE a.AppID = p.ID AND a.OS = 'Android'
     ) AS HasAndroid,
     EXISTS (
         SELECT 1 
         FROM Platforms a 
-        WHERE a.PlatformID = p.ID AND a.OS = 'iOS'
+        WHERE a.AppID = p.ID AND a.OS = 'iOS'
     ) AS HasIOS,
     EXISTS (
         SELECT 1 
         FROM Platforms a 
-        WHERE a.PlatformID = p.ID AND a.OS = 'Windows'
+        WHERE a.AppID = p.ID AND a.OS = 'Windows'
     ) AS HasWindows,
     EXISTS (
         SELECT 1 
         FROM Platforms a 
-        WHERE a.PlatformID = p.ID AND a.OS = 'Linux'
+        WHERE a.AppID = p.ID AND a.OS = 'Linux'
     ) AS HasLinux,
     EXISTS (
         SELECT 1 
         FROM Platforms a 
-        WHERE a.PlatformID = p.ID AND a.OS = 'macOS'
+        WHERE a.AppID = p.ID AND a.OS = 'macOS'
     ) AS HasMacOS FROM Products p WHERE ID = $1`
 
 	row := r.db.QueryRow(q, product.ID)

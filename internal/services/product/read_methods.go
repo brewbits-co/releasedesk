@@ -41,16 +41,16 @@ func (s *service) GetCurrentProductData(slug values.Slug) (session.CurrentProduc
 		return session.CurrentProductData{}, err
 	}
 
-	apps, err := s.appRepo.FindByAppID(productEntity.ID)
+	platforms, err := s.platformRepo.FindByAppID(productEntity.ID)
 	if err != nil {
 		return session.CurrentProductData{}, err
 	}
 
-	var productApps []session.CurrentProductAppData
-	for _, appEntity := range apps {
-		productApps = append(productApps, session.CurrentProductAppData{
-			AppID:       appEntity.ID,
-			AppPlatform: appEntity.OS,
+	var appPlatforms []session.CurrentPlatformData
+	for _, platformEntity := range platforms {
+		appPlatforms = append(appPlatforms, session.CurrentPlatformData{
+			PlatformID:  platformEntity.ID,
+			OS:          platformEntity.OS,
 			ProductSlug: slug,
 		})
 	}
@@ -65,14 +65,14 @@ func (s *service) GetCurrentProductData(slug values.Slug) (session.CurrentProduc
 	}
 
 	// Sorting based on the platform order
-	sort.Slice(productApps, func(i, j int) bool {
-		return platformOrder[productApps[i].AppPlatform] < platformOrder[productApps[j].AppPlatform]
+	sort.Slice(appPlatforms, func(i, j int) bool {
+		return platformOrder[appPlatforms[i].OS] < platformOrder[appPlatforms[j].OS]
 	})
 
 	return session.CurrentProductData{
 		ProductID:   productEntity.ID,
 		ProductName: productEntity.Name,
 		ProductSlug: productEntity.Slug,
-		Apps:        productApps,
+		Platforms:   appPlatforms,
 	}, nil
 }

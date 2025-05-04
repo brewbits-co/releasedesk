@@ -5,17 +5,15 @@
             <div>
                 <h3 class="text-xl font-semibold text-gray-900 flex gap-x-2">
                      <span class="flex size-8 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-white text-1 font-medium">
-                         {{ if eq .CurrentApp.AppPlatform "Android" }}<i
+                         {{ if eq .CurrentPlatform.OS "Android" }}<i
                                  class="fa-brands fa-android text-green-600"></i>{{ end }}
-                         {{ if eq .CurrentApp.AppPlatform "iOS" }}<i
+                         {{ if eq .CurrentPlatform.OS "iOS" }}<i
                                  class="fa-brands fa-apple text-gray-800"></i>{{ end }}
-                         {{ if eq .CurrentApp.AppPlatform "Windows" }}<i
+                         {{ if eq .CurrentPlatform.OS "Windows" }}<i
                                  class="fa-brands fa-windows text-sky-500"></i>{{ end }}
-                         {{ if eq .CurrentApp.AppPlatform "Linux" }}<i
+                         {{ if eq .CurrentPlatform.OS "Linux" }}<i
                                  class="fa-brands fa-linux text-amber-500"></i>{{ end }}
-                         {{ if eq .CurrentApp.AppPlatform "macOS" }}<i class="macos"></i>{{ end }}
-                         {{ if eq .CurrentApp.AppPlatform "Other" }}<i
-                                 class="fa-solid fa-file-code text-gray-700"></i>{{ end }}
+                         {{ if eq .CurrentPlatform.OS "macOS" }}<i class="macos"></i>{{ end }}
                     </span>
                     Build #{{ .Build.BasicInfo.Number }}
                 </h3>
@@ -56,7 +54,7 @@
                        aria-current="page">
                         Summary
                     </a>
-                    <a href="/dashboard/{{.CurrentProductData.ProductSlug}}/apps/{{.CurrentApp.AppPlatform}}/builds/{{.Build.BasicInfo.Number}}/metadata"
+                    <a href="/dashboard/{{.CurrentProductData.ProductSlug}}/platforms/{{.CurrentPlatform.OS}}/builds/{{.Build.BasicInfo.Number}}/metadata"
                        class="whitespace-nowrap border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                         Build Info
                     </a>

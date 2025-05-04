@@ -20,7 +20,7 @@ func (c *buildController) RenderBuildList(w http.ResponseWriter, r *http.Request
 	}
 
 	platform := chi.URLParam(r, "platform")
-	currentApp := session.NewCurrentAppData(currentProduct, values.OS(platform))
+	currentPlatform := session.NewCurrentPlatformData(currentProduct, values.OS(platform))
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/build_list.gohtml")
 	if err != nil {
@@ -28,7 +28,7 @@ func (c *buildController) RenderBuildList(w http.ResponseWriter, r *http.Request
 		log.Println(err)
 	}
 
-	builds, err := c.service.GetPlatformBuilds(currentApp.AppID)
+	builds, err := c.service.GetPlatformBuilds(currentPlatform.PlatformID)
 	if err != nil {
 		// TODO: redirect to error page
 		log.Println(err)
@@ -37,7 +37,7 @@ func (c *buildController) RenderBuildList(w http.ResponseWriter, r *http.Request
 	data := BuildListData{
 		SessionData:        session.NewSessionData(r.Context()),
 		CurrentProductData: currentProduct,
-		CurrentApp:         currentApp,
+		CurrentPlatform:    currentPlatform,
 		Builds:             builds,
 	}
 
@@ -57,7 +57,7 @@ func (c *buildController) RenderBuildDetails(w http.ResponseWriter, r *http.Requ
 	}
 
 	platform := chi.URLParam(r, "platform")
-	currentApp := session.NewCurrentAppData(currentProduct, values.OS(platform))
+	currentPlatform := session.NewCurrentPlatformData(currentProduct, values.OS(platform))
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/build_details.gohtml")
 	if err != nil {
@@ -71,7 +71,7 @@ func (c *buildController) RenderBuildDetails(w http.ResponseWriter, r *http.Requ
 		log.Println(err)
 	}
 
-	buildDetails, err := c.service.GetBuildDetails(currentApp.AppID, number)
+	buildDetails, err := c.service.GetBuildDetails(currentPlatform.PlatformID, number)
 	if err != nil {
 		// TODO: redirect to error page
 		log.Println(err)
@@ -80,7 +80,7 @@ func (c *buildController) RenderBuildDetails(w http.ResponseWriter, r *http.Requ
 	data := BuildDetailsData{
 		SessionData:        session.NewSessionData(r.Context()),
 		CurrentProductData: currentProduct,
-		CurrentApp:         currentApp,
+		CurrentPlatform:    currentPlatform,
 		Build:              buildDetails,
 	}
 
@@ -100,7 +100,7 @@ func (c *buildController) RenderBuildMetadata(w http.ResponseWriter, r *http.Req
 	}
 
 	platform := chi.URLParam(r, "platform")
-	currentApp := session.NewCurrentAppData(currentProduct, values.OS(platform))
+	currentPlatform := session.NewCurrentPlatformData(currentProduct, values.OS(platform))
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/build_metadata.gohtml")
 	if err != nil {
@@ -114,7 +114,7 @@ func (c *buildController) RenderBuildMetadata(w http.ResponseWriter, r *http.Req
 		log.Println(err)
 	}
 
-	buildDetails, err := c.service.GetBuildDetails(currentApp.AppID, number)
+	buildDetails, err := c.service.GetBuildDetails(currentPlatform.PlatformID, number)
 	if err != nil {
 		// TODO: redirect to error page
 		log.Println(err)
@@ -123,7 +123,7 @@ func (c *buildController) RenderBuildMetadata(w http.ResponseWriter, r *http.Req
 	data := BuildDetailsData{
 		SessionData:        session.NewSessionData(r.Context()),
 		CurrentProductData: currentProduct,
-		CurrentApp:         currentApp,
+		CurrentPlatform:    currentPlatform,
 		Build:              buildDetails,
 	}
 

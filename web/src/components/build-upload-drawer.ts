@@ -15,7 +15,6 @@ export class BuildUploadDrawer extends LitElement {
         "Linux": [".AppImage", ".deb", ".rpm",  ".tgz", ".gz", ".snap", ".flatpak"],
         "Android": [".apk", ".aab"],
         "iOS": [".ipa"],
-        "Other": [".zip"]
     };
 
     archsByPlatform = {
@@ -24,14 +23,13 @@ export class BuildUploadDrawer extends LitElement {
         "Linux": ["x86", "x64", "ARM", "ARM64"],
         "Android": [""],
         "iOS": [""],
-        "Other": [""]
     };
 
     @property({type: String})
     slug = "";
 
     @property({type: String})
-    platform = "Other";
+    platform = "Windows";
 
     @property({type: Boolean})
     showDrawer = false;
@@ -50,7 +48,7 @@ export class BuildUploadDrawer extends LitElement {
 
         const formData = new FormData(event.target as HTMLFormElement);
 
-        fetch(`/internal/products/${this.slug}/apps/${this.platform}/builds`, {
+        fetch(`/internal/products/${this.slug}/platforms/${this.platform}/builds`, {
             method: 'POST',
             body: formData,
             credentials: 'include'
@@ -63,7 +61,7 @@ export class BuildUploadDrawer extends LitElement {
                 // scroll the page to the error alert
                 this.errorAlertRef.value?.scrollIntoView();
             } else {
-                window.location.href = `/dashboard/${this.slug}/apps/${this.platform}/builds/${formData.get("Number")}`;
+                window.location.href = `/dashboard/${this.slug}/platforms/${this.platform}/builds/${formData.get("Number")}`;
             }
         });
     }

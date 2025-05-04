@@ -69,9 +69,9 @@ func (r *buildRepository) Save(build *build.Build) error {
 	return nil
 }
 
-func (r *buildRepository) FindByAppID(appID int) ([]build.BasicInfo, error) {
+func (r *buildRepository) FindByPlatformID(platformID int) ([]build.BasicInfo, error) {
 	// Execute the database query
-	rows, err := r.db.Queryx("SELECT ID, PlatformID, Number, Version, CreatedAt, UpdatedAt FROM Builds WHERE PlatformID = $1 ORDER BY CreatedAt DESC", appID)
+	rows, err := r.db.Queryx("SELECT ID, PlatformID, Number, Version, CreatedAt, UpdatedAt FROM Builds WHERE PlatformID = $1 ORDER BY CreatedAt DESC", platformID)
 	if err != nil {
 		return nil, err // Return an error if the query fails
 	}
@@ -99,12 +99,12 @@ func (r *buildRepository) FindByAppID(appID int) ([]build.BasicInfo, error) {
 	return builds, nil
 }
 
-func (r *buildRepository) GetByAppIDAndNumber(appID int, number int) (build.Build, error) {
+func (r *buildRepository) GetByPlatformIDAndNumber(platformID int, number int) (build.Build, error) {
 	var buildDetails build.Build
 
 	q := `SELECT * FROM Builds WHERE PlatformID = $1 AND Number = $2 LIMIT 1`
 
-	err := r.db.QueryRowx(q, appID, number).StructScan(&buildDetails)
+	err := r.db.QueryRowx(q, platformID, number).StructScan(&buildDetails)
 	if err != nil {
 		return build.Build{}, err
 	}

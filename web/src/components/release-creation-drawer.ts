@@ -50,7 +50,7 @@ export class ReleaseCreationDrawer extends LitElement {
                 this.errorAlertRef.value?.scrollIntoView();
             } else {
                 let data = await response.json();
-                window.location.href = `/dashboard/${this.slug}/releases/${data.ID}`;
+                window.location.href = `/dashboard/${this.slug}/releases/${data.Version}`;
             }
         });
     }

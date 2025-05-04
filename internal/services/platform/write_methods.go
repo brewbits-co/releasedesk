@@ -13,7 +13,7 @@ func (s *service) AddPlatformToApp(slug values.Slug, info platform.BasicInfo) (p
 	}
 
 	info.AppID = productEntity.ID
-	addedPlatform := platform.NewApp(info)
+	addedPlatform := platform.NewPlatform(info)
 
 	err = s.platformRepo.Save(&addedPlatform)
 	if err != nil {

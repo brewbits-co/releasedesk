@@ -16,44 +16,44 @@ type platformRepository struct {
 	db *sqlx.DB
 }
 
-func (r *platformRepository) Save(app *platform.Platform) error {
-	_ = app.BeforeCreate()
+func (r *platformRepository) Save(platform *platform.Platform) error {
+	_ = platform.BeforeCreate()
 
-	q := `INSERT INTO Platforms (PlatformID, OS, CreatedAt, UpdatedAt) 
-			VALUES (:PlatformID, :OS, :CreatedAt, :UpdatedAt)`
+	q := `INSERT INTO Platforms (AppID, OS, CreatedAt, UpdatedAt) 
+			VALUES (:AppID, :OS, :CreatedAt, :UpdatedAt)`
 
-	exec, err := r.db.NamedExec(q, app)
+	exec, err := r.db.NamedExec(q, platform)
 	if err != nil {
 		return err
 	}
 
 	insertId, _ := exec.LastInsertId()
-	app.ID = int(insertId)
+	platform.ID = int(insertId)
 
-	_ = app.AfterCreate()
+	_ = platform.AfterCreate()
 	return nil
 }
 
-func (r *platformRepository) FindByAppID(productID int) ([]platform.Platform, error) {
+func (r *platformRepository) FindByAppID(appID int) ([]platform.Platform, error) {
 	// Execute the database query
-	rows, err := r.db.Queryx("SELECT * FROM Platforms WHERE PlatformID = $1", productID)
+	rows, err := r.db.Queryx("SELECT * FROM Platforms WHERE AppID = $1", appID)
 	if err != nil {
 		return nil, err // Return an error if the query fails
 	}
 	defer rows.Close() // Ensure the cursor is closed when the function exits
 
-	// Declare a slice to store the apps
-	var apps []platform.Platform
+	// Declare a slice to store the platforms
+	var platforms []platform.Platform
 
 	// Iterate over the result set
 	for rows.Next() {
-		var appEntity platform.Platform
+		var platformEntity platform.Platform
 		// Map the row's data to the platform struct
-		if err := rows.StructScan(&appEntity); err != nil {
+		if err := rows.StructScan(&platformEntity); err != nil {
 			return nil, err // Return an error if mapping fails
 		}
-		appEntity.FormatAuditable()
-		apps = append(apps, appEntity) // Add the product to the slice
+		platformEntity.FormatAuditable()
+		platforms = append(platforms, platformEntity) // Add the product to the slice
 	}
 
 	// Check for errors during iteration
@@ -61,14 +61,14 @@ func (r *platformRepository) FindByAppID(productID int) ([]platform.Platform, er
 		return nil, err
 	}
 
-	return apps, nil // Return the list of apps
+	return platforms, nil // Return the list of platforms
 }
 
 func (r *platformRepository) GetByAppSlugAndOS(slug values.Slug, os values.OS) (platform.Platform, error) {
 	var platformInfo platform.Platform
 
 	q := `SELECT Platforms.* FROM Platforms
-	JOIN Products ON Platforms.PlatformID = Products.ID
+	JOIN Products ON Platforms.AppID = Products.ID
 	WHERE Products.Slug = $1 AND Platforms.OS = $2
 	LIMIT 1`
 

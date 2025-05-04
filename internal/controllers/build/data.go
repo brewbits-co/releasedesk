@@ -8,13 +8,13 @@ import (
 type BuildListData struct {
 	session.SessionData
 	session.CurrentProductData
-	CurrentApp session.CurrentProductAppData
-	Builds     []build.BasicInfo
+	CurrentPlatform session.CurrentPlatformData
+	Builds          []build.BasicInfo
 }
 
 type BuildDetailsData struct {
 	session.SessionData
 	session.CurrentProductData
-	CurrentApp session.CurrentProductAppData
-	Build      build.Build
+	CurrentPlatform session.CurrentPlatformData
+	Build           build.Build
 }
