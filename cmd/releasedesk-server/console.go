@@ -35,7 +35,7 @@ func buildConsole(container *dig.Container) *http.Server {
 		authCtrl auth.AuthController,
 		miscCtrl misc.MiscController,
 		productCtrl product.ProductController,
-		appCtrl platform.PlatformController,
+		platformCtrl platform.PlatformController,
 		releaseCtrl release.ReleaseController,
 		buildCtrl build.BuildController,
 	) {
@@ -65,7 +65,7 @@ func buildConsole(container *dig.Container) *http.Server {
 			r.Post("/internal/logout", authCtrl.HandleLogout)
 			r.Post("/internal/products", productCtrl.HandleCreateProduct)
 			r.Post("/internal/products/{slug}/setup", productCtrl.HandleProductSetupGuide)
-			r.Post("/internal/products/{slug}/platforms", appCtrl.HandleAddPlatform)
+			r.Post("/internal/products/{slug}/platforms", platformCtrl.HandleAddPlatform)
 			r.Post("/internal/products/{slug}/releases", releaseCtrl.HandleCreateRelease)
 			r.Post("/internal/products/{slug}/platforms/{platform}/builds", buildCtrl.HandleBuildUpload)
 			r.Get("/internal/artifacts/{checksum}", buildCtrl.HandleArtifactDownload)
@@ -75,7 +75,7 @@ func buildConsole(container *dig.Container) *http.Server {
 		router.Group(func(r chi.Router) {
 			r.Use(middlewares.APITokenAuthorization(authService))
 
-			r.Post("/api/products/{slug}/apps/{platform}/builds", buildCtrl.HandleBuildUpload)
+			r.Post("/api/products/{slug}/platforms/{platform}/builds", buildCtrl.HandleBuildUpload)
 		})
 	})
 	if err != nil {

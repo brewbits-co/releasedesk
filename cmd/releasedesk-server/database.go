@@ -36,7 +36,7 @@ func newSQLiteDB() (*sqlx.DB, error) {
 		log.Fatalf("Could not create SQLite driver instance: %v", err)
 	}
 
-	// Initialize migration with embedded source and SQLite driver
+	// Initialize migration with an embedded source and SQLite driver
 	m, err := migrate.NewWithInstance(
 		"iofs", d, "sqlite3", driver,
 	)
