@@ -17,7 +17,7 @@ func (s *service) UploadBuild(slug values.Slug, platform values.OS, info build.B
 		}
 	}
 
-	appEntity, err := s.appRepo.GetByProductSlugAndPlatform(slug, platform)
+	appEntity, err := s.appRepo.GetByAppSlugAndOS(slug, platform)
 	if err != nil {
 		return build.Build{}, err
 	}

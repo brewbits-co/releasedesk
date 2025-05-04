@@ -7,8 +7,8 @@ import (
 	"github.com/brewbits-co/releasedesk/pkg/validator"
 )
 
-func NewApp(info BasicInfo) App {
-	return App{
+func NewApp(info BasicInfo) Platform {
+	return Platform{
 		BaseHooks:     hooks.BaseHooks{},
 		BaseValidator: validator.BaseValidator{},
 		Auditable:     fields.NewAuditable(),
@@ -17,26 +17,24 @@ func NewApp(info BasicInfo) App {
 }
 
 type BasicInfo struct {
-	// ID is the unique identifier of an App.
+	// ID is the unique identifier of an app Platform.
 	ID int `db:"ID"`
-	// ProductID is the identifier of the product that this App belongs.
+	// ProductID is the identifier of the product that this Platform belongs.
 	ProductID int `db:"ProductID"`
-	// Name is a human-readable unique identifier of an App.
-	Name string `db:"Name"`
-	// Platform is the target OS of the App.
-	Platform values.OS `db:"OS"`
+	// OS is the target operating system of the Platform.
+	OS values.OS `db:"OS"`
 }
 
-type App struct {
+type Platform struct {
 	hooks.BaseHooks
 	validator.BaseValidator
 	fields.Auditable
 	BasicInfo
 }
 
-// IsValid checks if the current app details follows the pre-defined business rules
-func (a *App) IsValid() error {
-	if validator.IsAnyEmpty(a.Name, string(a.Platform)) {
+// IsValid checks if the current platform details follow the pre-defined business rules
+func (a *Platform) IsValid() error {
+	if validator.IsAnyEmpty(string(a.OS)) {
 		return ErrEmptyField
 	}
 	return nil

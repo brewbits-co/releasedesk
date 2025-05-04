@@ -6,10 +6,10 @@ import (
 	"github.com/brewbits-co/releasedesk/internal/values"
 )
 
-func (s *service) CreateApp(slug values.Slug, info app.BasicInfo) (app.App, error) {
+func (s *service) CreateApp(slug values.Slug, info app.BasicInfo) (app.Platform, error) {
 	productEntity, err := s.productRepo.FindBySlug(slug)
 	if err != nil {
-		return app.App{}, product.ErrProductNotFound
+		return app.Platform{}, product.ErrProductNotFound
 	}
 
 	info.ProductID = productEntity.ID
@@ -17,7 +17,7 @@ func (s *service) CreateApp(slug values.Slug, info app.BasicInfo) (app.App, erro
 
 	err = s.appRepo.Save(&newApp)
 	if err != nil {
-		return app.App{}, err
+		return app.Platform{}, err
 	}
 
 	return newApp, nil

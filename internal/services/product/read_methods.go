@@ -41,7 +41,7 @@ func (s *service) GetCurrentProductData(slug values.Slug) (session.CurrentProduc
 		return session.CurrentProductData{}, err
 	}
 
-	apps, err := s.appRepo.FindByProductID(productEntity.ID)
+	apps, err := s.appRepo.FindByAppID(productEntity.ID)
 	if err != nil {
 		return session.CurrentProductData{}, err
 	}
@@ -50,8 +50,7 @@ func (s *service) GetCurrentProductData(slug values.Slug) (session.CurrentProduc
 	for _, appEntity := range apps {
 		productApps = append(productApps, session.CurrentProductAppData{
 			AppID:       appEntity.ID,
-			AppName:     appEntity.Name,
-			AppPlatform: appEntity.Platform,
+			AppPlatform: appEntity.OS,
 			ProductSlug: slug,
 		})
 	}

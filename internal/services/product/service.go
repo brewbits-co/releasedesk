@@ -26,7 +26,7 @@ type Service interface {
 }
 
 // NewProductService initializes a new instance of the product Service using the provided dependencies.
-func NewProductService(productRepo product.ProductRepository, appRepo app.AppRepository) Service {
+func NewProductService(productRepo product.ProductRepository, appRepo app.PlatformRepository) Service {
 	return &service{
 		productRepo: productRepo,
 		appRepo:     appRepo,
@@ -36,5 +36,5 @@ func NewProductService(productRepo product.ProductRepository, appRepo app.AppRep
 // service implements the product.Service
 type service struct {
 	productRepo product.ProductRepository
-	appRepo     app.AppRepository
+	appRepo     app.PlatformRepository
 }

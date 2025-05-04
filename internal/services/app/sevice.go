@@ -11,11 +11,11 @@ type Service interface {
 	// CreateApp creates a new app for a specific product using the provided basic information.
 	// It validates the input data against defined business rules and returns
 	// the created app or an error if the validation or creation fails.
-	CreateApp(slug values.Slug, info app.BasicInfo) (app.App, error)
+	CreateApp(slug values.Slug, info app.BasicInfo) (app.Platform, error)
 }
 
 // NewAppService initializes a new instance of the app Service using the provided dependencies.
-func NewAppService(appRepo app.AppRepository, productRepo product.ProductRepository) Service {
+func NewAppService(appRepo app.PlatformRepository, productRepo product.ProductRepository) Service {
 	return &service{
 		appRepo:     appRepo,
 		productRepo: productRepo,
@@ -24,6 +24,6 @@ func NewAppService(appRepo app.AppRepository, productRepo product.ProductReposit
 
 // service implements the app.Service
 type service struct {
-	appRepo     app.AppRepository
+	appRepo     app.PlatformRepository
 	productRepo product.ProductRepository
 }
