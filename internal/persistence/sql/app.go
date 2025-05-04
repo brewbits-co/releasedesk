@@ -19,8 +19,8 @@ type appRepository struct {
 func (r *appRepository) Save(app *app.App) error {
 	_ = app.BeforeCreate()
 
-	q := `INSERT INTO Apps (ProductID, Name, Platform, CreatedAt, UpdatedAt) 
-			VALUES (:ProductID, :Name, :Platform, :CreatedAt, :UpdatedAt)`
+	q := `INSERT INTO Apps (ProductID, Name, OS, CreatedAt, UpdatedAt) 
+			VALUES (:ProductID, :Name, :OS, :CreatedAt, :UpdatedAt)`
 
 	exec, err := r.db.NamedExec(q, app)
 	if err != nil {
@@ -64,12 +64,12 @@ func (r *appRepository) FindByProductID(productID int) ([]app.App, error) {
 	return apps, nil // Return the list of apps
 }
 
-func (r *appRepository) GetByProductSlugAndPlatform(slug values.Slug, platform values.Platform) (app.App, error) {
+func (r *appRepository) GetByProductSlugAndPlatform(slug values.Slug, platform values.OS) (app.App, error) {
 	var appInfo app.App
 
 	q := `SELECT Apps.* FROM Apps
 	JOIN Products ON Apps.ProductID = Products.ID
-	WHERE Products.Slug = $1 AND Apps.Platform = $2
+	WHERE Products.Slug = $1 AND Apps.OS = $2
 	LIMIT 1`
 
 	err := r.db.QueryRowx(q, slug, platform).StructScan(&appInfo)

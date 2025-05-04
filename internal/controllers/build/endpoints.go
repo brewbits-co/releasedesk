@@ -66,7 +66,7 @@ func (c *buildController) HandleBuildUpload(w http.ResponseWriter, r *http.Reque
 
 	_, err = c.service.UploadBuild(
 		values.Slug(slug),
-		values.Platform(platform),
+		values.OS(platform),
 		buildUploadRequest.BasicInfo,
 		files,
 		buildUploadRequest.Metadata,

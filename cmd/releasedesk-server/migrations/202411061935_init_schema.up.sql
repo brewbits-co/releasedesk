@@ -49,13 +49,13 @@ CREATE TABLE Apps
     ProductID INTEGER
         CONSTRAINT Apps_Products_ID_fk REFERENCES Products,
     Name      TEXT     NOT NULL,
-    Platform  TEXT,
+    OS  TEXT,
     CreatedAt DATETIME NOT NULL,
     UpdatedAt DATETIME NOT NULL
 );
 
-CREATE UNIQUE INDEX Apps_ProductID_Platform_uindex
-    ON Apps (ProductID, Platform);
+CREATE UNIQUE INDEX Apps_ProductID_OS_uindex
+    ON Apps (ProductID, OS);
 
 CREATE TABLE Builds
 (

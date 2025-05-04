@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 )
 
-func (s *service) UploadBuild(slug values.Slug, platform values.Platform, info build.BasicInfo, files map[values.Architecture]*multipart.FileHeader, Metadata map[string]string) (build.Build, error) {
+func (s *service) UploadBuild(slug values.Slug, platform values.OS, info build.BasicInfo, files map[values.Architecture]*multipart.FileHeader, Metadata map[string]string) (build.Build, error) {
 	for _, header := range files {
 		validFileType := isValidFileType(platform, header.Filename)
 		if !validFileType {
@@ -59,8 +59,8 @@ func (s *service) UploadBuild(slug values.Slug, platform values.Platform, info b
 	return buildEntity, err
 }
 
-func isValidFileType(platform values.Platform, fileName string) bool {
-	allowedExtensions := map[values.Platform][]string{
+func isValidFileType(platform values.OS, fileName string) bool {
+	allowedExtensions := map[values.OS][]string{
 		values.Windows: {".appx", ".appxbundle", ".appxupload", ".msix", ".msixbundle", ".msixupload", ".exe", ".zip", ".msi"},
 		values.MacOS:   {".zip", ".app.zip", ".dmg", ".pkg"},
 		values.Linux:   {".AppImage", ".deb", ".rpm", ".tgz", ".gz", ".snap", ".flatpak"},

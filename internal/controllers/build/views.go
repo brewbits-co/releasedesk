@@ -20,7 +20,7 @@ func (c *buildController) RenderBuildList(w http.ResponseWriter, r *http.Request
 	}
 
 	platform := chi.URLParam(r, "platform")
-	currentApp := session.NewCurrentAppData(currentProduct, values.Platform(platform))
+	currentApp := session.NewCurrentAppData(currentProduct, values.OS(platform))
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/build_list.gohtml")
 	if err != nil {
@@ -57,7 +57,7 @@ func (c *buildController) RenderBuildDetails(w http.ResponseWriter, r *http.Requ
 	}
 
 	platform := chi.URLParam(r, "platform")
-	currentApp := session.NewCurrentAppData(currentProduct, values.Platform(platform))
+	currentApp := session.NewCurrentAppData(currentProduct, values.OS(platform))
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/build_details.gohtml")
 	if err != nil {
@@ -100,7 +100,7 @@ func (c *buildController) RenderBuildMetadata(w http.ResponseWriter, r *http.Req
 	}
 
 	platform := chi.URLParam(r, "platform")
-	currentApp := session.NewCurrentAppData(currentProduct, values.Platform(platform))
+	currentApp := session.NewCurrentAppData(currentProduct, values.OS(platform))
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/build_metadata.gohtml")
 	if err != nil {

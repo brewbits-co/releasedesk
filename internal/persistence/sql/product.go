@@ -142,32 +142,32 @@ func (r *productRepository) GetPlatformAvailability(product *product.Product) er
     EXISTS (
         SELECT 1 
         FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.Platform = 'Android'
+        WHERE a.ProductID = p.ID AND a.OS = 'Android'
     ) AS HasAndroid,
     EXISTS (
         SELECT 1 
         FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.Platform = 'iOS'
+        WHERE a.ProductID = p.ID AND a.OS = 'iOS'
     ) AS HasIOS,
     EXISTS (
         SELECT 1 
         FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.Platform = 'Windows'
+        WHERE a.ProductID = p.ID AND a.OS = 'Windows'
     ) AS HasWindows,
     EXISTS (
         SELECT 1 
         FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.Platform = 'Linux'
+        WHERE a.ProductID = p.ID AND a.OS = 'Linux'
     ) AS HasLinux,
     EXISTS (
         SELECT 1 
         FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.Platform = 'macOS'
+        WHERE a.ProductID = p.ID AND a.OS = 'macOS'
     ) AS HasMacOS,
     EXISTS (
         SELECT 1 
         FROM Apps a 
-        WHERE a.ProductID = p.ID AND a.Platform = 'Other'
+        WHERE a.ProductID = p.ID AND a.OS = 'Other'
     ) AS HasOther FROM Products p WHERE ID = $1`
 
 	row := r.db.QueryRow(q, product.ID)

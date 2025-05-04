@@ -57,7 +57,7 @@ func (s *service) GetCurrentProductData(slug values.Slug) (session.CurrentProduc
 	}
 
 	// Desired platform order
-	platformOrder := map[values.Platform]int{
+	platformOrder := map[values.OS]int{
 		values.Android: 1,
 		values.IOS:     2,
 		values.Windows: 3,

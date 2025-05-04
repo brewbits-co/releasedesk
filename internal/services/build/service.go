@@ -10,7 +10,7 @@ import (
 // Service defines the interface for handling build-related use cases.
 type Service interface {
 	// UploadBuild uploads a new build for the specified app, using the provided build information and files.
-	UploadBuild(slug values.Slug, platform values.Platform, info build.BasicInfo, files map[values.Architecture]*multipart.FileHeader, Metadata map[string]string) (build.Build, error)
+	UploadBuild(slug values.Slug, platform values.OS, info build.BasicInfo, files map[values.Architecture]*multipart.FileHeader, Metadata map[string]string) (build.Build, error)
 	// GetAppBuilds retrieves the list of build from a specific App.
 	GetAppBuilds(appID int) ([]build.BasicInfo, error)
 	// GetBuildDetails return the full information of a Build including its Artifacts and Metadata.

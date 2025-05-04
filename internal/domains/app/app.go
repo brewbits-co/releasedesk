@@ -24,7 +24,7 @@ type BasicInfo struct {
 	// Name is a human-readable unique identifier of an App.
 	Name string `db:"Name"`
 	// Platform is the target OS of the App.
-	Platform values.Platform `db:"Platform"`
+	Platform values.OS `db:"OS"`
 }
 
 type App struct {

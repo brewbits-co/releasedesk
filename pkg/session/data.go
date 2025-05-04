@@ -25,11 +25,11 @@ type CurrentProductData struct {
 type CurrentProductAppData struct {
 	AppID       int
 	AppName     string
-	AppPlatform values.Platform
+	AppPlatform values.OS
 	ProductSlug values.Slug
 }
 
-func NewCurrentAppData(ctx CurrentProductData, platform values.Platform) CurrentProductAppData {
+func NewCurrentAppData(ctx CurrentProductData, platform values.OS) CurrentProductAppData {
 	for _, appCtx := range ctx.Apps {
 		if appCtx.AppPlatform == platform {
 			return appCtx
