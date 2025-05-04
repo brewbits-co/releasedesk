@@ -1,4 +1,4 @@
-package app
+package platform
 
 import (
 	"github.com/brewbits-co/releasedesk/internal/domains/platform"
@@ -22,7 +22,7 @@ func NewPlatformService(platformRepo platform.PlatformRepository, productRepo pr
 	}
 }
 
-// service implements the app.Service
+// service implements the platform.Service
 type service struct {
 	platformRepo platform.PlatformRepository
 	productRepo  product.ProductRepository

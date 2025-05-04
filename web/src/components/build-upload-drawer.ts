@@ -11,7 +11,7 @@ export class BuildUploadDrawer extends LitElement {
 
     extensionsByPlatform = {
         "Windows": [".appx", ".appxbundle", ".appxupload", ".msix", ".msixbundle", ".msixupload", ".exe", ".zip", ".msi"],
-        "macOS": [".zip", ".app.zip", ".dmg", ".pkg"],
+        "macOS": [".zip", ".platform.zip", ".dmg", ".pkg"],
         "Linux": [".AppImage", ".deb", ".rpm",  ".tgz", ".gz", ".snap", ".flatpak"],
         "Android": [".apk", ".aab"],
         "iOS": [".ipa"],

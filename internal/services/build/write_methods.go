@@ -62,7 +62,7 @@ func (s *service) UploadBuild(slug values.Slug, os values.OS, info build.BasicIn
 func isValidFileType(os values.OS, fileName string) bool {
 	allowedExtensions := map[values.OS][]string{
 		values.Windows: {".appx", ".appxbundle", ".appxupload", ".msix", ".msixbundle", ".msixupload", ".exe", ".zip", ".msi"},
-		values.MacOS:   {".zip", ".app.zip", ".dmg", ".pkg"},
+		values.MacOS:   {".zip", ".platform.zip", ".dmg", ".pkg"},
 		values.Linux:   {".AppImage", ".deb", ".rpm", ".tgz", ".gz", ".snap", ".flatpak"},
 		values.Android: {".apk", ".aab"},
 		values.IOS:     {".ipa"},
