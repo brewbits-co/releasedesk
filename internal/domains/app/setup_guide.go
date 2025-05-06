@@ -1,4 +1,4 @@
-package product
+package app
 
 import (
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
@@ -14,7 +14,7 @@ type SetupGuide struct {
 type SetupChannelsOption string
 
 const (
-	// CustomChannels is tailored to your product's unique requirements.
+	// CustomChannels is tailored to your app's unique requirements.
 	CustomChannels SetupChannelsOption = "CustomChannels"
 	// ByMaturity represent the stability of the release and the intended audience.
 	ByMaturity SetupChannelsOption = "ByMaturity"

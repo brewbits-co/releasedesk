@@ -1,15 +1,15 @@
 package platform
 
 import (
+	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/domains/platform"
-	"github.com/brewbits-co/releasedesk/internal/domains/product"
 	"github.com/brewbits-co/releasedesk/internal/values"
 )
 
 func (s *service) AddPlatformToApp(slug values.Slug, info platform.BasicInfo) (platform.Platform, error) {
-	appEntity, err := s.productRepo.FindBySlug(slug)
+	appEntity, err := s.appRepo.FindBySlug(slug)
 	if err != nil {
-		return platform.Platform{}, product.ErrAppNotFound
+		return platform.Platform{}, app.ErrAppNotFound
 	}
 
 	info.AppID = appEntity.ID

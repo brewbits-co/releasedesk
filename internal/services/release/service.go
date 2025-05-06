@@ -1,7 +1,7 @@
 package release
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/domains/product"
+	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
 	"github.com/brewbits-co/releasedesk/internal/values"
 )
@@ -15,7 +15,7 @@ type Service interface {
 }
 
 // NewReleaseService initializes a new instance of the release Service using the provided dependencies.
-func NewReleaseService(releaseRepo release.ReleaseRepository, appRepo product.AppRepository) Service {
+func NewReleaseService(releaseRepo release.ReleaseRepository, appRepo app.AppRepository) Service {
 	return &service{
 		releaseRepo: releaseRepo,
 		appRepo:     appRepo,
@@ -24,5 +24,5 @@ func NewReleaseService(releaseRepo release.ReleaseRepository, appRepo product.Ap
 
 type service struct {
 	releaseRepo release.ReleaseRepository
-	appRepo     product.AppRepository
+	appRepo     app.AppRepository
 }

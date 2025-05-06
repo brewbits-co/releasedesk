@@ -1,36 +1,36 @@
-package product
+package app
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/domains/product"
+	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
 	"github.com/brewbits-co/releasedesk/internal/values"
 )
 
-func (s *service) ApplyAppSetupGuide(slug values.Slug, format values.VersionFormat, channels product.SetupChannelsOption, customChannels []string) error {
+func (s *service) ApplyAppSetupGuide(slug values.Slug, format values.VersionFormat, channels app.SetupChannelsOption, customChannels []string) error {
 	appEntity, err := s.appRepo.FindBySlug(slug)
 	if err != nil {
-		return product.ErrAppNotFound
+		return app.ErrAppNotFound
 	}
 
 	if appEntity.SetupGuideCompleted == true {
-		return product.ErrSetupGuideAlreadyCompleted
+		return app.ErrSetupGuideAlreadyCompleted
 	}
 
 	var channelsToCreate []release.Channel
-	if channels == product.ByMaturity {
+	if channels == app.ByMaturity {
 		channelsToCreate = release.NewByMaturityChannels(appEntity.ID)
 	}
-	if channels == product.ByEnvironment {
+	if channels == app.ByEnvironment {
 		channelsToCreate = release.NewByEnvironmentChannels(appEntity.ID)
 	}
-	if channels == product.CustomChannels {
+	if channels == app.CustomChannels {
 		channelsToCreate = make([]release.Channel, len(customChannels))
 		for i := range customChannels {
 			channelsToCreate[i] = release.NewChannel(appEntity.ID, customChannels[i], false)
 		}
 	}
 
-	stepGuide := product.SetupGuide{
+	stepGuide := app.SetupGuide{
 		AppID:         appEntity.ID,
 		VersionFormat: format,
 		Channels:      channelsToCreate,

@@ -1,11 +1,11 @@
 package main
 
 import (
+	"github.com/brewbits-co/releasedesk/internal/controllers/app"
 	"github.com/brewbits-co/releasedesk/internal/controllers/auth"
 	"github.com/brewbits-co/releasedesk/internal/controllers/build"
 	"github.com/brewbits-co/releasedesk/internal/controllers/misc"
 	"github.com/brewbits-co/releasedesk/internal/controllers/platform"
-	"github.com/brewbits-co/releasedesk/internal/controllers/product"
 	"github.com/brewbits-co/releasedesk/internal/controllers/release"
 	authSrv "github.com/brewbits-co/releasedesk/internal/services/auth"
 	"github.com/brewbits-co/releasedesk/pkg/middlewares"
@@ -34,7 +34,7 @@ func buildConsole(container *dig.Container) *http.Server {
 		authService authSrv.Service,
 		authCtrl auth.AuthController,
 		miscCtrl misc.MiscController,
-		appCtrl product.AppController,
+		appCtrl app.AppController,
 		platformCtrl platform.PlatformController,
 		releaseCtrl release.ReleaseController,
 		buildCtrl build.BuildController,

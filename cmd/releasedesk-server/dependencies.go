@@ -2,17 +2,17 @@ package main
 
 import (
 	"embed"
+	appCtrl "github.com/brewbits-co/releasedesk/internal/controllers/app"
 	authCtrl "github.com/brewbits-co/releasedesk/internal/controllers/auth"
 	buildCtrl "github.com/brewbits-co/releasedesk/internal/controllers/build"
 	"github.com/brewbits-co/releasedesk/internal/controllers/misc"
 	platformCtrl "github.com/brewbits-co/releasedesk/internal/controllers/platform"
-	appCtrl "github.com/brewbits-co/releasedesk/internal/controllers/product"
 	releaseCtrl "github.com/brewbits-co/releasedesk/internal/controllers/release"
 	"github.com/brewbits-co/releasedesk/internal/persistence/sql"
+	"github.com/brewbits-co/releasedesk/internal/services/app"
 	"github.com/brewbits-co/releasedesk/internal/services/auth"
 	"github.com/brewbits-co/releasedesk/internal/services/build"
 	"github.com/brewbits-co/releasedesk/internal/services/platform"
-	"github.com/brewbits-co/releasedesk/internal/services/product"
 	"github.com/brewbits-co/releasedesk/internal/services/release"
 	"go.uber.org/dig"
 )
@@ -36,7 +36,7 @@ func buildContainer() *dig.Container {
 	container.Provide(sql.NewReleaseRepository)
 	// Services
 	container.Provide(auth.NewAuthService)
-	container.Provide(product.NewAppService)
+	container.Provide(app.NewAppService)
 	container.Provide(platform.NewPlatformService)
 	container.Provide(build.NewBuildService)
 	container.Provide(release.NewReleaseService)

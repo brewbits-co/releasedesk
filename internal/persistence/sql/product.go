@@ -1,22 +1,22 @@
 package sql
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/domains/product"
+	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/jmoiron/sqlx"
 )
 
 // NewApplicationRepository is the constructor for appRepository
-func NewApplicationRepository(db *sqlx.DB) product.AppRepository {
+func NewApplicationRepository(db *sqlx.DB) app.AppRepository {
 	return &appRepository{db: db}
 }
 
-// appRepository is the implementation of product.AppRepository
+// appRepository is the implementation of app.AppRepository
 type appRepository struct {
 	db *sqlx.DB
 }
 
-func (r *appRepository) Save(app *product.App) error {
+func (r *appRepository) Save(app *app.App) error {
 	_ = app.BeforeCreate()
 
 	q := `INSERT INTO Apps (
@@ -42,7 +42,7 @@ func (r *appRepository) Save(app *product.App) error {
 	return nil
 }
 
-func (r *appRepository) Find() ([]product.App, error) {
+func (r *appRepository) Find() ([]app.App, error) {
 	// Execute the database query
 	rows, err := r.db.Queryx("SELECT * FROM Apps")
 	if err != nil {
@@ -51,11 +51,11 @@ func (r *appRepository) Find() ([]product.App, error) {
 	defer rows.Close() // Ensure the cursor is closed when the function exits
 
 	// Declare a slice to store the apps
-	var apps []product.App
+	var apps []app.App
 
 	// Iterate over the result set
 	for rows.Next() {
-		var p product.App
+		var p app.App
 		// Map the row's data to the application struct
 		if err := rows.StructScan(&p); err != nil {
 			return nil, err // Return an error if mapping fails
@@ -72,17 +72,17 @@ func (r *appRepository) Find() ([]product.App, error) {
 	return apps, nil // Return the list of apps
 }
 
-func (r *appRepository) FindBySlug(slug values.Slug) (product.App, error) {
-	var p product.App
+func (r *appRepository) FindBySlug(slug values.Slug) (app.App, error) {
+	var p app.App
 	err := r.db.QueryRowx("SELECT * FROM Apps WHERE Slug = $1 LIMIT 1", slug).StructScan(&p)
 	if err != nil {
-		return product.App{}, err
+		return app.App{}, err
 	}
 
 	return p, err
 }
 
-func (r *appRepository) Update(app product.App) error {
+func (r *appRepository) Update(app app.App) error {
 	_ = app.BeforeUpdate()
 
 	q := `UPDATE Apps SET 
@@ -102,12 +102,12 @@ func (r *appRepository) Update(app product.App) error {
 	return nil
 }
 
-func (r *appRepository) Delete(app product.App) error {
+func (r *appRepository) Delete(app app.App) error {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (r *appRepository) SaveSetupGuide(guide product.SetupGuide) error {
+func (r *appRepository) SaveSetupGuide(guide app.SetupGuide) error {
 	tx, err := r.db.Beginx()
 	if err != nil {
 		return err
@@ -137,7 +137,7 @@ func (r *appRepository) SaveSetupGuide(guide product.SetupGuide) error {
 	return nil
 }
 
-func (r *appRepository) GetPlatformAvailability(app *product.App) error {
+func (r *appRepository) GetPlatformAvailability(app *app.App) error {
 	q := `SELECT 
     EXISTS (
         SELECT 1 

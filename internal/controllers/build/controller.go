@@ -1,8 +1,8 @@
 package build
 
 import (
+	"github.com/brewbits-co/releasedesk/internal/services/app"
 	"github.com/brewbits-co/releasedesk/internal/services/build"
-	"github.com/brewbits-co/releasedesk/internal/services/product"
 	"net/http"
 )
 
@@ -15,7 +15,7 @@ type BuildController interface {
 	RenderBuildMetadata(w http.ResponseWriter, r *http.Request)
 }
 
-func NewBuildController(service build.Service, appService product.Service) BuildController {
+func NewBuildController(service build.Service, appService app.Service) BuildController {
 	return &buildController{
 		service:    service,
 		appService: appService,
@@ -24,5 +24,5 @@ func NewBuildController(service build.Service, appService product.Service) Build
 
 type buildController struct {
 	service    build.Service
-	appService product.Service
+	appService app.Service
 }

@@ -5,8 +5,8 @@ import {encodeFormData} from "../utils";
 import {map} from 'lit/directives/map.js';
 import {range} from 'lit/directives/range.js';
 
-@customElement('product-setup-guide')
-export class ProductSetupGuide extends LitElement {
+@customElement('app-setup-guide')
+export class AppSetupGuide extends LitElement {
     // @ts-ignore
     static styles = [getTailwindStyleSheet()]
 
@@ -70,8 +70,8 @@ export class ProductSetupGuide extends LitElement {
                                     <fieldset>
                                         <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4">
                                             ${radioOption('VersionFormat', 'SemVer', 'Semantic Versioning', 'SemVer is a 3-component number in the format of MAJOR.MINOR.PATCH', '1.0.2')}
-                                            ${radioOption('VersionFormat', 'CalVer', 'Calendar Versioning', "CalVer is a versioning convention based on your product's release calendar.", '2024.09')}
-                                            ${radioOption('VersionFormat', 'Custom', 'Custom Format', "A custom versioning format allows you to fit product-specific needs.", '')}
+                                            ${radioOption('VersionFormat', 'CalVer', 'Calendar Versioning', "CalVer is a versioning convention based on your app's release calendar.", '2024.09')}
+                                            ${radioOption('VersionFormat', 'Custom', 'Custom Format', "A custom versioning format allows you to fit app-specific needs.", '')}
                                         </div>
                                     </fieldset>
                                 </div>
@@ -92,7 +92,7 @@ export class ProductSetupGuide extends LitElement {
                                         <div class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-3 sm:gap-x-4">
                                             ${radioOption('Channels', 'ByMaturity', 'By Maturity', 'Channels represent the stability of the release and the intended audience.', 'Canary - Beta - Stable', this.handleChannelChange)}
                                             ${radioOption('Channels', 'ByEnvironment', 'By Environment', 'Channels map releases to environments for effective deployment control.', 'Development - Staging - Production', this.handleChannelChange)}
-                                            ${radioOption('Channels', 'CustomChannels', 'Custom Channels', "Create release channels tailored to your product's unique requirements.", '', this.handleChannelChange)}
+                                            ${radioOption('Channels', 'CustomChannels', 'Custom Channels', "Create release channels tailored to your app's unique requirements.", '', this.handleChannelChange)}
                                         </div>
 
                                         ${this.showCustomChannels ? html`
@@ -164,6 +164,6 @@ const listItem = (name: string, placeholder: string) => html`
 
 declare global {
     interface HTMLElementTagNameMap {
-        'product-setup-guide': ProductSetupGuide;
+        'app-setup-guide': AppSetupGuide;
     }
 }

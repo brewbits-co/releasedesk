@@ -1,8 +1,8 @@
-package product
+package app
 
 import (
+	"github.com/brewbits-co/releasedesk/internal/services/app"
 	"github.com/brewbits-co/releasedesk/internal/services/platform"
-	"github.com/brewbits-co/releasedesk/internal/services/product"
 	"net/http"
 )
 
@@ -13,15 +13,15 @@ type AppController interface {
 }
 
 // NewAppController creates a new instance of appController with the provided dependencies.
-func NewAppController(service product.Service, platformService platform.Service) AppController {
+func NewAppController(service app.Service, platformService platform.Service) AppController {
 	return &appController{
 		service:         service,
 		platformService: platformService,
 	}
 }
 
-// appController implements the product.AppController.
+// appController implements the app.AppController.
 type appController struct {
-	service         product.Service
+	service         app.Service
 	platformService platform.Service
 }

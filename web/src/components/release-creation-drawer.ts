@@ -73,7 +73,7 @@ export class ReleaseCreationDrawer extends LitElement {
             <headless-drawer ?open="${this.showDrawer}"
                              @closed="${this.handleClose}"
                              headerTitle="New Application">
-                <form slot="body" id="product-creation-form" class="px-4 sm:px-6 pb-4"
+                <form slot="body" id="app-creation-form" class="px-4 sm:px-6 pb-4"
                       @reset="${this.handleClose}"
                       @submit="${this.handleSubmit}">
                     <div class="space-y-6 pb-5 pt-6">
@@ -115,12 +115,12 @@ export class ReleaseCreationDrawer extends LitElement {
 
                 <span slot="footer">
           <button type="reset"
-                  form="product-creation-form"
+                  form="app-creation-form"
                   class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
             Cancel
           </button>
           <button type="submit"
-                  form="product-creation-form"
+                  form="app-creation-form"
                   class="ml-4 inline-flex justify-center rounded-md bg-violet-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-800">
             Save
           </button>

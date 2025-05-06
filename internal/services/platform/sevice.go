@@ -1,8 +1,8 @@
 package platform
 
 import (
+	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/domains/platform"
-	"github.com/brewbits-co/releasedesk/internal/domains/product"
 	"github.com/brewbits-co/releasedesk/internal/values"
 )
 
@@ -15,15 +15,15 @@ type Service interface {
 }
 
 // NewPlatformService initializes a new instance of the platform Service using the provided dependencies.
-func NewPlatformService(platformRepo platform.PlatformRepository, productRepo product.AppRepository) Service {
+func NewPlatformService(platformRepo platform.PlatformRepository, appRepo app.AppRepository) Service {
 	return &service{
 		platformRepo: platformRepo,
-		productRepo:  productRepo,
+		appRepo:      appRepo,
 	}
 }
 
 // service implements the platform.Service
 type service struct {
 	platformRepo platform.PlatformRepository
-	productRepo  product.AppRepository
+	appRepo      app.AppRepository
 }

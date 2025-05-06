@@ -1,13 +1,13 @@
-package product
+package app
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/domains/product"
+	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/brewbits-co/releasedesk/pkg/session"
 	"sort"
 )
 
-func (s *service) GetUserAccessibleApps(userID int) ([]product.App, error) {
+func (s *service) GetUserAccessibleApps(userID int) ([]app.App, error) {
 	applications, err := s.appRepo.Find()
 	if err != nil {
 		return nil, err
@@ -22,13 +22,13 @@ func (s *service) GetUserAccessibleApps(userID int) ([]product.App, error) {
 	return applications, nil
 }
 
-func (s *service) GetAppOverview(slug values.Slug) (product.Overview, error) {
+func (s *service) GetAppOverview(slug values.Slug) (app.Overview, error) {
 	applicationEntity, err := s.appRepo.FindBySlug(slug)
 	if err != nil {
-		return product.Overview{}, err
+		return app.Overview{}, err
 	}
 
-	data := product.Overview{
+	data := app.Overview{
 		SetupGuideCompleted: applicationEntity.SetupGuideCompleted,
 	}
 

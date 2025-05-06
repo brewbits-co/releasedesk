@@ -4,8 +4,8 @@ import {convertToSlug, encodeFormData} from "../utils";
 import {Ref, createRef, ref} from 'lit/directives/ref.js';
 import {map} from 'lit/directives/map.js';
 
-@customElement('product-creation-drawer')
-export class ProductCreationDrawer extends LitElement {
+@customElement('app-creation-drawer')
+export class AppCreationDrawer extends LitElement {
   override createRenderRoot() {
     return this;
   }
@@ -64,15 +64,15 @@ export class ProductCreationDrawer extends LitElement {
         <button type="button"
                 class="inline-flex items-center rounded-md bg-violet-900 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-900"
                 @click="${() => this.showDrawer = true}">
-          <i class="fa-solid fa-layer-group"></i>&nbsp;&nbsp;Create Your Product
+          <i class="fa-solid fa-layer-group"></i>&nbsp;&nbsp;Create Your Application
         </button>
       </div>
 
       <headless-drawer ?open="${this.showDrawer}"
                        @closed="${this.handleClose}"
-                       headerTitle="New Product"
-                       headerSubtitle="Get started by filling in the information below to create your new product.">
-        <form slot="body" id="product-creation-form" class="px-4 sm:px-6 pb-4"
+                       headerTitle="New Application"
+                       headerSubtitle="Get started by filling in the information below to create your new application.">
+        <form slot="body" id="app-creation-form" class="px-4 sm:px-6 pb-4"
               @reset="${this.handleClose}"
               @submit="${this.handleSubmit}">
           <div class="space-y-6 pb-5 pt-6">
@@ -129,7 +129,7 @@ export class ProductCreationDrawer extends LitElement {
                     <label for="privacy-public" class="font-medium text-gray-900">Public
                       Access</label>
                     <p id="privacy-public-description" class="text-gray-500">
-                      Everyone with the link will see this product.
+                      Everyone with the link will see this application.
                     </p>
                   </div>
                 </div>
@@ -146,7 +146,7 @@ export class ProductCreationDrawer extends LitElement {
                     <div class="pl-7 text-sm/6">
                       <label for="privacy-private-to-project" class="font-medium text-gray-900">Private</label>
                       <p id="privacy-private-to-project-description" class="text-gray-500">
-                        Only members of this product would be able to access.
+                        Only members of this application would be able to access.
                       </p>
                     </div>
                   </div>
@@ -168,12 +168,12 @@ export class ProductCreationDrawer extends LitElement {
 
         <span slot="footer">
           <button type="reset"
-                  form="product-creation-form"
+                  form="app-creation-form"
                   class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
             Cancel
           </button>
           <button type="submit"
-                  form="product-creation-form"
+                  form="app-creation-form"
                   class="ml-4 inline-flex justify-center rounded-md bg-violet-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-800">
             Save
           </button>
@@ -185,6 +185,6 @@ export class ProductCreationDrawer extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'product-creation-drawer': ProductCreationDrawer;
+    'app-creation-drawer': AppCreationDrawer;
   }
 }

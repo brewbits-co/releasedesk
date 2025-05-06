@@ -1,5 +1,5 @@
 {{ define "content" }}
-    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/product.DashboardData*/ -}}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/app.DashboardData*/ -}}
     {{ if .SetupGuideCompleted}}
         <div class="grid justify-items-end">
             <app-platform-drawer slug="{{.CurrentAppData.AppSlug}}" name="{{.CurrentAppData.AppName}}"></app-platform-drawer>
@@ -19,12 +19,12 @@
         </div>
     {{else}}
         <div class="pb-5">
-            <h3 class="text-xl font-semibold tracking-tight text-gray-900">Congrats on the new product!</h3>
+            <h3 class="text-xl font-semibold tracking-tight text-gray-900">Congrats on the new application!</h3>
             <p class="mt-2 max-w-4xl text-sm text-gray-500">
                 Complete these simple steps to get your software distribution up and running.</p>
         </div>
         <div class="rounded-lg bg-white shadow">
-            <product-setup-guide slug="{{.CurrentAppData.AppSlug}}"></product-setup-guide>
+            <app-setup-guide slug="{{.CurrentAppData.AppSlug}}"></app-setup-guide>
         </div>
     {{end}}
 {{ end }}

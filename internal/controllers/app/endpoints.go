@@ -1,7 +1,7 @@
-package product
+package app
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/domains/product"
+	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/brewbits-co/releasedesk/pkg/schemas"
 	"github.com/brewbits-co/releasedesk/pkg/utils"
@@ -19,7 +19,7 @@ func (c *appController) HandleCreateApp(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	var appCreationRequest product.BasicInfo
+	var appCreationRequest app.BasicInfo
 
 	err = utils.NewDecoder().Decode(&appCreationRequest, r.Form)
 	if err != nil {
@@ -55,7 +55,7 @@ func (c *appController) HandleAppSetupGuide(w http.ResponseWriter, r *http.Reque
 	err = c.service.ApplyAppSetupGuide(
 		values.Slug(slug),
 		values.VersionFormat(r.Form.Get("VersionFormat")),
-		product.SetupChannelsOption(r.Form.Get("Channels")),
+		app.SetupChannelsOption(r.Form.Get("Channels")),
 		r.Form["CustomChannels"],
 	)
 	if err != nil {

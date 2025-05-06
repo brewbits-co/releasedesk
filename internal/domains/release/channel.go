@@ -7,7 +7,7 @@ func NewChannel(appID int, name string, closed bool) Channel {
 type Channel struct {
 	// ID is the unique identifier of a Channel.
 	ID int `db:"ID"`
-	// AppID is the identifier of the product that this Channel belongs.
+	// AppID is the identifier of the app that this Channel belongs.
 	AppID int `db:"AppID" json:"-"`
 	// Name is a human-readable unique identifier of a Channel.
 	Name string `db:"Name"`

@@ -2,29 +2,19 @@
     {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/misc.HomepageData*/ -}}
     <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white sm:rounded-xl">
         {{- range .Apps }}
-            {{template "product-line" . }}
+            {{template "app-line" . }}
         {{- end }}
     </ul>
 
     <div class="mt-10 mb-10">
-      <div class="text-center">
-        <img class="mx-auto w-48 text-gray-400" src="./assets/product-example.png" alt="product-example"/>
-        <h3 class="mt-2 text-sm font-semibold text-gray-900">
-          Products are containers for your apps
-        </h3>
-        <p class="mt-1 text-sm text-gray-500">
-          Apps in a product share features such as Announcements, Analytics and a customizable
-          Download Portal.
-      </div>
-
       <div class="mt-6">
-        <product-creation-drawer/>
+        <app-creation-drawer/>
       </div>
     </div>
 {{ end }}
 
-{{ define "product-line" }}
-    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/domains/product.App*/ -}}
+{{ define "app-line" }}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/domains/app.App*/ -}}
     <a href="./dashboard/{{ .Slug }}">
       <li class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
         <div class="flex min-w-0 gap-x-4">

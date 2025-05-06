@@ -1,7 +1,7 @@
 package misc
 
 import (
-	"github.com/brewbits-co/releasedesk/internal/services/product"
+	"github.com/brewbits-co/releasedesk/internal/services/app"
 	"net/http"
 )
 
@@ -12,11 +12,11 @@ type MiscController interface {
 }
 
 // NewMiscController creates a new instance of authController with the provided dependencies.
-func NewMiscController(service product.Service) MiscController {
+func NewMiscController(service app.Service) MiscController {
 	return &miscController{service: service}
 }
 
 // miscController implements the auth.MiscController.
 type miscController struct {
-	service product.Service
+	service app.Service
 }

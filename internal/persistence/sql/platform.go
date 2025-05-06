@@ -53,7 +53,7 @@ func (r *platformRepository) FindByAppID(appID int) ([]platform.Platform, error)
 			return nil, err // Return an error if mapping fails
 		}
 		platformEntity.FormatAuditable()
-		platforms = append(platforms, platformEntity) // Add the product to the slice
+		platforms = append(platforms, platformEntity) // Add the app to the slice
 	}
 
 	// Check for errors during iteration

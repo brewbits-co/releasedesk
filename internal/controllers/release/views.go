@@ -13,7 +13,7 @@ import (
 
 func (c *releaseController) RenderReleaseList(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentApp, err := c.productService.GetCurrentAppData(values.Slug(slug))
+	currentApp, err := c.appService.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
@@ -64,7 +64,7 @@ func (c *releaseController) RenderReleaseList(w http.ResponseWriter, r *http.Req
 
 func (c *releaseController) RenderReleaseSummary(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentApp, err := c.productService.GetCurrentAppData(values.Slug(slug))
+	currentApp, err := c.appService.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
@@ -105,7 +105,7 @@ func (c *releaseController) RenderReleaseSummary(w http.ResponseWriter, r *http.
 
 func (c *releaseController) RenderReleaseNotes(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentApp, err := c.productService.GetCurrentAppData(values.Slug(slug))
+	currentApp, err := c.appService.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
