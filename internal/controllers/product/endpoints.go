@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func (c *productController) HandleCreateProduct(w http.ResponseWriter, r *http.Request) {
+func (c *appController) HandleCreateApp(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		render.Status(r, http.StatusInternalServerError)
@@ -19,31 +19,31 @@ func (c *productController) HandleCreateProduct(w http.ResponseWriter, r *http.R
 		return
 	}
 
-	var productCreationRequest product.BasicInfo
+	var appCreationRequest product.BasicInfo
 
-	err = utils.NewDecoder().Decode(&productCreationRequest, r.Form)
+	err = utils.NewDecoder().Decode(&appCreationRequest, r.Form)
 	if err != nil {
 		render.Status(r, http.StatusInternalServerError)
 		render.PlainText(w, r, err.Error())
 		return
 	}
 
-	newProduct, err := c.service.CreateProduct(productCreationRequest)
+	newApp, err := c.service.CreateApp(appCreationRequest)
 	if err != nil {
 		render.Status(r, http.StatusConflict)
-		render.JSON(w, r, schemas.NewErrorResponse("A product with the same identifier already exists.", []string{
-			"Please use a unique product name and slug.",
-			"Check the existing products before creating a new one.",
+		render.JSON(w, r, schemas.NewErrorResponse("An application with the same identifier already exists.", []string{
+			"Please use a unique application name and slug.",
+			"Check the existing applications before creating a new one.",
 		}))
 		return
 	}
 
-	log.Println(newProduct.ID)
+	log.Println(newApp.ID)
 
 	render.Status(r, http.StatusCreated)
 }
 
-func (c *productController) HandleProductSetupGuide(w http.ResponseWriter, r *http.Request) {
+func (c *appController) HandleAppSetupGuide(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		render.Status(r, http.StatusInternalServerError)
@@ -52,7 +52,7 @@ func (c *productController) HandleProductSetupGuide(w http.ResponseWriter, r *ht
 	}
 	slug := chi.URLParam(r, "slug")
 
-	err = c.service.ApplyProductSetupGuide(
+	err = c.service.ApplyAppSetupGuide(
 		values.Slug(slug),
 		values.VersionFormat(r.Form.Get("VersionFormat")),
 		product.SetupChannelsOption(r.Form.Get("Channels")),

@@ -14,7 +14,7 @@
             Builds
         </h3>
         <div class="mt-3 sm:ml-4 sm:mt-0">
-            <build-upload-drawer slug="{{.CurrentProductData.ProductSlug}}"
+            <build-upload-drawer slug="{{.CurrentAppData.AppSlug}}"
                                  platform="{{.CurrentPlatform.OS}}"></build-upload-drawer>
         </div>
     </div>
@@ -45,7 +45,7 @@
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{.Version}}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{.Auditable.CreatedAtFormatted}}</td>
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a href="/dashboard/{{$.CurrentPlatform.ProductSlug}}/platforms/{{$.CurrentPlatform.OS}}/builds/{{.Number}}"
+                        <a href="/dashboard/{{$.CurrentPlatform.AppSlug}}/platforms/{{$.CurrentPlatform.OS}}/builds/{{.Number}}"
                            class="text-violet-900 hover:text-violet-800">View</a>
                     </td>
                 </tr>

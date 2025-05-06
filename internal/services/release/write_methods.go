@@ -6,12 +6,12 @@ import (
 )
 
 func (s *service) CreateRelease(slug values.Slug, info release.BasicInfo) (release.Release, error) {
-	productEntity, err := s.productRepo.FindBySlug(slug)
+	appEntity, err := s.appRepo.FindBySlug(slug)
 	if err != nil {
 		return release.Release{}, err
 	}
 
-	info.ProductID = productEntity.ID
+	info.AppID = appEntity.ID
 	info.Status = release.Unpublished
 
 	newRelease := release.NewRelease(info)

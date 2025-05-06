@@ -6,6 +6,6 @@ import (
 
 type DashboardData struct {
 	session.SessionData
-	session.CurrentProductData
+	session.CurrentAppData
 	SetupGuideCompleted bool
 }

@@ -1,6 +1,6 @@
 DROP TABLE Users;
 
-DROP TABLE Products;
+DROP TABLE Platforms;
 
 DROP TABLE Channels;
 

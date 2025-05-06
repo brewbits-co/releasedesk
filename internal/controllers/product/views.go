@@ -10,15 +10,15 @@ import (
 	"net/http"
 )
 
-func (c *productController) RenderDashboard(w http.ResponseWriter, r *http.Request) {
+func (c *appController) RenderDashboard(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentProduct, err := c.service.GetCurrentProductData(values.Slug(slug))
+	currentApp, err := c.service.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
 	}
 
-	overview, err := c.service.GetProductOverview(values.Slug(slug))
+	overview, err := c.service.GetAppOverview(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
@@ -26,7 +26,7 @@ func (c *productController) RenderDashboard(w http.ResponseWriter, r *http.Reque
 
 	data := DashboardData{
 		SessionData:         session.NewSessionData(r.Context()),
-		CurrentProductData:  currentProduct,
+		CurrentAppData:      currentApp,
 		SetupGuideCompleted: overview.SetupGuideCompleted,
 	}
 

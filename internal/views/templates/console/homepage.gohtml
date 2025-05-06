@@ -1,7 +1,7 @@
 {{ define "content" }}
     {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/misc.HomepageData*/ -}}
     <ul role="list" class="divide-y divide-gray-100 overflow-hidden bg-white sm:rounded-xl">
-        {{- range .Products }}
+        {{- range .Apps }}
             {{template "product-line" . }}
         {{- end }}
     </ul>
@@ -24,7 +24,7 @@
 {{ end }}
 
 {{ define "product-line" }}
-    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/domains/product.Product*/ -}}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/domains/product.App*/ -}}
     <a href="./dashboard/{{ .Slug }}">
       <li class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6">
         <div class="flex min-w-0 gap-x-4">

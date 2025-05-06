@@ -33,7 +33,7 @@ export class AppPlatformDrawer extends LitElement {
 
         const formData = new FormData(event.target as HTMLFormElement);
 
-        fetch(`/internal/products/${this.slug}/platforms`, {
+        fetch(`/internal/apps/${this.slug}/platforms`, {
             method: 'POST',
             body: encodeFormData(formData),
             credentials: 'include',

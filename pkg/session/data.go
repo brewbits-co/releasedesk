@@ -15,20 +15,20 @@ func NewSessionData(ctx context.Context) SessionData {
 	}
 }
 
-type CurrentProductData struct {
-	ProductID   int
-	ProductName string
-	ProductSlug values.Slug
-	Platforms   []CurrentPlatformData
+type CurrentAppData struct {
+	AppID     int
+	AppName   string
+	AppSlug   values.Slug
+	Platforms []CurrentPlatformData
 }
 
 type CurrentPlatformData struct {
-	PlatformID  int
-	OS          values.OS
-	ProductSlug values.Slug
+	PlatformID int
+	OS         values.OS
+	AppSlug    values.Slug
 }
 
-func NewCurrentPlatformData(ctx CurrentProductData, platform values.OS) CurrentPlatformData {
+func NewCurrentPlatformData(ctx CurrentAppData, platform values.OS) CurrentPlatformData {
 	for _, appCtx := range ctx.Platforms {
 		if appCtx.OS == platform {
 			return appCtx

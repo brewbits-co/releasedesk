@@ -2,8 +2,8 @@ package release
 
 import "github.com/brewbits-co/releasedesk/internal/domains/release"
 
-func (s *service) GetReleaseChannels(productID int) ([]release.Channel, error) {
-	channels, err := s.releaseRepo.FindChannelsByProductID(productID)
+func (s *service) GetReleaseChannels(appID int) ([]release.Channel, error) {
+	channels, err := s.releaseRepo.FindChannelsByAppID(appID)
 	if err != nil {
 		return nil, err
 	}
@@ -11,8 +11,8 @@ func (s *service) GetReleaseChannels(productID int) ([]release.Channel, error) {
 	return channels, nil
 }
 
-func (s *service) ListReleasesByChannel(productID int, channelID int) ([]release.BasicInfo, error) {
-	releases, err := s.releaseRepo.FindByProductIDAndChannel(productID, channelID)
+func (s *service) ListReleasesByChannel(appID int, channelID int) ([]release.BasicInfo, error) {
+	releases, err := s.releaseRepo.FindByAppIDAndChannel(appID, channelID)
 	if err != nil {
 		return nil, err
 	}
@@ -20,8 +20,8 @@ func (s *service) ListReleasesByChannel(productID int, channelID int) ([]release
 	return releases, nil
 }
 
-func (s *service) GetReleaseSummary(productID int, version string) (release.Release, error) {
-	releaseEntity, err := s.releaseRepo.GetByProductIdAndVersion(productID, version)
+func (s *service) GetReleaseSummary(appID int, version string) (release.Release, error) {
+	releaseEntity, err := s.releaseRepo.GetByAppIDAndVersion(appID, version)
 	if err != nil {
 		return release.Release{}, err
 	}

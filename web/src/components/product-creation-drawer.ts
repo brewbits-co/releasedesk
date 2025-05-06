@@ -27,7 +27,7 @@ export class ProductCreationDrawer extends LitElement {
 
     const formData = new FormData(event.target as HTMLFormElement);
 
-    fetch('/internal/products', {
+    fetch('/internal/apps', {
       method: 'POST',
       body: encodeFormData(formData),
       credentials: 'include',

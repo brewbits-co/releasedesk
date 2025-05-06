@@ -6,7 +6,7 @@ import (
 )
 
 type SetupGuide struct {
-	ProductID     int
+	AppID         int
 	VersionFormat values.VersionFormat
 	Channels      []release.Channel
 }

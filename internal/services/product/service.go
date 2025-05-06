@@ -7,34 +7,34 @@ import (
 	"github.com/brewbits-co/releasedesk/pkg/session"
 )
 
-// Service defines the interface for handling product-related use cases.
+// Service defines the interface for handling application-related use cases.
 type Service interface {
-	// CreateProduct creates a new product using the provided basic information.
+	// CreateApp creates a new application using the provided basic information.
 	// It validates the input data against defined business rules and returns
-	// the created product or an error if the validation or creation fails.
-	CreateProduct(info product.BasicInfo) (product.Product, error)
-	// GetUserAccessibleProducts retrieves the list of products that a given user
+	// the created application or an error if the validation or creation fails.
+	CreateApp(info product.BasicInfo) (product.App, error)
+	// GetUserAccessibleApps retrieves the list of applications that a given user
 	// has access to, based on the user's ID.
-	GetUserAccessibleProducts(userID int) ([]product.Product, error)
-	// ApplyProductSetupGuide applies the setup guide for the specified product,
+	GetUserAccessibleApps(userID int) ([]product.App, error)
+	// ApplyAppSetupGuide applies the setup guide for the specified application,
 	// configuring it with the chosen settings.
-	ApplyProductSetupGuide(slug values.Slug, format values.VersionFormat, channels product.SetupChannelsOption, customChannels []string) error
-	// GetProductOverview returns a summary of a product.
-	GetProductOverview(slug values.Slug) (product.Overview, error)
-	// GetCurrentProductData retrieves product information shared across views based on the provided slug.
-	GetCurrentProductData(slug values.Slug) (session.CurrentProductData, error)
+	ApplyAppSetupGuide(slug values.Slug, format values.VersionFormat, channels product.SetupChannelsOption, customChannels []string) error
+	// GetAppOverview returns a summary of an application.
+	GetAppOverview(slug values.Slug) (product.Overview, error)
+	// GetCurrentAppData retrieves application information shared across views based on the provided slug.
+	GetCurrentAppData(slug values.Slug) (session.CurrentAppData, error)
 }
 
-// NewProductService initializes a new instance of the product Service using the provided dependencies.
-func NewProductService(productRepo product.ProductRepository, platformRepo platform.PlatformRepository) Service {
+// NewAppService initializes a new instance of the application Service using the provided dependencies.
+func NewAppService(appRepo product.AppRepository, platformRepo platform.PlatformRepository) Service {
 	return &service{
-		productRepo:  productRepo,
+		appRepo:      appRepo,
 		platformRepo: platformRepo,
 	}
 }
 
 // service implements the product.Service
 type service struct {
-	productRepo  product.ProductRepository
+	appRepo      product.AppRepository
 	platformRepo platform.PlatformRepository
 }

@@ -1,5 +1,5 @@
 {{ define "body" }}
-    {{- /*gotype: github.com/brewbits-co/releasedesk/pkg/session.CurrentProductData*/ -}}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/pkg/session.CurrentAppData*/ -}}
     <div>
         <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
         <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
@@ -70,7 +70,7 @@
                                     <ul role="list" class="-mx-2 space-y-1">
                                         <li>
                                             <!-- Current: "bg-violet-950 text-white", Default: "text-violet-200 hover:text-white hover:bg-violet-800" -->
-                                            <a href="/dashboard/{{.ProductSlug}}"
+                                            <a href="/dashboard/{{.AppSlug}}"
                                                class="group flex gap-x-3 rounded-md bg-violet-950 p-2 text-sm/6 font-semibold text-white">
                                                 <svg class="size-6 shrink-0 text-white" fill="none" viewBox="0 0 24 24"
                                                      stroke-width="1.5"
@@ -82,7 +82,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/{{.ProductSlug}}/feeds"
+                                            <a href="/dashboard/{{.AppSlug}}/feeds"
                                                class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                      fill="currentColor" class="size-6">
@@ -95,7 +95,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/{{.ProductSlug}}/distribution-groups"
+                                            <a href="/dashboard/{{.AppSlug}}/distribution-groups"
                                                class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                                 <svg class="size-6 shrink-0 text-violet-200 group-hover:text-white"
                                                      fill="none"
@@ -109,7 +109,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/{{.ProductSlug}}/announcements"
+                                            <a href="/dashboard/{{.AppSlug}}/announcements"
                                                class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                                      fill="currentColor"
@@ -121,7 +121,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/{{.ProductSlug}}/feeds"
+                                            <a href="/dashboard/{{.AppSlug}}/feeds"
                                                class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white"
                                                translate="no">
                                                 <i class="fa-solid fa-rss"></i>
@@ -129,7 +129,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/{{.ProductSlug}}/analytics"
+                                            <a href="/dashboard/{{.AppSlug}}/analytics"
                                                class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                      stroke-width="1.5"
@@ -171,7 +171,7 @@
                                     </ul>
                                 </li>
                                 <li class="mt-auto">
-                                    <a href="/dashboard/{{.ProductSlug}}/settings"
+                                    <a href="/dashboard/{{.AppSlug}}/settings"
                                        class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                         <svg class="size-6 shrink-0 text-violet-200 group-hover:text-white" fill="none"
                                              viewBox="0 0 24 24"
@@ -205,7 +205,7 @@
                             <ul role="list" class="-mx-2 space-y-1">
                                 <li>
                                     <!-- Current: "bg-violet-950 text-white", Default: "text-violet-200 hover:text-white hover:bg-violet-800" -->
-                                    <a href="/dashboard/{{.ProductSlug}}"
+                                    <a href="/dashboard/{{.AppSlug}}"
                                        class="group flex gap-x-3 rounded-md bg-violet-950 p-2 text-sm/6 font-semibold text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
@@ -216,7 +216,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/dashboard/{{.ProductSlug}}/releases"
+                                    <a href="/dashboard/{{.AppSlug}}/releases"
                                        class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
@@ -229,7 +229,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/dashboard/{{.ProductSlug}}/distribution-groups"
+                                    <a href="/dashboard/{{.AppSlug}}/distribution-groups"
                                        class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
@@ -242,7 +242,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/dashboard/{{.ProductSlug}}/announcements"
+                                    <a href="/dashboard/{{.AppSlug}}/announcements"
                                        class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
@@ -252,7 +252,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/dashboard/{{.ProductSlug}}/feeds"
+                                    <a href="/dashboard/{{.AppSlug}}/feeds"
                                        class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white"
                                        translate="no">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
@@ -265,7 +265,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/dashboard/{{.ProductSlug}}/analytics"
+                                    <a href="/dashboard/{{.AppSlug}}/analytics"
                                        class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
@@ -285,7 +285,7 @@
                             </ul>
                         </li>
                         <li class="mt-auto">
-                            <a href="/dashboard/{{.ProductSlug}}/settings"
+                            <a href="/dashboard/{{.AppSlug}}/settings"
                                class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                                 <svg class="size-6 shrink-0 text-violet-200 group-hover:text-white" fill="none"
                                      viewBox="0 0 24 24"
@@ -324,7 +324,7 @@
                             <span class="text-sm font-medium text-white" translate="no">MY</span>
                         </span>
                         <span class="relative flex flex-1 text-md font-medium text-gray-700 hover:text-gray-800"
-                              translate="no">{{.ProductName}}</span>
+                              translate="no">{{.AppName}}</span>
 
                         <!-- Profile dropdown -->
                         <headless-dropdown class="relative">
@@ -400,14 +400,14 @@
             </summary>
             <ul class="mt-1 px-2" id="sub-menu-1">
                 <li>
-                    <a href="/dashboard/{{.ProductSlug}}/platforms/{{.OS}}/builds"
+                    <a href="/dashboard/{{.AppSlug}}/platforms/{{.OS}}/builds"
                        class="group flex gap-x-3 rounded-md p-2 ml-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white" translate="no">
                         <i class="fa-solid fa-square-binary text-2xl"></i>
                         Builds
                     </a>
                 </li>
                 <li>
-                    <a href="/dashboard/{{.ProductSlug}}/platforms/{{.OS}}/configs"
+                    <a href="/dashboard/{{.AppSlug}}/platforms/{{.OS}}/configs"
                        class="group flex gap-x-3 rounded-md p-2 ml-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
                             <path fill-rule="evenodd"

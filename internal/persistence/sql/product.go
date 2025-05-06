@@ -6,20 +6,20 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-// NewProductRepository is the constructor for productRepository
-func NewProductRepository(db *sqlx.DB) product.ProductRepository {
-	return &productRepository{db: db}
+// NewApplicationRepository is the constructor for appRepository
+func NewApplicationRepository(db *sqlx.DB) product.AppRepository {
+	return &appRepository{db: db}
 }
 
-// productRepository is the implementation of product.ProductRepository
-type productRepository struct {
+// appRepository is the implementation of product.AppRepository
+type appRepository struct {
 	db *sqlx.DB
 }
 
-func (r *productRepository) Save(product *product.Product) error {
-	_ = product.BeforeCreate()
+func (r *appRepository) Save(app *product.App) error {
+	_ = app.BeforeCreate()
 
-	q := `INSERT INTO Products (
+	q := `INSERT INTO Apps (
 			Name, 
 			Slug, 
 			Description, 
@@ -30,38 +30,38 @@ func (r *productRepository) Save(product *product.Product) error {
 			SetupGuideCompleted
 		) VALUES (:Name, :Slug, :Description, :Private, :CreatedAt, :UpdatedAt, :VersionFormat, :SetupGuideCompleted)`
 
-	exec, err := r.db.NamedExec(q, product)
+	exec, err := r.db.NamedExec(q, app)
 	if err != nil {
 		return err
 	}
 
 	insertId, _ := exec.LastInsertId()
-	product.ID = int(insertId)
+	app.ID = int(insertId)
 
-	_ = product.AfterCreate()
+	_ = app.AfterCreate()
 	return nil
 }
 
-func (r *productRepository) Find() ([]product.Product, error) {
+func (r *appRepository) Find() ([]product.App, error) {
 	// Execute the database query
-	rows, err := r.db.Queryx("SELECT * FROM Products")
+	rows, err := r.db.Queryx("SELECT * FROM Apps")
 	if err != nil {
 		return nil, err // Return an error if the query fails
 	}
 	defer rows.Close() // Ensure the cursor is closed when the function exits
 
-	// Declare a slice to store the products
-	var products []product.Product
+	// Declare a slice to store the apps
+	var apps []product.App
 
 	// Iterate over the result set
 	for rows.Next() {
-		var p product.Product
-		// Map the row's data to the product struct
+		var p product.App
+		// Map the row's data to the application struct
 		if err := rows.StructScan(&p); err != nil {
 			return nil, err // Return an error if mapping fails
 		}
 		p.FormatAuditable()
-		products = append(products, p) // Add the product to the slice
+		apps = append(apps, p) // Add the application to the slice
 	}
 
 	// Check for errors during iteration
@@ -69,23 +69,23 @@ func (r *productRepository) Find() ([]product.Product, error) {
 		return nil, err
 	}
 
-	return products, nil // Return the list of products
+	return apps, nil // Return the list of apps
 }
 
-func (r *productRepository) FindBySlug(slug values.Slug) (product.Product, error) {
-	var p product.Product
-	err := r.db.QueryRowx("SELECT * FROM Products WHERE Slug = $1 LIMIT 1", slug).StructScan(&p)
+func (r *appRepository) FindBySlug(slug values.Slug) (product.App, error) {
+	var p product.App
+	err := r.db.QueryRowx("SELECT * FROM Apps WHERE Slug = $1 LIMIT 1", slug).StructScan(&p)
 	if err != nil {
-		return product.Product{}, err
+		return product.App{}, err
 	}
 
 	return p, err
 }
 
-func (r *productRepository) Update(product product.Product) error {
-	_ = product.BeforeUpdate()
+func (r *appRepository) Update(app product.App) error {
+	_ = app.BeforeUpdate()
 
-	q := `UPDATE Products SET 
+	q := `UPDATE Apps SET 
 			Name = :Name, 
 			Slug = :Slug, 
 			Description = :Description,
@@ -93,34 +93,34 @@ func (r *productRepository) Update(product product.Product) error {
            	VersionFormat = :VersionFormat, 
 			SetupGuideCompleted = :SetupGuideCompleted WHERE ID = :ID`
 
-	_, err := r.db.NamedExec(q, product)
+	_, err := r.db.NamedExec(q, app)
 	if err != nil {
 		return err
 	}
 
-	_ = product.AfterUpdate()
+	_ = app.AfterUpdate()
 	return nil
 }
 
-func (r *productRepository) Delete(product product.Product) error {
+func (r *appRepository) Delete(app product.App) error {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (r *productRepository) SaveSetupGuide(guide product.SetupGuide) error {
+func (r *appRepository) SaveSetupGuide(guide product.SetupGuide) error {
 	tx, err := r.db.Beginx()
 	if err != nil {
 		return err
 	}
 
-	q := "UPDATE Products SET VersionFormat = $1, SetupGuideCompleted = true WHERE ID = $2"
-	_, err = tx.Exec(q, guide.VersionFormat, guide.ProductID)
+	q := "UPDATE Apps SET VersionFormat = $1, SetupGuideCompleted = true WHERE ID = $2"
+	_, err = tx.Exec(q, guide.VersionFormat, guide.AppID)
 	if err != nil {
 		_ = tx.Rollback()
 		return err
 	}
 
-	q = "INSERT INTO Channels (Name, ProductID, Closed) VALUES (:Name, :ProductID, :Closed)"
+	q = "INSERT INTO Channels (Name, AppID, Closed) VALUES (:Name, :AppID, :Closed)"
 	for _, channel := range guide.Channels {
 		_, err := tx.NamedExec(q, channel)
 		if err != nil {
@@ -137,7 +137,7 @@ func (r *productRepository) SaveSetupGuide(guide product.SetupGuide) error {
 	return nil
 }
 
-func (r *productRepository) GetPlatformAvailability(product *product.Product) error {
+func (r *appRepository) GetPlatformAvailability(app *product.App) error {
 	q := `SELECT 
     EXISTS (
         SELECT 1 
@@ -163,16 +163,16 @@ func (r *productRepository) GetPlatformAvailability(product *product.Product) er
         SELECT 1 
         FROM Platforms a 
         WHERE a.AppID = p.ID AND a.OS = 'macOS'
-    ) AS HasMacOS FROM Products p WHERE ID = $1`
+    ) AS HasMacOS FROM Apps p WHERE ID = $1`
 
-	row := r.db.QueryRow(q, product.ID)
+	row := r.db.QueryRow(q, app.ID)
 
 	err := row.Scan(
-		&product.HasAndroid,
-		&product.HasIOS,
-		&product.HasWindows,
-		&product.HasLinux,
-		&product.HasMacOS,
+		&app.HasAndroid,
+		&app.HasIOS,
+		&app.HasWindows,
+		&app.HasLinux,
+		&app.HasMacOS,
 	)
 	if err != nil {
 		return err

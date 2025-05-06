@@ -7,14 +7,14 @@ import (
 
 type BuildListData struct {
 	session.SessionData
-	session.CurrentProductData
+	session.CurrentAppData
 	CurrentPlatform session.CurrentPlatformData
 	Builds          []build.BasicInfo
 }
 
 type BuildDetailsData struct {
 	session.SessionData
-	session.CurrentProductData
+	session.CurrentAppData
 	CurrentPlatform session.CurrentPlatformData
 	Build           build.Build
 }

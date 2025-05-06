@@ -7,5 +7,5 @@ import (
 
 type HomepageData struct {
 	session.SessionData
-	Products []product.Product
+	Apps []product.App
 }

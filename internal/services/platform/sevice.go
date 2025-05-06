@@ -15,7 +15,7 @@ type Service interface {
 }
 
 // NewPlatformService initializes a new instance of the platform Service using the provided dependencies.
-func NewPlatformService(platformRepo platform.PlatformRepository, productRepo product.ProductRepository) Service {
+func NewPlatformService(platformRepo platform.PlatformRepository, productRepo product.AppRepository) Service {
 	return &service{
 		platformRepo: platformRepo,
 		productRepo:  productRepo,
@@ -25,5 +25,5 @@ func NewPlatformService(platformRepo platform.PlatformRepository, productRepo pr
 // service implements the platform.Service
 type service struct {
 	platformRepo platform.PlatformRepository
-	productRepo  product.ProductRepository
+	productRepo  product.AppRepository
 }

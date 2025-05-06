@@ -33,7 +33,7 @@ export class ReleaseCreationDrawer extends LitElement {
 
         const formData = new FormData(event.target as HTMLFormElement);
 
-        fetch(`/internal/products/${this.slug}/releases`, {
+        fetch(`/internal/apps/${this.slug}/releases`, {
             method: 'POST',
             body: encodeFormData(formData),
             credentials: 'include',

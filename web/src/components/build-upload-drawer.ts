@@ -48,7 +48,7 @@ export class BuildUploadDrawer extends LitElement {
 
         const formData = new FormData(event.target as HTMLFormElement);
 
-        fetch(`/internal/products/${this.slug}/platforms/${this.platform}/builds`, {
+        fetch(`/internal/apps/${this.slug}/platforms/${this.platform}/builds`, {
             method: 'POST',
             body: formData,
             credentials: 'include'

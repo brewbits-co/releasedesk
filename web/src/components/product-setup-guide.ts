@@ -23,7 +23,7 @@ export class ProductSetupGuide extends LitElement {
 
         const formData = new FormData(event.target as HTMLFormElement);
 
-        fetch(`/internal/products/${this.slug}/setup`, {
+        fetch(`/internal/apps/${this.slug}/setup`, {
             method: 'POST',
             body: encodeFormData(formData),
             credentials: 'include',

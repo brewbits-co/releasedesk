@@ -2,12 +2,12 @@ package product
 
 import "github.com/brewbits-co/releasedesk/internal/values"
 
-type ProductRepository interface {
-	Save(product *Product) error
-	Find() ([]Product, error)
-	FindBySlug(slug values.Slug) (Product, error)
-	Update(product Product) error
-	Delete(product Product) error
-	GetPlatformAvailability(product *Product) error
+type AppRepository interface {
+	Save(app *App) error
+	Find() ([]App, error)
+	FindBySlug(slug values.Slug) (App, error)
+	Update(app App) error
+	Delete(app App) error
+	GetPlatformAvailability(app *App) error
 	SaveSetupGuide(guide SetupGuide) error
 }

@@ -34,7 +34,7 @@ func buildConsole(container *dig.Container) *http.Server {
 		authService authSrv.Service,
 		authCtrl auth.AuthController,
 		miscCtrl misc.MiscController,
-		productCtrl product.ProductController,
+		appCtrl product.AppController,
 		platformCtrl platform.PlatformController,
 		releaseCtrl release.ReleaseController,
 		buildCtrl build.BuildController,
@@ -54,7 +54,7 @@ func buildConsole(container *dig.Container) *http.Server {
 
 			// Private Views
 			r.Get("/homepage", miscCtrl.RenderHomepage)
-			r.Get("/dashboard/{slug}", productCtrl.RenderDashboard)
+			r.Get("/dashboard/{slug}", appCtrl.RenderDashboard)
 			r.Get("/dashboard/{slug}/releases", releaseCtrl.RenderReleaseList)
 			r.Get("/dashboard/{slug}/releases/{version}", releaseCtrl.RenderReleaseSummary)
 			r.Get("/dashboard/{slug}/releases/{version}/release-notes", releaseCtrl.RenderReleaseNotes)
@@ -63,11 +63,11 @@ func buildConsole(container *dig.Container) *http.Server {
 			r.Get("/dashboard/{slug}/platforms/{platform}/builds/{number}/metadata", buildCtrl.RenderBuildMetadata)
 			// Private Internal API
 			r.Post("/internal/logout", authCtrl.HandleLogout)
-			r.Post("/internal/products", productCtrl.HandleCreateProduct)
-			r.Post("/internal/products/{slug}/setup", productCtrl.HandleProductSetupGuide)
-			r.Post("/internal/products/{slug}/platforms", platformCtrl.HandleAddPlatform)
-			r.Post("/internal/products/{slug}/releases", releaseCtrl.HandleCreateRelease)
-			r.Post("/internal/products/{slug}/platforms/{platform}/builds", buildCtrl.HandleBuildUpload)
+			r.Post("/internal/apps", appCtrl.HandleCreateApp)
+			r.Post("/internal/apps/{slug}/setup", appCtrl.HandleAppSetupGuide)
+			r.Post("/internal/apps/{slug}/platforms", platformCtrl.HandleAddPlatform)
+			r.Post("/internal/apps/{slug}/releases", releaseCtrl.HandleCreateRelease)
+			r.Post("/internal/apps/{slug}/platforms/{platform}/builds", buildCtrl.HandleBuildUpload)
 			r.Get("/internal/artifacts/{checksum}", buildCtrl.HandleArtifactDownload)
 		})
 
@@ -75,7 +75,7 @@ func buildConsole(container *dig.Container) *http.Server {
 		router.Group(func(r chi.Router) {
 			r.Use(middlewares.APITokenAuthorization(authService))
 
-			r.Post("/api/products/{slug}/platforms/{platform}/builds", buildCtrl.HandleBuildUpload)
+			r.Post("/api/apps/{slug}/platforms/{platform}/builds", buildCtrl.HandleBuildUpload)
 		})
 	})
 	if err != nil {

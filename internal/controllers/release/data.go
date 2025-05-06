@@ -7,7 +7,7 @@ import (
 
 type ReleaseListData struct {
 	session.SessionData
-	session.CurrentProductData
+	session.CurrentAppData
 	Releases         []release.BasicInfo
 	Channels         []release.Channel
 	CurrentChannelID int
@@ -15,12 +15,12 @@ type ReleaseListData struct {
 
 type ReleaseSummaryData struct {
 	session.SessionData
-	session.CurrentProductData
+	session.CurrentAppData
 	release.Release
 	Channels []release.Channel
 }
 
 type ReleaseNotesData struct {
 	session.SessionData
-	session.CurrentProductData
+	session.CurrentAppData
 }

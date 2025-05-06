@@ -13,13 +13,13 @@ import (
 
 func (c *releaseController) RenderReleaseList(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentProduct, err := c.productService.GetCurrentProductData(values.Slug(slug))
+	currentApp, err := c.productService.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
 	}
 
-	channels, err := c.service.GetReleaseChannels(currentProduct.ProductID)
+	channels, err := c.service.GetReleaseChannels(currentApp.AppID)
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
@@ -34,18 +34,18 @@ func (c *releaseController) RenderReleaseList(w http.ResponseWriter, r *http.Req
 		currentChannelID, _ = strconv.Atoi(channel)
 	}
 
-	releases, err := c.service.ListReleasesByChannel(currentProduct.ProductID, currentChannelID)
+	releases, err := c.service.ListReleasesByChannel(currentApp.AppID, currentChannelID)
 	if err != nil {
 		// TODO: redirect to error page
 		log.Println(err)
 	}
 
 	data := ReleaseListData{
-		SessionData:        session.NewSessionData(r.Context()),
-		CurrentProductData: currentProduct,
-		Releases:           releases,
-		Channels:           channels,
-		CurrentChannelID:   currentChannelID,
+		SessionData:      session.NewSessionData(r.Context()),
+		CurrentAppData:   currentApp,
+		Releases:         releases,
+		Channels:         channels,
+		CurrentChannelID: currentChannelID,
 	}
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/release_list.gohtml")
@@ -64,7 +64,7 @@ func (c *releaseController) RenderReleaseList(w http.ResponseWriter, r *http.Req
 
 func (c *releaseController) RenderReleaseSummary(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentProduct, err := c.productService.GetCurrentProductData(values.Slug(slug))
+	currentApp, err := c.productService.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
@@ -76,24 +76,24 @@ func (c *releaseController) RenderReleaseSummary(w http.ResponseWriter, r *http.
 		log.Println(err)
 	}
 
-	channels, err := c.service.GetReleaseChannels(currentProduct.ProductID)
+	channels, err := c.service.GetReleaseChannels(currentApp.AppID)
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
 	}
 
 	version := chi.URLParam(r, "version")
-	releaseSummary, err := c.service.GetReleaseSummary(currentProduct.ProductID, version)
+	releaseSummary, err := c.service.GetReleaseSummary(currentApp.AppID, version)
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
 	}
 
 	data := ReleaseSummaryData{
-		SessionData:        session.NewSessionData(r.Context()),
-		CurrentProductData: currentProduct,
-		Channels:           channels,
-		Release:            releaseSummary,
+		SessionData:    session.NewSessionData(r.Context()),
+		CurrentAppData: currentApp,
+		Channels:       channels,
+		Release:        releaseSummary,
 	}
 
 	err = tmpl.ExecuteTemplate(w, "index.gohtml", data)
@@ -105,7 +105,7 @@ func (c *releaseController) RenderReleaseSummary(w http.ResponseWriter, r *http.
 
 func (c *releaseController) RenderReleaseNotes(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentProduct, err := c.productService.GetCurrentProductData(values.Slug(slug))
+	currentApp, err := c.productService.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
@@ -118,8 +118,8 @@ func (c *releaseController) RenderReleaseNotes(w http.ResponseWriter, r *http.Re
 	}
 
 	data := ReleaseNotesData{
-		SessionData:        session.NewSessionData(r.Context()),
-		CurrentProductData: currentProduct,
+		SessionData:    session.NewSessionData(r.Context()),
+		CurrentAppData: currentApp,
 	}
 
 	err = tmpl.ExecuteTemplate(w, "index.gohtml", data)

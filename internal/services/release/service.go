@@ -9,20 +9,20 @@ import (
 // Service defines the interface for handling release-related use cases.
 type Service interface {
 	CreateRelease(slug values.Slug, info release.BasicInfo) (release.Release, error)
-	ListReleasesByChannel(productID int, channelID int) ([]release.BasicInfo, error)
-	GetReleaseSummary(productID int, version string) (release.Release, error)
-	GetReleaseChannels(productID int) ([]release.Channel, error)
+	ListReleasesByChannel(appID int, channelID int) ([]release.BasicInfo, error)
+	GetReleaseSummary(appID int, version string) (release.Release, error)
+	GetReleaseChannels(appID int) ([]release.Channel, error)
 }
 
 // NewReleaseService initializes a new instance of the release Service using the provided dependencies.
-func NewReleaseService(releaseRepo release.ReleaseRepository, productRepo product.ProductRepository) Service {
+func NewReleaseService(releaseRepo release.ReleaseRepository, appRepo product.AppRepository) Service {
 	return &service{
 		releaseRepo: releaseRepo,
-		productRepo: productRepo,
+		appRepo:     appRepo,
 	}
 }
 
 type service struct {
 	releaseRepo release.ReleaseRepository
-	productRepo product.ProductRepository
+	appRepo     product.AppRepository
 }

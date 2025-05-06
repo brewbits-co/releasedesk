@@ -15,14 +15,14 @@ type BuildController interface {
 	RenderBuildMetadata(w http.ResponseWriter, r *http.Request)
 }
 
-func NewBuildController(service build.Service, productService product.Service) BuildController {
+func NewBuildController(service build.Service, appService product.Service) BuildController {
 	return &buildController{
-		service:        service,
-		productService: productService,
+		service:    service,
+		appService: appService,
 	}
 }
 
 type buildController struct {
-	service        build.Service
-	productService product.Service
+	service    build.Service
+	appService product.Service
 }

@@ -6,22 +6,22 @@ import (
 	"net/http"
 )
 
-type ProductController interface {
-	HandleCreateProduct(w http.ResponseWriter, r *http.Request)
-	HandleProductSetupGuide(w http.ResponseWriter, r *http.Request)
+type AppController interface {
+	HandleCreateApp(w http.ResponseWriter, r *http.Request)
+	HandleAppSetupGuide(w http.ResponseWriter, r *http.Request)
 	RenderDashboard(w http.ResponseWriter, r *http.Request)
 }
 
-// NewProductController creates a new instance of productController with the provided dependencies.
-func NewProductController(service product.Service, platformService platform.Service) ProductController {
-	return &productController{
+// NewAppController creates a new instance of appController with the provided dependencies.
+func NewAppController(service product.Service, platformService platform.Service) AppController {
+	return &appController{
 		service:         service,
 		platformService: platformService,
 	}
 }
 
-// productController implements the product.ProductController.
-type productController struct {
+// appController implements the product.AppController.
+type appController struct {
 	service         product.Service
 	platformService platform.Service
 }

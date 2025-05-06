@@ -9,10 +9,10 @@ import (
 )
 
 func (c *miscController) RenderHomepage(w http.ResponseWriter, r *http.Request) {
-	products, err := c.service.GetUserAccessibleProducts(r.Context().Value("userID").(int))
+	apps, err := c.service.GetUserAccessibleApps(r.Context().Value("userID").(int))
 	data := HomepageData{
 		SessionData: session.NewSessionData(r.Context()),
-		Products:    products,
+		Apps:        apps,
 	}
 
 	tmpl, err := views.ParseTemplate(views.NavbarLayout, "templates/console/homepage.gohtml")

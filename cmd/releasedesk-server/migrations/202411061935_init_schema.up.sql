@@ -17,7 +17,7 @@ INSERT INTO Users (Username, Email, Password, FirstName, LastName, Role, Created
 VALUES ('admin', null, '$2a$10$Z13RQlu6HdKSW41rJsz7Ju5NZ0VMyUdm6YZMr0wjJqW955qd2pzx2',
         null, null, 1, '1731426770000', '1731426770000');
 
-CREATE TABLE Products
+CREATE TABLE Apps
 (
     ID                  INTEGER PRIMARY KEY AUTOINCREMENT,
     Name                TEXT     NOT NULL UNIQUE,
@@ -33,38 +33,38 @@ CREATE TABLE Products
 
 CREATE TABLE Channels
 (
-    ID        INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name      TEXT NOT NULL,
-    ProductID INTEGER
-        CONSTRAINT Channels_Products_ID_fk REFERENCES Products,
-    Closed    BOOLEAN DEFAULT FALSE
+    ID     INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name   TEXT NOT NULL,
+    AppID  INTEGER
+        CONSTRAINT Channels_App_ID_fk REFERENCES Apps,
+    Closed BOOLEAN DEFAULT FALSE
 );
 
-CREATE UNIQUE INDEX Channels_ProductID_Name_uindex
-    ON Channels (ProductID, Name);
+CREATE UNIQUE INDEX Channels_AppID_Name_uindex
+    ON Channels (AppID, Name);
 
 CREATE TABLE Platforms
 (
     ID        INTEGER PRIMARY KEY AUTOINCREMENT,
-    AppID INTEGER
-        CONSTRAINT Apps_Products_ID_fk REFERENCES Products,
-    OS  TEXT,
+    AppID     INTEGER
+        CONSTRAINT Platforms_App_ID_fk REFERENCES Apps,
+    OS        TEXT,
     CreatedAt DATETIME NOT NULL,
     UpdatedAt DATETIME NOT NULL
 );
 
-CREATE UNIQUE INDEX Apps_ProductID_OS_uindex
+CREATE UNIQUE INDEX Apps_AppID_OS_uindex
     ON Platforms (AppID, OS);
 
 CREATE TABLE Builds
 (
-    ID        INTEGER PRIMARY KEY AUTOINCREMENT,
-    PlatformID     INTEGER
+    ID         INTEGER PRIMARY KEY AUTOINCREMENT,
+    PlatformID INTEGER
         CONSTRAINT Builds_Platform_ID_fk REFERENCES Platforms,
-    Number    TEXT     NOT NULL,
-    Version   TEXT     NOT NULL,
-    CreatedAt DATETIME NOT NULL,
-    UpdatedAt DATETIME NOT NULL
+    Number     TEXT     NOT NULL,
+    Version    TEXT     NOT NULL,
+    CreatedAt  DATETIME NOT NULL,
+    UpdatedAt  DATETIME NOT NULL
 );
 
 CREATE UNIQUE INDEX Builds_PlatformID_Number_uindex

@@ -30,8 +30,8 @@ type BasicInfo struct {
 	fields.Auditable
 	// ID is the unique identifier of a Release.
 	ID int `db:"ID"`
-	// ProductID is the identifier of the product that this Release belongs.
-	ProductID int `db:"ProductID"`
+	// AppID is the identifier of the product that this Release belongs.
+	AppID int `db:"AppID"`
 	// Version specifies the version of the Release.
 	Version string `db:"Version"`
 	// TargetChannel

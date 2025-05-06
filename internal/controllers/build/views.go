@@ -13,14 +13,14 @@ import (
 
 func (c *buildController) RenderBuildList(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentProduct, err := c.productService.GetCurrentProductData(values.Slug(slug))
+	currentApp, err := c.appService.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
 	}
 
 	platform := chi.URLParam(r, "platform")
-	currentPlatform := session.NewCurrentPlatformData(currentProduct, values.OS(platform))
+	currentPlatform := session.NewCurrentPlatformData(currentApp, values.OS(platform))
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/build_list.gohtml")
 	if err != nil {
@@ -35,10 +35,10 @@ func (c *buildController) RenderBuildList(w http.ResponseWriter, r *http.Request
 	}
 
 	data := BuildListData{
-		SessionData:        session.NewSessionData(r.Context()),
-		CurrentProductData: currentProduct,
-		CurrentPlatform:    currentPlatform,
-		Builds:             builds,
+		SessionData:     session.NewSessionData(r.Context()),
+		CurrentAppData:  currentApp,
+		CurrentPlatform: currentPlatform,
+		Builds:          builds,
 	}
 
 	err = tmpl.ExecuteTemplate(w, "index.gohtml", data)
@@ -50,14 +50,14 @@ func (c *buildController) RenderBuildList(w http.ResponseWriter, r *http.Request
 
 func (c *buildController) RenderBuildDetails(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentProduct, err := c.productService.GetCurrentProductData(values.Slug(slug))
+	currentApp, err := c.appService.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
 	}
 
 	platform := chi.URLParam(r, "platform")
-	currentPlatform := session.NewCurrentPlatformData(currentProduct, values.OS(platform))
+	currentPlatform := session.NewCurrentPlatformData(currentApp, values.OS(platform))
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/build_details.gohtml")
 	if err != nil {
@@ -78,10 +78,10 @@ func (c *buildController) RenderBuildDetails(w http.ResponseWriter, r *http.Requ
 	}
 
 	data := BuildDetailsData{
-		SessionData:        session.NewSessionData(r.Context()),
-		CurrentProductData: currentProduct,
-		CurrentPlatform:    currentPlatform,
-		Build:              buildDetails,
+		SessionData:     session.NewSessionData(r.Context()),
+		CurrentAppData:  currentApp,
+		CurrentPlatform: currentPlatform,
+		Build:           buildDetails,
 	}
 
 	err = tmpl.ExecuteTemplate(w, "index.gohtml", data)
@@ -93,14 +93,14 @@ func (c *buildController) RenderBuildDetails(w http.ResponseWriter, r *http.Requ
 
 func (c *buildController) RenderBuildMetadata(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
-	currentProduct, err := c.productService.GetCurrentProductData(values.Slug(slug))
+	currentApp, err := c.appService.GetCurrentAppData(values.Slug(slug))
 	if err != nil {
 		// TODO: redirect to 404 page
 		log.Println(err)
 	}
 
 	platform := chi.URLParam(r, "platform")
-	currentPlatform := session.NewCurrentPlatformData(currentProduct, values.OS(platform))
+	currentPlatform := session.NewCurrentPlatformData(currentApp, values.OS(platform))
 
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/build_metadata.gohtml")
 	if err != nil {
@@ -121,10 +121,10 @@ func (c *buildController) RenderBuildMetadata(w http.ResponseWriter, r *http.Req
 	}
 
 	data := BuildDetailsData{
-		SessionData:        session.NewSessionData(r.Context()),
-		CurrentProductData: currentProduct,
-		CurrentPlatform:    currentPlatform,
-		Build:              buildDetails,
+		SessionData:     session.NewSessionData(r.Context()),
+		CurrentAppData:  currentApp,
+		CurrentPlatform: currentPlatform,
+		Build:           buildDetails,
 	}
 
 	err = tmpl.ExecuteTemplate(w, "index.gohtml", data)

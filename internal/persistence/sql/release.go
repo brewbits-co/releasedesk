@@ -15,8 +15,8 @@ type releaseRepository struct {
 	db *sqlx.DB
 }
 
-func (r *releaseRepository) FindChannelsByProductID(productID int) ([]release.Channel, error) {
-	rows, err := r.db.Queryx(`SELECT ID, Name, ProductID, Closed FROM Channels WHERE ProductID = $1 ORDER BY ID`, productID)
+func (r *releaseRepository) FindChannelsByAppID(appID int) ([]release.Channel, error) {
+	rows, err := r.db.Queryx(`SELECT ID, Name, AppID, Closed FROM Channels WHERE AppID = $1 ORDER BY ID`, appID)
 	if err != nil {
 		return nil, err
 	}
@@ -42,8 +42,8 @@ func (r *releaseRepository) FindChannelsByProductID(productID int) ([]release.Ch
 func (r *releaseRepository) Save(release *release.Release) error {
 	_ = release.BeforeCreate()
 
-	q := `INSERT INTO Releases (ProductID, Version, TargetChannel, Status, CreatedAt, UpdatedAt) 
-			VALUES (:ProductID, :Version, :TargetChannel, :Status, :CreatedAt, :UpdatedAt)`
+	q := `INSERT INTO Releases (AppID, Version, TargetChannel, Status, CreatedAt, UpdatedAt) 
+			VALUES (:AppID, :Version, :TargetChannel, :Status, :CreatedAt, :UpdatedAt)`
 
 	exec, err := r.db.NamedExec(q, release)
 	if err != nil {
@@ -57,11 +57,11 @@ func (r *releaseRepository) Save(release *release.Release) error {
 	return nil
 }
 
-func (r *releaseRepository) FindByProductIDAndChannel(productID int, channelID int) ([]release.BasicInfo, error) {
+func (r *releaseRepository) FindByAppIDAndChannel(appID int, channelID int) ([]release.BasicInfo, error) {
 	// Execute the database query
-	q := `SELECT ID, ProductID, Version, TargetChannel, Status, CreatedAt, UpdatedAt 
-			FROM Releases WHERE ProductID = $1 AND TargetChannel = $2 ORDER BY CreatedAt DESC`
-	rows, err := r.db.Queryx(q, productID, channelID)
+	q := `SELECT ID, AppID, Version, TargetChannel, Status, CreatedAt, UpdatedAt 
+			FROM Releases WHERE AppID = $1 AND TargetChannel = $2 ORDER BY CreatedAt DESC`
+	rows, err := r.db.Queryx(q, appID, channelID)
 	if err != nil {
 		return nil, err // Return an error if the query fails
 	}
@@ -89,14 +89,14 @@ func (r *releaseRepository) FindByProductIDAndChannel(productID int, channelID i
 	return releases, nil
 }
 
-func (r *releaseRepository) GetByProductIdAndVersion(productID int, version string) (release.Release, error) {
+func (r *releaseRepository) GetByAppIDAndVersion(appID int, version string) (release.Release, error) {
 	var releaseSummary release.Release
 
 	// Execute the database query
-	q := `SELECT ID, ProductID, Version, TargetChannel, Status, CreatedAt, UpdatedAt 
-			FROM Releases WHERE ProductID = $1 AND Version = $2 LIMIT 1`
+	q := `SELECT ID, AppID, Version, TargetChannel, Status, CreatedAt, UpdatedAt 
+			FROM Releases WHERE AppID = $1 AND Version = $2 LIMIT 1`
 
-	err := r.db.QueryRowx(q, productID, version).StructScan(&releaseSummary)
+	err := r.db.QueryRowx(q, appID, version).StructScan(&releaseSummary)
 	if err != nil {
 		return release.Release{}, err
 	}

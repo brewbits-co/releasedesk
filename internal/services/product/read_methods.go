@@ -7,51 +7,51 @@ import (
 	"sort"
 )
 
-func (s *service) GetUserAccessibleProducts(userID int) ([]product.Product, error) {
-	products, err := s.productRepo.Find()
+func (s *service) GetUserAccessibleApps(userID int) ([]product.App, error) {
+	applications, err := s.appRepo.Find()
 	if err != nil {
 		return nil, err
 	}
 
-	for i := range products {
-		if s.productRepo.GetPlatformAvailability(&products[i]) != nil {
+	for i := range applications {
+		if s.appRepo.GetPlatformAvailability(&applications[i]) != nil {
 			return nil, err
 		}
 	}
 
-	return products, nil
+	return applications, nil
 }
 
-func (s *service) GetProductOverview(slug values.Slug) (product.Overview, error) {
-	productEntity, err := s.productRepo.FindBySlug(slug)
+func (s *service) GetAppOverview(slug values.Slug) (product.Overview, error) {
+	applicationEntity, err := s.appRepo.FindBySlug(slug)
 	if err != nil {
 		return product.Overview{}, err
 	}
 
 	data := product.Overview{
-		SetupGuideCompleted: productEntity.SetupGuideCompleted,
+		SetupGuideCompleted: applicationEntity.SetupGuideCompleted,
 	}
 
 	return data, nil
 }
 
-func (s *service) GetCurrentProductData(slug values.Slug) (session.CurrentProductData, error) {
-	productEntity, err := s.productRepo.FindBySlug(slug)
+func (s *service) GetCurrentAppData(slug values.Slug) (session.CurrentAppData, error) {
+	applicationEntity, err := s.appRepo.FindBySlug(slug)
 	if err != nil {
-		return session.CurrentProductData{}, err
+		return session.CurrentAppData{}, err
 	}
 
-	platforms, err := s.platformRepo.FindByAppID(productEntity.ID)
+	platforms, err := s.platformRepo.FindByAppID(applicationEntity.ID)
 	if err != nil {
-		return session.CurrentProductData{}, err
+		return session.CurrentAppData{}, err
 	}
 
 	var appPlatforms []session.CurrentPlatformData
 	for _, platformEntity := range platforms {
 		appPlatforms = append(appPlatforms, session.CurrentPlatformData{
-			PlatformID:  platformEntity.ID,
-			OS:          platformEntity.OS,
-			ProductSlug: slug,
+			PlatformID: platformEntity.ID,
+			OS:         platformEntity.OS,
+			AppSlug:    slug,
 		})
 	}
 
@@ -69,10 +69,10 @@ func (s *service) GetCurrentProductData(slug values.Slug) (session.CurrentProduc
 		return platformOrder[appPlatforms[i].OS] < platformOrder[appPlatforms[j].OS]
 	})
 
-	return session.CurrentProductData{
-		ProductID:   productEntity.ID,
-		ProductName: productEntity.Name,
-		ProductSlug: productEntity.Slug,
-		Platforms:   appPlatforms,
+	return session.CurrentAppData{
+		AppID:     applicationEntity.ID,
+		AppName:   applicationEntity.Name,
+		AppSlug:   applicationEntity.Slug,
+		Platforms: appPlatforms,
 	}, nil
 }

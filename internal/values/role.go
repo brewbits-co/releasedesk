@@ -4,14 +4,14 @@ package values
 type Role int
 
 const (
-	// Admin have full access to all products and administrative tasks.
+	// Admin have full access to all applications and administrative tasks.
 	Admin Role = iota + 1
-	// Manager have full access to all products.
+	// Manager have full access to all applications.
 	Manager // 2
-	// Developer have limited access to selected products.
+	// Developer have limited access to selected applications.
 	Developer
-	// Tester have limited access to selected products.
+	// Tester have limited access to selected applications.
 	Tester
-	// Viewer have read access to selected products.
+	// Viewer have read access to selected applications.
 	Viewer // 3
 )

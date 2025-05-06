@@ -4,21 +4,21 @@ import (
 	"github.com/brewbits-co/releasedesk/internal/domains/product"
 )
 
-func (s *service) CreateProduct(info product.BasicInfo) (product.Product, error) {
+func (s *service) CreateApp(info product.BasicInfo) (product.App, error) {
 	info.SetupGuideCompleted = false
 	info.Slug.Format()
 
-	newProduct := product.NewProduct(info)
+	newApp := product.NewApp(info)
 
-	err := newProduct.IsValid()
+	err := newApp.IsValid()
 	if err != nil {
-		return product.Product{}, err
+		return product.App{}, err
 	}
 
-	err = s.productRepo.Save(&newProduct)
+	err = s.appRepo.Save(&newApp)
 	if err != nil {
-		return product.Product{}, err
+		return product.App{}, err
 	}
 
-	return newProduct, nil
+	return newApp, nil
 }

@@ -6,37 +6,37 @@ import (
 	"github.com/brewbits-co/releasedesk/internal/values"
 )
 
-func (s *service) ApplyProductSetupGuide(slug values.Slug, format values.VersionFormat, channels product.SetupChannelsOption, customChannels []string) error {
-	productEntity, err := s.productRepo.FindBySlug(slug)
+func (s *service) ApplyAppSetupGuide(slug values.Slug, format values.VersionFormat, channels product.SetupChannelsOption, customChannels []string) error {
+	appEntity, err := s.appRepo.FindBySlug(slug)
 	if err != nil {
-		return product.ErrProductNotFound
+		return product.ErrAppNotFound
 	}
 
-	if productEntity.SetupGuideCompleted == true {
+	if appEntity.SetupGuideCompleted == true {
 		return product.ErrSetupGuideAlreadyCompleted
 	}
 
 	var channelsToCreate []release.Channel
 	if channels == product.ByMaturity {
-		channelsToCreate = release.NewByMaturityChannels(productEntity.ID)
+		channelsToCreate = release.NewByMaturityChannels(appEntity.ID)
 	}
 	if channels == product.ByEnvironment {
-		channelsToCreate = release.NewByEnvironmentChannels(productEntity.ID)
+		channelsToCreate = release.NewByEnvironmentChannels(appEntity.ID)
 	}
 	if channels == product.CustomChannels {
 		channelsToCreate = make([]release.Channel, len(customChannels))
 		for i := range customChannels {
-			channelsToCreate[i] = release.NewChannel(productEntity.ID, customChannels[i], false)
+			channelsToCreate[i] = release.NewChannel(appEntity.ID, customChannels[i], false)
 		}
 	}
 
 	stepGuide := product.SetupGuide{
-		ProductID:     productEntity.ID,
+		AppID:         appEntity.ID,
 		VersionFormat: format,
 		Channels:      channelsToCreate,
 	}
 
-	err = s.productRepo.SaveSetupGuide(stepGuide)
+	err = s.appRepo.SaveSetupGuide(stepGuide)
 	if err != nil {
 		return err
 	}
