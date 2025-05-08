@@ -23,4 +23,6 @@ type ReleaseSummaryData struct {
 type ReleaseNotesData struct {
 	session.SessionData
 	session.CurrentAppData
+	Release      release.Release
+	ReleaseNotes release.ReleaseNotes
 }

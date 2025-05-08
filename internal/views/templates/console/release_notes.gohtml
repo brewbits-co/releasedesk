@@ -1,14 +1,14 @@
 {{ define "content" }}
-    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/release.ReleaseSummaryData*/ -}}
+    {{- /*gotype: github.com/brewbits-co/releasedesk/internal/controllers/release.ReleaseNotesData*/ -}}
     <div class="relative border-b border-gray-200 pb-5 sm:pb-0">
         <div class="md:flex md:items-center md:justify-between">
             <div>
-                <h3 class="text-xl font-semibold text-gray-900">Release 1.0.1</h3>
+                <h3 class="text-xl font-semibold text-gray-900">Release {{.Release.BasicInfo.Version}}</h3>
             </div>
         </div>
         <div class="mt-4">
             <nav class="-mb-px flex space-x-8">
-                <a href="/dashboard/{{.CurrentAppData.AppSlug}}/releases/1.0.1"
+                <a href="/dashboard/{{.CurrentAppData.AppSlug}}/releases/{{.Release.BasicInfo.Version}}"
                    class="whitespace-nowrap border-b-2 border-transparent px-1 pb-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                     Summary
                 </a>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="rounded-lg bg-white shadow p-6 mt-4">
-        <form action="#">
+        <form action="/internal/releases/{{.Release.ID}}/release-notes" method="POST">
             <div>
                 <div class="group flex items-center" aria-orientation="horizontal" role="tablist">
                     <!-- Selected: "bg-gray-100 text-gray-900 hover:bg-gray-200", Not Selected: "bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-900" -->
@@ -39,11 +39,11 @@
                 <div class="mt-2">
                     <div id="tabs-1-panel-1" class="-m-0.5 rounded-lg p-0.5" aria-labelledby="tabs-1-tab-1"
                          role="tabpanel" tabindex="0">
-                        <label for="comment" class="sr-only">Comment</label>
+                        <label for="release-notes" class="sr-only">Release Notes</label>
                         <div>
-                            <textarea rows="5" name="comment" id="comment"
+                            <textarea rows="5" name="release-notes" id="release-notes"
                                       class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-violet-600 sm:text-sm/6"
-                                      placeholder="Add your comment..."></textarea>
+                                      placeholder="Add your release notes...">{{.ReleaseNotes.Text}}</textarea>
                         </div>
                     </div>
                     <div class="-m-0.5 rounded-lg p-0.5">
@@ -57,6 +57,41 @@
                 <legend class="text-sm font-medium text-gray-900 mb-4">
                     Changes
                 </legend>
+
+                <!-- Existing Changelog Entries -->
+                {{range .ReleaseNotes.Changelogs}}
+                    <div class="divide-y divide-gray-200 border-b border-gray-200">
+                        <div class="relative flex gap-3 py-2">
+                            <div class="w-1/12 flex justify-end">
+                                {{if eq .ChangeType "Changed"}}
+                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-bold text-green-600 h-6 mt-2">Changed</span>
+                                {{else if eq .ChangeType "Added"}}
+                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-blue-100 px-1.5 py-0.5 text-xs font-bold text-blue-600 h-6 mt-2">Added</span>
+                                {{else if eq .ChangeType "Fixed"}}
+                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-pink-100 px-1.5 py-0.5 text-xs font-bold text-pink-600 h-6 mt-2">Fixed</span>
+                                {{else if eq .ChangeType "Removed"}}
+                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-red-100 px-1.5 py-0.5 text-xs font-bold text-red-600 h-6 mt-2">Removed</span>
+                                {{else if eq .ChangeType "Security"}}
+                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-purple-100 px-1.5 py-0.5 text-xs font-bold text-purple-600 h-6 mt-2">Security</span>
+                                {{else if eq .ChangeType "Deprecated"}}
+                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-gray-200 px-1.5 py-0.5 text-xs font-bold text-gray-600 h-6 mt-2">Deprecated</span>
+                                {{end}}
+                            </div>
+                            <div class="min-w-0 flex-1 text-sm/6">
+                                <input type="text"
+                                       name="{{if eq .ChangeType "Changed"}}changed{{else if eq .ChangeType "Added"}}added{{else if eq .ChangeType "Fixed"}}fixed{{else if eq .ChangeType "Removed"}}removed{{else if eq .ChangeType "Security"}}security{{else if eq .ChangeType "Deprecated"}}deprecated{{end}}_{{.ID}}"
+                                       id="{{if eq .ChangeType "Changed"}}changed{{else if eq .ChangeType "Added"}}added{{else if eq .ChangeType "Fixed"}}fixed{{else if eq .ChangeType "Removed"}}removed{{else if eq .ChangeType "Security"}}security{{else if eq .ChangeType "Deprecated"}}deprecated{{end}}_{{.ID}}"
+                                       value="{{.Text}}"
+                                       required
+                                       autocomplete="off"
+                                       placeholder="Describe your change..."
+                                       class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
+                            </div>
+                        </div>
+                    </div>
+                {{end}}
+
+                <!-- New Changelog Entry Fields -->
                 <div class="divide-y divide-gray-200 border-b border-gray-200">
                     <div class="relative flex gap-3 py-2">
                         <div class="w-1/12 flex justify-end"><span
@@ -64,9 +99,8 @@
                         </div>
                         <div class="min-w-0 flex-1 text-sm/6">
                             <input type="text"
-                                   name="feature"
-                                   id="feature"
-                                   required
+                                   name="changed"
+                                   id="changed"
                                    autocomplete="off"
                                    placeholder="Describe your change..."
                                    class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
@@ -80,9 +114,8 @@
                         </div>
                         <div class="min-w-0 flex-1 text-sm/6">
                             <input type="text"
-                                   name="feature"
-                                   id="feature"
-                                   required
+                                   name="added"
+                                   id="added"
                                    autocomplete="off"
                                    placeholder="Describe your change..."
                                    class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
@@ -96,9 +129,8 @@
                         </div>
                         <div class="min-w-0 flex-1 text-sm/6">
                             <input type="text"
-                                   name="feature"
-                                   id="feature"
-                                   required
+                                   name="fixed"
+                                   id="fixed"
                                    autocomplete="off"
                                    placeholder="Describe your change..."
                                    class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
@@ -112,9 +144,8 @@
                         </div>
                         <div class="min-w-0 flex-1 text-sm/6">
                             <input type="text"
-                                   name="feature"
-                                   id="feature"
-                                   required
+                                   name="removed"
+                                   id="removed"
                                    autocomplete="off"
                                    placeholder="Describe your change..."
                                    class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
@@ -128,9 +159,8 @@
                         </div>
                         <div class="min-w-0 flex-1 text-sm/6">
                             <input type="text"
-                                   name="feature"
-                                   id="feature"
-                                   required
+                                   name="security"
+                                   id="security"
                                    autocomplete="off"
                                    placeholder="Describe your change..."
                                    class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
@@ -144,9 +174,8 @@
                         </div>
                         <div class="min-w-0 flex-1 text-sm/6">
                             <input type="text"
-                                   name="feature"
-                                   id="feature"
-                                   required
+                                   name="deprecated"
+                                   id="deprecated"
                                    autocomplete="off"
                                    placeholder="Describe your change..."
                                    class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">

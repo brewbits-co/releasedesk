@@ -67,6 +67,7 @@ func buildConsole(container *dig.Container) *http.Server {
 			r.Post("/internal/apps/{slug}/setup", appCtrl.HandleAppSetupGuide)
 			r.Post("/internal/apps/{slug}/platforms", platformCtrl.HandleAddPlatform)
 			r.Post("/internal/apps/{slug}/releases", releaseCtrl.HandleCreateRelease)
+			r.Post("/internal/releases/{id}/release-notes", releaseCtrl.HandleSaveReleaseNotes)
 			r.Post("/internal/apps/{slug}/platforms/{platform}/builds", buildCtrl.HandleBuildUpload)
 			r.Get("/internal/artifacts/{checksum}", buildCtrl.HandleArtifactDownload)
 		})

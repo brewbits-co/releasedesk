@@ -1,6 +1,7 @@
 package release
 
 import (
+	"github.com/brewbits-co/releasedesk/internal/domains/release"
 	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/brewbits-co/releasedesk/internal/views"
 	"github.com/brewbits-co/releasedesk/pkg/session"
@@ -111,6 +112,19 @@ func (c *releaseController) RenderReleaseNotes(w http.ResponseWriter, r *http.Re
 		log.Println(err)
 	}
 
+	version := chi.URLParam(r, "version")
+	releaseSummary, err := c.service.GetReleaseSummary(currentApp.AppID, version)
+	if err != nil {
+		// TODO: redirect to 404 page
+		log.Println(err)
+	}
+
+	releaseNotes, err := c.service.GetReleaseNotes(releaseSummary.ID)
+	if err != nil {
+		// This might be a new release without notes, so we'll create an empty one
+		releaseNotes = release.NewReleaseNotes(releaseSummary.ID, "")
+	}
+
 	tmpl, err := views.ParseTemplate(views.SidebarLayout, "templates/console/release_notes.gohtml")
 	if err != nil {
 		// TODO: redirect to error page
@@ -120,6 +134,8 @@ func (c *releaseController) RenderReleaseNotes(w http.ResponseWriter, r *http.Re
 	data := ReleaseNotesData{
 		SessionData:    session.NewSessionData(r.Context()),
 		CurrentAppData: currentApp,
+		Release:        releaseSummary,
+		ReleaseNotes:   releaseNotes,
 	}
 
 	err = tmpl.ExecuteTemplate(w, "index.gohtml", data)
