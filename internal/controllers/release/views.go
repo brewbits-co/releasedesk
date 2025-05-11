@@ -42,6 +42,7 @@ func (c *releaseController) RenderReleaseList(w http.ResponseWriter, r *http.Req
 	}
 
 	data := ReleaseListData{
+		CurrentPage:      "Releases",
 		SessionData:      session.NewSessionData(r.Context()),
 		CurrentAppData:   currentApp,
 		Releases:         releases,
@@ -91,6 +92,7 @@ func (c *releaseController) RenderReleaseSummary(w http.ResponseWriter, r *http.
 	}
 
 	data := ReleaseSummaryData{
+		CurrentPage:    "Releases",
 		SessionData:    session.NewSessionData(r.Context()),
 		CurrentAppData: currentApp,
 		Channels:       channels,
@@ -132,6 +134,7 @@ func (c *releaseController) RenderReleaseNotes(w http.ResponseWriter, r *http.Re
 	}
 
 	data := ReleaseNotesData{
+		CurrentPage:    "Releases",
 		SessionData:    session.NewSessionData(r.Context()),
 		CurrentAppData: currentApp,
 		Release:        releaseSummary,

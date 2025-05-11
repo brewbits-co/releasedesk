@@ -206,7 +206,7 @@
                                 <li>
                                     <!-- Current: "bg-violet-950 text-white", Default: "text-violet-200 hover:text-white hover:bg-violet-800" -->
                                     <a href="/dashboard/{{.AppSlug}}"
-                                       class="group flex gap-x-3 rounded-md bg-violet-950 p-2 text-sm/6 font-semibold text-white">
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold {{if eq .CurrentPage "Overview"}}bg-violet-950 text-white{{else}}text-violet-200 hover:text-white hover:bg-violet-800{{end}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
                                             <path d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z"/>
@@ -217,7 +217,7 @@
                                 </li>
                                 <li>
                                     <a href="/dashboard/{{.AppSlug}}/releases"
-                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold {{if eq .CurrentPage "Releases"}}bg-violet-950 text-white{{else}}text-violet-200 hover:text-white hover:bg-violet-800{{end}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
                                             <path fill-rule="evenodd"
@@ -230,7 +230,7 @@
                                 </li>
                                 <li>
                                     <a href="/dashboard/{{.AppSlug}}/distribution-groups"
-                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold {{if eq .CurrentPage "Distribution Groups"}}bg-violet-950 text-white{{else}}text-violet-200 hover:text-white hover:bg-violet-800{{end}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
                                             <path fill-rule="evenodd"
@@ -243,7 +243,7 @@
                                 </li>
                                 <li>
                                     <a href="/dashboard/{{.AppSlug}}/announcements"
-                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold {{if eq .CurrentPage "Announcements"}}bg-violet-950 text-white{{else}}text-violet-200 hover:text-white hover:bg-violet-800{{end}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
                                             <path d="M16.881 4.345A23.112 23.112 0 0 1 8.25 6H7.5a5.25 5.25 0 0 0-.88 10.427 21.593 21.593 0 0 0 1.378 3.94c.464 1.004 1.674 1.32 2.582.796l.657-.379c.88-.508 1.165-1.593.772-2.468a17.116 17.116 0 0 1-.628-1.607c1.918.258 3.76.75 5.5 1.446A21.727 21.727 0 0 0 18 11.25c0-2.414-.393-4.735-1.119-6.905ZM18.26 3.74a23.22 23.22 0 0 1 1.24 7.51 23.22 23.22 0 0 1-1.41 7.992.75.75 0 1 0 1.409.516 24.555 24.555 0 0 0 1.415-6.43 2.992 2.992 0 0 0 .836-2.078c0-.807-.319-1.54-.836-2.078a24.65 24.65 0 0 0-1.415-6.43.75.75 0 1 0-1.409.516c.059.16.116.321.17.483Z"/>
@@ -253,7 +253,7 @@
                                 </li>
                                 <li>
                                     <a href="/dashboard/{{.AppSlug}}/feeds"
-                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white"
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold {{if eq .CurrentPage "Feeds"}}bg-violet-950 text-white{{else}}text-violet-200 hover:text-white hover:bg-violet-800{{end}}"
                                        translate="no">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
@@ -266,7 +266,7 @@
                                 </li>
                                 <li>
                                     <a href="/dashboard/{{.AppSlug}}/analytics"
-                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-violet-200 hover:bg-violet-800 hover:text-white">
+                                       class="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold {{if eq .CurrentPage "Analytics"}}bg-violet-950 text-white{{else}}text-violet-200 hover:text-white hover:bg-violet-800{{end}}">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                              class="size-6">
                                             <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75ZM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 0 1-1.875-1.875V8.625ZM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 0 1 3 19.875v-6.75Z"/>

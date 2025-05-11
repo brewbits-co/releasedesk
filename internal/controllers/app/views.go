@@ -25,6 +25,7 @@ func (c *appController) RenderDashboard(w http.ResponseWriter, r *http.Request) 
 	}
 
 	data := DashboardData{
+		CurrentPage:         "Overview",
 		SessionData:         session.NewSessionData(r.Context()),
 		CurrentAppData:      currentApp,
 		SetupGuideCompleted: overview.SetupGuideCompleted,

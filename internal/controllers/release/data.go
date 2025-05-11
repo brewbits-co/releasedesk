@@ -6,6 +6,7 @@ import (
 )
 
 type ReleaseListData struct {
+	CurrentPage string
 	session.SessionData
 	session.CurrentAppData
 	Releases         []release.BasicInfo
@@ -14,6 +15,7 @@ type ReleaseListData struct {
 }
 
 type ReleaseSummaryData struct {
+	CurrentPage string
 	session.SessionData
 	session.CurrentAppData
 	release.Release
@@ -21,6 +23,7 @@ type ReleaseSummaryData struct {
 }
 
 type ReleaseNotesData struct {
+	CurrentPage string
 	session.SessionData
 	session.CurrentAppData
 	Release      release.Release
