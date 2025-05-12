@@ -6,6 +6,7 @@ import (
 )
 
 type BuildListData struct {
+	CurrentPage string
 	session.SessionData
 	session.CurrentAppData
 	CurrentPlatform session.CurrentPlatformData
@@ -13,6 +14,7 @@ type BuildListData struct {
 }
 
 type BuildDetailsData struct {
+	CurrentPage string
 	session.SessionData
 	session.CurrentAppData
 	CurrentPlatform session.CurrentPlatformData

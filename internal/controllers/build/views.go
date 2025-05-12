@@ -35,6 +35,7 @@ func (c *buildController) RenderBuildList(w http.ResponseWriter, r *http.Request
 	}
 
 	data := BuildListData{
+		CurrentPage:     "Builds",
 		SessionData:     session.NewSessionData(r.Context()),
 		CurrentAppData:  currentApp,
 		CurrentPlatform: currentPlatform,
@@ -78,6 +79,7 @@ func (c *buildController) RenderBuildDetails(w http.ResponseWriter, r *http.Requ
 	}
 
 	data := BuildDetailsData{
+		CurrentPage:     "Builds",
 		SessionData:     session.NewSessionData(r.Context()),
 		CurrentAppData:  currentApp,
 		CurrentPlatform: currentPlatform,
@@ -121,6 +123,7 @@ func (c *buildController) RenderBuildMetadata(w http.ResponseWriter, r *http.Req
 	}
 
 	data := BuildDetailsData{
+		CurrentPage:     "Builds",
 		SessionData:     session.NewSessionData(r.Context()),
 		CurrentAppData:  currentApp,
 		CurrentPlatform: currentPlatform,
