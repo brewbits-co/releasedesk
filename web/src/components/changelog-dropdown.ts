@@ -11,9 +11,8 @@ export class ChangelogDropdown extends LitElement {
   isOpen = false;
 
   @state()
-  addedEntries: Array<{type: string, label: string, bgColor: string, textColor: string, id: string}> = [];
+  addedEntries: Array<{type: string, label: string, bgColor: string, textColor: string}> = [];
 
-  @state()
   changelogTypes = [
     { type: 'Changed', label: 'Changed', bgColor: 'bg-green-100', textColor: 'text-green-600' },
     { type: 'Added', label: 'Added', bgColor: 'bg-blue-100', textColor: 'text-blue-600' },
@@ -28,13 +27,7 @@ export class ChangelogDropdown extends LitElement {
   }
 
   addChangelogEntry(type: string, label: string, bgColor: string, textColor: string) {
-    // Generate a unique ID for this entry
-    const id = `${type}_${Date.now()}`;
-
-    // Add the new entry to the addedEntries array
-    this.addedEntries = [...this.addedEntries, { type, label, bgColor, textColor, id }];
-
-    // Close the dropdown
+    this.addedEntries = [...this.addedEntries, { type, label, bgColor, textColor }];
     this.isOpen = false;
   }
 
@@ -53,7 +46,7 @@ export class ChangelogDropdown extends LitElement {
               <div class="min-w-0 flex-1 text-sm/6">
                 <input type="text"
                        name="${entry.type}"
-                       id="${entry.id}"
+                       id="${entry.type}"
                        autocomplete="off"
                        placeholder="Describe your change..."
                        class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
