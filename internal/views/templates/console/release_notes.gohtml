@@ -64,23 +64,23 @@
                         <div class="relative flex gap-3 py-2">
                             <div class="w-1/12 flex justify-end">
                                 {{if eq .ChangeType "Changed"}}
-                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-bold text-green-600 h-6 mt-2">Changed</span>
+                                    <label class="inline-flex items-center gap-x-1.5 rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-bold text-green-600 h-6 mt-2">Changed</label>
                                 {{else if eq .ChangeType "Added"}}
-                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-blue-100 px-1.5 py-0.5 text-xs font-bold text-blue-600 h-6 mt-2">Added</span>
+                                    <label class="inline-flex items-center gap-x-1.5 rounded-md bg-blue-100 px-1.5 py-0.5 text-xs font-bold text-blue-600 h-6 mt-2">Added</label>
                                 {{else if eq .ChangeType "Fixed"}}
-                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-pink-100 px-1.5 py-0.5 text-xs font-bold text-pink-600 h-6 mt-2">Fixed</span>
+                                    <label class="inline-flex items-center gap-x-1.5 rounded-md bg-pink-100 px-1.5 py-0.5 text-xs font-bold text-pink-600 h-6 mt-2">Fixed</label>
                                 {{else if eq .ChangeType "Removed"}}
-                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-red-100 px-1.5 py-0.5 text-xs font-bold text-red-600 h-6 mt-2">Removed</span>
+                                    <label class="inline-flex items-center gap-x-1.5 rounded-md bg-red-100 px-1.5 py-0.5 text-xs font-bold text-red-600 h-6 mt-2">Removed</label>
                                 {{else if eq .ChangeType "Security"}}
-                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-purple-100 px-1.5 py-0.5 text-xs font-bold text-purple-600 h-6 mt-2">Security</span>
+                                    <label class="inline-flex items-center gap-x-1.5 rounded-md bg-purple-100 px-1.5 py-0.5 text-xs font-bold text-purple-600 h-6 mt-2">Security</label>
                                 {{else if eq .ChangeType "Deprecated"}}
-                                    <span class="inline-flex items-center gap-x-1.5 rounded-md bg-gray-200 px-1.5 py-0.5 text-xs font-bold text-gray-600 h-6 mt-2">Deprecated</span>
+                                    <label class="inline-flex items-center gap-x-1.5 rounded-md bg-gray-200 px-1.5 py-0.5 text-xs font-bold text-gray-600 h-6 mt-2">Deprecated</label>
                                 {{end}}
                             </div>
                             <div class="min-w-0 flex-1 text-sm/6">
                                 <input type="text"
-                                       name="{{if eq .ChangeType "Changed"}}changed{{else if eq .ChangeType "Added"}}added{{else if eq .ChangeType "Fixed"}}fixed{{else if eq .ChangeType "Removed"}}removed{{else if eq .ChangeType "Security"}}security{{else if eq .ChangeType "Deprecated"}}deprecated{{end}}_{{.ID}}"
-                                       id="{{if eq .ChangeType "Changed"}}changed{{else if eq .ChangeType "Added"}}added{{else if eq .ChangeType "Fixed"}}fixed{{else if eq .ChangeType "Removed"}}removed{{else if eq .ChangeType "Security"}}security{{else if eq .ChangeType "Deprecated"}}deprecated{{end}}_{{.ID}}"
+                                       name="{{.ChangeType}}_{{.ID}}"
+                                       id="{{.ChangeType}}_{{.ID}}"
                                        value="{{.Text}}"
                                        required
                                        autocomplete="off"
@@ -92,102 +92,7 @@
                 {{end}}
 
                 <!-- New Changelog Entry Fields -->
-                <div class="divide-y divide-gray-200 border-b border-gray-200">
-                    <div class="relative flex gap-3 py-2">
-                        <div class="w-1/12 flex justify-end"><span
-                                    class="inline-flex items-center gap-x-1.5 rounded-md bg-green-100 px-1.5 py-0.5 text-xs font-bold text-green-600 h-6 mt-2">Changed</span>
-                        </div>
-                        <div class="min-w-0 flex-1 text-sm/6">
-                            <input type="text"
-                                   name="changed"
-                                   id="changed"
-                                   autocomplete="off"
-                                   placeholder="Describe your change..."
-                                   class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
-                        </div>
-                    </div>
-                </div>
-                <div class="divide-y divide-gray-200 border-b border-gray-200">
-                    <div class="relative flex gap-3 py-2">
-                        <div class="w-1/12 flex justify-end"><span
-                                    class="inline-flex items-center gap-x-1.5 rounded-md bg-blue-100 px-1.5 py-0.5 text-xs font-bold text-blue-600  h-6 mt-2">Added</span>
-                        </div>
-                        <div class="min-w-0 flex-1 text-sm/6">
-                            <input type="text"
-                                   name="added"
-                                   id="added"
-                                   autocomplete="off"
-                                   placeholder="Describe your change..."
-                                   class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
-                        </div>
-                    </div>
-                </div>
-                <div class="divide-y divide-gray-200 border-b border-gray-200">
-                    <div class="relative flex gap-3 py-2">
-                        <div class="w-1/12 flex justify-end"><span
-                                    class="inline-flex items-center gap-x-1.5 rounded-md bg-pink-100 px-1.5 py-0.5 text-xs font-bold text-pink-600  h-6 mt-2">Fixed</span>
-                        </div>
-                        <div class="min-w-0 flex-1 text-sm/6">
-                            <input type="text"
-                                   name="fixed"
-                                   id="fixed"
-                                   autocomplete="off"
-                                   placeholder="Describe your change..."
-                                   class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
-                        </div>
-                    </div>
-                </div>
-                <div class="divide-y divide-gray-200 border-b border-gray-200">
-                    <div class="relative flex gap-3 py-2">
-                        <div class="w-1/12 flex justify-end"><span
-                                    class="inline-flex items-center gap-x-1.5 rounded-md bg-red-100 px-1.5 py-0.5 text-xs font-bold text-red-600  h-6 mt-2">Removed</span>
-                        </div>
-                        <div class="min-w-0 flex-1 text-sm/6">
-                            <input type="text"
-                                   name="removed"
-                                   id="removed"
-                                   autocomplete="off"
-                                   placeholder="Describe your change..."
-                                   class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
-                        </div>
-                    </div>
-                </div>
-                <div class="divide-y divide-gray-200 border-b border-gray-200">
-                    <div class="relative flex gap-3 py-2">
-                        <div class="w-1/12 flex justify-end"><span
-                                    class="inline-flex items-center gap-x-1.5 rounded-md bg-purple-100 px-1.5 py-0.5 text-xs font-bold text-purple-600  h-6 mt-2">Security</span>
-                        </div>
-                        <div class="min-w-0 flex-1 text-sm/6">
-                            <input type="text"
-                                   name="security"
-                                   id="security"
-                                   autocomplete="off"
-                                   placeholder="Describe your change..."
-                                   class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
-                        </div>
-                    </div>
-                </div>
-                <div class="divide-y divide-gray-200 border-b border-gray-200">
-                    <div class="relative flex gap-3 py-2">
-                        <div class="w-1/12 flex justify-end"><span
-                                    class="inline-flex items-center gap-x-1.5 rounded-md bg-gray-200 px-1.5 py-0.5 text-xs font-bold text-gray-600  h-6 mt-2">Deprecated</span>
-                        </div>
-                        <div class="min-w-0 flex-1 text-sm/6">
-                            <input type="text"
-                                   name="deprecated"
-                                   id="deprecated"
-                                   autocomplete="off"
-                                   placeholder="Describe your change..."
-                                   class="block w-full bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline-0 border-0 focus:ring-0 sm:text-sm/6">
-                        </div>
-                    </div>
-                </div>
-                <div class="flex pt-2">
-                    <button type="button"
-                            class="text-sm/6 font-semibold text-violet-800 hover:text-violet-700">
-                        <span aria-hidden="true">+</span> Add another change
-                    </button>
-                </div>
+                <changelog-dropdown></changelog-dropdown>
             </fieldset>
             <div class="mt-4 flex justify-end">
                 <button type="submit"

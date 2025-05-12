@@ -42,8 +42,7 @@ func (c *releaseController) HandleSaveReleaseNotes(w http.ResponseWriter, r *htt
 
 		// Check for existing entries (format: <type>_<id>=<text>)
 		for _, changeType := range []string{"Changed", "Added", "Fixed", "Removed", "Security", "Deprecated"} {
-			prefix := strings.ToLower(changeType) + "_"
-			if strings.HasPrefix(key, prefix) {
+			if strings.HasPrefix(key, changeType+"_") {
 				// Extract the changelog ID
 				parts := strings.SplitN(key, "_", 2)
 				if len(parts) != 2 {
@@ -70,7 +69,7 @@ func (c *releaseController) HandleSaveReleaseNotes(w http.ResponseWriter, r *htt
 
 		// Check for new entries (format: <type>=<text>)
 		switch key {
-		case "changed", "added", "fixed", "removed", "security", "deprecated":
+		case "Changed", "Added", "Fixed", "Removed", "Security", "Deprecated":
 			changelog := release.Changelog{
 				ReleaseID:  releaseID,
 				Text:       values[0],
