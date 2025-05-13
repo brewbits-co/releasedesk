@@ -1,7 +1,9 @@
 package sql
 
 import (
+	"github.com/brewbits-co/releasedesk/internal/domains/build"
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
+	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -103,5 +105,67 @@ func (r *releaseRepository) GetByAppIDAndVersion(appID int, version string) (rel
 
 	releaseSummary.Auditable.FormatAuditable()
 
+	// Fetch linked builds for this release
+	builds, err := r.getLinkedBuilds(releaseSummary.ID)
+	if err != nil {
+		return release.Release{}, err
+	}
+
+	releaseSummary.Builds = builds
+
 	return releaseSummary, nil
+}
+
+func (r *releaseRepository) getLinkedBuilds(releaseID int) (map[values.OS]build.BasicInfo, error) {
+	q := `SELECT b.ID, b.PlatformID, b.Version, b.Number, b.CreatedAt, b.UpdatedAt, lb.OS
+			FROM LinkedBuilds lb
+			JOIN Builds b ON lb.BuildID = b.ID
+			WHERE lb.ReleaseID = $1`
+
+	rows, err := r.db.Queryx(q, releaseID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	builds := make(map[values.OS]build.BasicInfo)
+
+	for rows.Next() {
+		var buildInfo build.BasicInfo
+		var os values.OS
+		// Use a temporary struct to scan both the build info and the OS
+		dest := struct {
+			build.BasicInfo
+			OS values.OS `db:"OS"`
+		}{
+			BasicInfo: buildInfo,
+		}
+
+		if err := rows.StructScan(&dest); err != nil {
+			return nil, err
+		}
+
+		buildInfo = dest.BasicInfo
+		os = dest.OS
+		buildInfo.FormatAuditable()
+		builds[os] = buildInfo
+	}
+
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return builds, nil
+}
+
+func (r *releaseRepository) LinkBuild(releaseID int, buildID int, os values.OS) error {
+	q := `INSERT INTO LinkedBuilds (ReleaseID, BuildID, OS) VALUES ($1, $2, $3)`
+	_, err := r.db.Exec(q, releaseID, buildID, os)
+	return err
+}
+
+func (r *releaseRepository) UnlinkBuild(releaseID int, buildID int, os values.OS) error {
+	q := `DELETE FROM LinkedBuilds WHERE ReleaseID = $1 AND BuildID = $2 AND OS = $3`
+	_, err := r.db.Exec(q, releaseID, buildID, os)
+	return err
 }
