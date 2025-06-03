@@ -68,8 +68,8 @@ func (r *platformRepository) GetByAppSlugAndOS(slug values.Slug, os values.OS) (
 	var platformInfo platform.Platform
 
 	q := `SELECT Platforms.* FROM Platforms
-	JOIN Apps ON Platforms.AppID = Apps.ID
-	WHERE Apps.Slug = $1 AND Platforms.OS = $2
+	JOIN App ON Platforms.AppID = App.ID
+	WHERE App.Slug = $1 AND Platforms.OS = $2
 	LIMIT 1`
 
 	err := r.db.QueryRowx(q, slug, os).StructScan(&platformInfo)

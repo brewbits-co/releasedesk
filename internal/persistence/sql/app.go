@@ -4,69 +4,41 @@ import (
 	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/jmoiron/sqlx"
+	"xorm.io/xorm"
 )
 
 // NewApplicationRepository is the constructor for appRepository
-func NewApplicationRepository(db *sqlx.DB) app.AppRepository {
-	return &appRepository{db: db}
+func NewApplicationRepository(db *sqlx.DB, engine *xorm.Engine) app.AppRepository {
+	return &appRepository{db: db, engine: engine}
 }
 
 // appRepository is the implementation of app.AppRepository
 type appRepository struct {
-	db *sqlx.DB
+	db     *sqlx.DB
+	engine *xorm.Engine
 }
 
 func (r *appRepository) Save(app *app.App) error {
 	_ = app.BeforeCreate()
 
-	q := `INSERT INTO Apps (
-			Name, 
-			Slug, 
-			Description, 
-			Private, 
-			CreatedAt, 
-			UpdatedAt, 
-			VersionFormat, 
-			SetupGuideCompleted
-		) VALUES (:Name, :Slug, :Description, :Private, :CreatedAt, :UpdatedAt, :VersionFormat, :SetupGuideCompleted)`
-
-	exec, err := r.db.NamedExec(q, app)
+	_, err := r.engine.Insert(app)
 	if err != nil {
 		return err
 	}
-
-	insertId, _ := exec.LastInsertId()
-	app.ID = int(insertId)
 
 	_ = app.AfterCreate()
 	return nil
 }
 
 func (r *appRepository) Find() ([]app.App, error) {
-	// Execute the database query
-	rows, err := r.db.Queryx("SELECT * FROM Apps")
-	if err != nil {
-		return nil, err // Return an error if the query fails
-	}
-	defer rows.Close() // Ensure the cursor is closed when the function exits
-
-	// Declare a slice to store the apps
 	var apps []app.App
-
-	// Iterate over the result set
-	for rows.Next() {
-		var p app.App
-		// Map the row's data to the application struct
-		if err := rows.StructScan(&p); err != nil {
-			return nil, err // Return an error if mapping fails
-		}
-		p.FormatAuditable()
-		apps = append(apps, p) // Add the application to the slice
+	err := r.engine.Find(&apps)
+	if err != nil {
+		return nil, err
 	}
 
-	// Check for errors during iteration
-	if err := rows.Err(); err != nil {
-		return nil, err
+	for _, row := range apps {
+		row.FormatAuditable()
 	}
 
 	return apps, nil // Return the list of apps
@@ -74,7 +46,8 @@ func (r *appRepository) Find() ([]app.App, error) {
 
 func (r *appRepository) FindBySlug(slug values.Slug) (app.App, error) {
 	var p app.App
-	err := r.db.QueryRowx("SELECT * FROM Apps WHERE Slug = $1 LIMIT 1", slug).StructScan(&p)
+	p.Slug = slug
+	_, err := r.engine.Get(&p)
 	if err != nil {
 		return app.App{}, err
 	}

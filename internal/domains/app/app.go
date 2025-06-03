@@ -24,19 +24,19 @@ func NewApp(info BasicInfo) App {
 
 type BasicInfo struct {
 	// ID is the unique identifier of an App.
-	ID int `db:"ID"`
+	ID int `xorm:"'ID' pk autoincr"`
 	// Name is a human-readable unique identifier of an App.
-	Name string `db:"Name"`
+	Name string `xorm:"'Name' varchar(100) not null"`
 	// Slug is a URL-friendly version of the App's name.
-	Slug values.Slug `db:"Slug"`
+	Slug values.Slug `xorm:"'Slug' varchar(100) not null unique index"`
 	// Description provides details about the App.
-	Description sql.NullString `db:"Description"`
+	Description sql.NullString `xorm:"'Description' text"`
 	// Private indicates whether the App is private or publicly available.
-	Private bool `db:"Private"`
+	Private bool `xorm:"'Private' bool not null default false"`
 	// VersionFormat defines the versioning format of an App.
-	VersionFormat values.VersionFormat `db:"VersionFormat"`
+	VersionFormat values.VersionFormat `xorm:"'VersionFormat' varchar(20)"`
 	// SetupGuideCompleted marks the starting guide as completed.
-	SetupGuideCompleted bool `db:"SetupGuideCompleted"`
+	SetupGuideCompleted bool `xorm:"'SetupGuideCompleted' bool not null default false"`
 }
 
 type PlatformAvailability struct {
@@ -48,13 +48,17 @@ type PlatformAvailability struct {
 }
 
 type App struct {
-	hooks.BaseHooks
-	validator.BaseValidator
-	fields.Auditable
-	BasicInfo
-	PlatformAvailability
+	hooks.BaseHooks         `xorm:"extends"`
+	validator.BaseValidator `xorm:"-"`
+	fields.Auditable        `xorm:"extends"`
+	BasicInfo               `xorm:"extends"`
+	PlatformAvailability    `xorm:"-"`
 	// Logo is the image logo of the App.
-	Logo sql.NullString `db:"Logo"`
+	Logo sql.NullString `xorm:"'Logo' varchar(255)"`
+}
+
+func (p *App) TableName() string {
+	return "Apps"
 }
 
 // IsValid checks if the current user information follows the pre-defined business rules

@@ -6,6 +6,8 @@ import (
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"github.com/jmoiron/sqlx"
 	"log"
+	"xorm.io/xorm"
+	"xorm.io/xorm/names"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -58,4 +60,16 @@ func newSQLiteDB() (*sqlx.DB, error) {
 	log.Println("Migrations applied successfully!")
 
 	return db, nil
+}
+
+func newEngine() (*xorm.Engine, error) {
+	engine, err := xorm.NewEngine("sqlite3", "./_data/releasedesk.db")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	engine.SetMapper(names.GonicMapper{})
+	engine.ShowSQL(true)
+
+	return engine, nil
 }
