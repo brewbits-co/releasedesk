@@ -3,18 +3,16 @@ package sql
 import (
 	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/values"
-	"github.com/jmoiron/sqlx"
 	"xorm.io/xorm"
 )
 
 // NewApplicationRepository is the constructor for appRepository
-func NewApplicationRepository(db *sqlx.DB, engine *xorm.Engine) app.AppRepository {
-	return &appRepository{db: db, engine: engine}
+func NewApplicationRepository(engine *xorm.Engine) app.AppRepository {
+	return &appRepository{engine: engine}
 }
 
 // appRepository is the implementation of app.AppRepository
 type appRepository struct {
-	db     *sqlx.DB
 	engine *xorm.Engine
 }
 
