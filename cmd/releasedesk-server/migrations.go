@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/brewbits-co/releasedesk/internal/domains/app"
 	"github.com/brewbits-co/releasedesk/internal/domains/build"
+	"github.com/brewbits-co/releasedesk/internal/domains/platform"
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
 	"xorm.io/xorm"
 	"xorm.io/xorm/migrate"
@@ -44,6 +45,15 @@ func applyMigrations(engine *xorm.Engine, err error) {
 			},
 			Rollback: func(tx *xorm.Engine) error {
 				return tx.DropTables(&build.Build{})
+			},
+		},
+		{
+			ID: "202506142204",
+			Migrate: func(tx *xorm.Engine) error {
+				return tx.Sync2(&platform.Platform{})
+			},
+			Rollback: func(tx *xorm.Engine) error {
+				return tx.DropTables(&platform.Platform{})
 			},
 		},
 	}

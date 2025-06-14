@@ -101,9 +101,9 @@ func (r *appRepository) SaveSetupGuide(guide app.SetupGuide) error {
 
 func (r *appRepository) GetPlatformAvailability(app *app.App) error {
 	platforms := make([]string, 0)
-	err := r.engine.Table("Platforms").
-		Where("AppID = ?", app.ID).
-		Cols("OS").
+	err := r.engine.Table("platform").
+		Where("app_id = ?", app.ID).
+		Cols("os").
 		Find(&platforms)
 	if err != nil {
 		return err
