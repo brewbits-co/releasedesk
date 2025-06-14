@@ -3,39 +3,26 @@ package sql
 import (
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
 	"github.com/jmoiron/sqlx"
+	"xorm.io/xorm"
 )
 
 // NewReleaseRepository is the constructor for releaseRepository
-func NewReleaseRepository(db *sqlx.DB) release.ReleaseRepository {
-	return &releaseRepository{db: db}
+func NewReleaseRepository(db *sqlx.DB, engine *xorm.Engine) release.ReleaseRepository {
+	return &releaseRepository{db: db, engine: engine}
 }
 
 // releaseRepository is the implementation of release.ReleaseRepository
 type releaseRepository struct {
-	db *sqlx.DB
+	db     *sqlx.DB
+	engine *xorm.Engine
 }
 
 func (r *releaseRepository) FindChannelsByAppID(appID int) ([]release.Channel, error) {
-	rows, err := r.db.Queryx(`SELECT ID, Name, AppID, Closed FROM Channels WHERE AppID = $1 ORDER BY ID`, appID)
+	var channels []release.Channel
+	err := r.engine.Where("app_id = ?", appID).OrderBy("id").Find(&channels)
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
-
-	var channels []release.Channel
-
-	for rows.Next() {
-		var channelEntity release.Channel
-		if err := rows.StructScan(&channelEntity); err != nil {
-			return nil, err
-		}
-		channels = append(channels, channelEntity)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-
 	return channels, nil
 }
 

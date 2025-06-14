@@ -2,7 +2,7 @@ DROP TABLE Users;
 
 DROP TABLE Platforms;
 
-DROP TABLE Channels;
+DROP TABLE channel;
 
 DROP TABLE app;
 

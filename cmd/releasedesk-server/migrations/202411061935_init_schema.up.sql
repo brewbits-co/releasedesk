@@ -31,17 +31,17 @@ CREATE TABLE app
     updated_at            DATETIME NOT NULL
 );
 
-CREATE TABLE Channels
+CREATE TABLE channel
 (
-    ID     INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name   TEXT NOT NULL,
-    AppID  INTEGER
+    id     INTEGER PRIMARY KEY AUTOINCREMENT,
+    name   TEXT NOT NULL,
+    app_id INTEGER
         CONSTRAINT Channels_App_ID_fk REFERENCES app,
-    Closed BOOLEAN DEFAULT FALSE
+    closed BOOLEAN DEFAULT FALSE
 );
 
 CREATE UNIQUE INDEX Channels_AppID_Name_uindex
-    ON Channels (AppID, Name);
+    ON channel (app_id, name);
 
 CREATE TABLE Platforms
 (

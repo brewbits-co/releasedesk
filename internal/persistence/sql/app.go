@@ -70,33 +70,33 @@ func (r *appRepository) Delete(app app.App) error {
 }
 
 func (r *appRepository) SaveSetupGuide(guide app.SetupGuide) error {
-	tx, err := r.db.Beginx()
-	if err != nil {
+	session := r.engine.NewSession()
+	defer session.Close()
+
+	if err := session.Begin(); err != nil {
 		return err
 	}
 
-	q := "UPDATE app SET version_format = $1, setup_guide_completed = true WHERE ID = $2"
-	_, err = tx.Exec(q, guide.VersionFormat, guide.AppID)
+	_, err := session.Table("app").
+		Where("ID = ?", guide.AppID).
+		Update(map[string]interface{}{
+			"version_format":        guide.VersionFormat,
+			"setup_guide_completed": true,
+		})
 	if err != nil {
-		_ = tx.Rollback()
+		session.Rollback()
 		return err
 	}
 
-	q = "INSERT INTO Channels (Name, AppID, Closed) VALUES (:Name, :AppID, :Closed)"
 	for _, channel := range guide.Channels {
-		_, err := tx.NamedExec(q, channel)
+		_, err := session.Insert(&channel)
 		if err != nil {
-			_ = tx.Rollback()
+			session.Rollback()
 			return err
 		}
 	}
 
-	if tx.Commit() != nil {
-		_ = tx.Rollback()
-		return err
-	}
-
-	return nil
+	return session.Commit()
 }
 
 func (r *appRepository) GetPlatformAvailability(app *app.App) error {
