@@ -3,18 +3,16 @@ package sql
 import (
 	"database/sql"
 	"github.com/brewbits-co/releasedesk/internal/domains/build"
-	"github.com/jmoiron/sqlx"
 	"xorm.io/xorm"
 )
 
 // NewBuildRepository is the constructor for buildRepository
-func NewBuildRepository(db *sqlx.DB, engine *xorm.Engine) build.BuildRepository {
-	return &buildRepository{db: db, engine: engine}
+func NewBuildRepository(engine *xorm.Engine) build.BuildRepository {
+	return &buildRepository{engine: engine}
 }
 
 // buildRepository is the implementation of build.BuildRepository
 type buildRepository struct {
-	db     *sqlx.DB
 	engine *xorm.Engine
 }
 

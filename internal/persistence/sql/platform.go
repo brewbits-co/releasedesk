@@ -4,18 +4,16 @@ import (
 	"database/sql"
 	"github.com/brewbits-co/releasedesk/internal/domains/platform"
 	"github.com/brewbits-co/releasedesk/internal/values"
-	"github.com/jmoiron/sqlx"
 	"xorm.io/xorm"
 )
 
 // NewPlatformRepository is the constructor for platformRepository
-func NewPlatformRepository(db *sqlx.DB, engine *xorm.Engine) platform.PlatformRepository {
-	return &platformRepository{db: db, engine: engine}
+func NewPlatformRepository(engine *xorm.Engine) platform.PlatformRepository {
+	return &platformRepository{engine: engine}
 }
 
 // platformRepository is the implementation of platform.PlatformRepository
 type platformRepository struct {
-	db     *sqlx.DB
 	engine *xorm.Engine
 }
 
