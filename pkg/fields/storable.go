@@ -5,13 +5,13 @@ import "fmt"
 // Storable represents the attributes required to store a file.
 type Storable struct {
 	// Filename is the name of the file, including its extension.
-	Filename string `db:"Filename" xorm:"not null"`
+	Filename string `xorm:"not null"`
 	// MimeType is the MIME type of the file (e.g., "application/json", "image/png").
-	MimeType string `db:"MimeType" xorm:"varchar(100) not null"`
+	MimeType string `xorm:"varchar(100) not null"`
 	// Size is the size of the file in bytes.
-	Size FileSize `db:"Size" xorm:"not null"`
+	Size FileSize `xorm:"not null"`
 	// Path is the storage location where the file is saved.
-	Path string `db:"Path" xorm:"not null"`
+	Path string `xorm:"not null"`
 }
 
 type FileSize int64

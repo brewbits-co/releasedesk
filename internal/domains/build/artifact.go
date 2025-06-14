@@ -28,12 +28,12 @@ func NewArtifact(filename string, size int64, arch values.Architecture, md5 stri
 }
 
 type Artifact struct {
-	fields.Storable
-	fields.Hashable
+	fields.Storable `xorm:"extends"`
+	fields.Hashable `xorm:"extends"`
 	// ID is the unique identifier of an Artifact.
-	ID int `db:"ID"`
+	ID int `xorm:"pk autoincr"`
 	// BuildID is the identifier of the Build that this Artifact belongs.
-	BuildID int `db:"BuildID"`
+	BuildID int `xorm:"not null unique(artifact_uidx)"`
 	// Architecture represents the system architecture for which the artifact is built.
-	Architecture values.Architecture `db:"Architecture"`
+	Architecture values.Architecture `xorm:"not null unique(artifact_uidx)"`
 }

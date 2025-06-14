@@ -22,11 +22,11 @@ func NewApp(info BasicInfo) App {
 
 type BasicInfo struct {
 	// ID is the unique identifier of an App.
-	ID int `xorm:"'ID' pk autoincr"`
+	ID int `xorm:"pk autoincr"`
 	// Name is a human-readable unique identifier of an App.
-	Name string `xorm:"varchar(100) not null"`
+	Name string `xorm:"varchar(100) not null unique"`
 	// Slug is a URL-friendly version of the App's name.
-	Slug values.Slug `xorm:"varchar(100) not null unique index"`
+	Slug values.Slug `xorm:"varchar(100) not null unique"`
 	// Description provides details about the App.
 	Description sql.NullString `xorm:"text"`
 	// Private indicates whether the App is private or publicly available.

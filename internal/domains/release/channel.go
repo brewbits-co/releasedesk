@@ -8,9 +8,9 @@ type Channel struct {
 	// ID is the unique identifier of a Channel.
 	ID int `xorm:"'ID' pk autoincr"`
 	// AppID is the identifier of the app that this Channel belongs.
-	AppID int `json:"-"`
+	AppID int `xorm:"unique(channel_uidx)" json:"-"`
 	// Name is a human-readable unique identifier of a Channel.
-	Name string `xorm:"not null"`
+	Name string `xorm:"not null unique(channel_uidx)"`
 	// Closed indicates whether the Channel is restricted to access only by invite, such as in a closed beta.
 	Closed bool `xorm:"not null default false" json:"-"`
 }

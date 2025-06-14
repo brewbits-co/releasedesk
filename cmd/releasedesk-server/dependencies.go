@@ -28,7 +28,7 @@ func buildContainer() *dig.Container {
 
 	// Register the constructors using factory methods
 	container.Provide(newSQLiteDB)
-	container.Provide(newEngine)
+	container.Provide(newDBEngine)
 	// Repositories
 	container.Provide(sql.NewUserRepository)
 	container.Provide(sql.NewApplicationRepository)
