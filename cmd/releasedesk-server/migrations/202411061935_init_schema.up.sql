@@ -17,18 +17,18 @@ INSERT INTO Users (Username, Email, Password, FirstName, LastName, Role, Created
 VALUES ('admin', null, '$2a$10$Z13RQlu6HdKSW41rJsz7Ju5NZ0VMyUdm6YZMr0wjJqW955qd2pzx2',
         null, null, 1, '1731426770000', '1731426770000');
 
-CREATE TABLE Apps
+CREATE TABLE app
 (
-    ID                  INTEGER PRIMARY KEY AUTOINCREMENT,
-    Name                TEXT     NOT NULL UNIQUE,
-    Slug                TEXT     NOT NULL UNIQUE,
-    Description         TEXT,
-    Logo                TEXT,
-    Private             BOOLEAN,
-    VersionFormat       TEXT,
-    SetupGuideCompleted BOOLEAN DEFAULT FALSE,
-    CreatedAt           DATETIME NOT NULL,
-    UpdatedAt           DATETIME NOT NULL
+    id                    INTEGER PRIMARY KEY AUTOINCREMENT,
+    name                  TEXT     NOT NULL UNIQUE,
+    slug                  TEXT     NOT NULL UNIQUE,
+    description           TEXT,
+    logo                  TEXT,
+    private               BOOLEAN,
+    version_format        TEXT,
+    setup_guide_completed BOOLEAN DEFAULT FALSE,
+    created_at            DATETIME NOT NULL,
+    updated_at            DATETIME NOT NULL
 );
 
 CREATE TABLE Channels
@@ -36,7 +36,7 @@ CREATE TABLE Channels
     ID     INTEGER PRIMARY KEY AUTOINCREMENT,
     Name   TEXT NOT NULL,
     AppID  INTEGER
-        CONSTRAINT Channels_App_ID_fk REFERENCES Apps,
+        CONSTRAINT Channels_App_ID_fk REFERENCES app,
     Closed BOOLEAN DEFAULT FALSE
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE Platforms
 (
     ID        INTEGER PRIMARY KEY AUTOINCREMENT,
     AppID     INTEGER
-        CONSTRAINT Platforms_App_ID_fk REFERENCES Apps,
+        CONSTRAINT Platforms_App_ID_fk REFERENCES app,
     OS        TEXT,
     CreatedAt DATETIME NOT NULL,
     UpdatedAt DATETIME NOT NULL

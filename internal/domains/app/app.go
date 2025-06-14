@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/brewbits-co/releasedesk/pkg/fields"
-	"github.com/brewbits-co/releasedesk/pkg/hooks"
 	"github.com/brewbits-co/releasedesk/pkg/validator"
 )
 
@@ -15,7 +14,6 @@ var (
 
 func NewApp(info BasicInfo) App {
 	return App{
-		BaseHooks:     hooks.BaseHooks{},
 		BaseValidator: validator.BaseValidator{},
 		Auditable:     fields.NewAuditable(),
 		BasicInfo:     info,
@@ -26,39 +24,34 @@ type BasicInfo struct {
 	// ID is the unique identifier of an App.
 	ID int `xorm:"'ID' pk autoincr"`
 	// Name is a human-readable unique identifier of an App.
-	Name string `xorm:"'Name' varchar(100) not null"`
+	Name string `xorm:"varchar(100) not null"`
 	// Slug is a URL-friendly version of the App's name.
-	Slug values.Slug `xorm:"'Slug' varchar(100) not null unique index"`
+	Slug values.Slug `xorm:"varchar(100) not null unique index"`
 	// Description provides details about the App.
-	Description sql.NullString `xorm:"'Description' text"`
+	Description sql.NullString `xorm:"text"`
 	// Private indicates whether the App is private or publicly available.
-	Private bool `xorm:"'Private' bool not null default false"`
+	Private bool `xorm:"not null default false"`
 	// VersionFormat defines the versioning format of an App.
-	VersionFormat values.VersionFormat `xorm:"'VersionFormat' varchar(20)"`
+	VersionFormat values.VersionFormat `xorm:"varchar(20)"`
 	// SetupGuideCompleted marks the starting guide as completed.
-	SetupGuideCompleted bool `xorm:"'SetupGuideCompleted' bool not null default false"`
+	SetupGuideCompleted bool `xorm:"not null default false"`
 }
 
 type PlatformAvailability struct {
-	HasAndroid bool `db:"HasAndroid"`
-	HasIOS     bool `db:"HasIOS"`
-	HasWindows bool `db:"HasWindows"`
-	HasLinux   bool `db:"HasLinux"`
-	HasMacOS   bool `db:"HasMacOS"`
+	HasAndroid bool
+	HasIOS     bool
+	HasWindows bool
+	HasLinux   bool
+	HasMacOS   bool
 }
 
 type App struct {
-	hooks.BaseHooks         `xorm:"extends"`
 	validator.BaseValidator `xorm:"-"`
 	fields.Auditable        `xorm:"extends"`
 	BasicInfo               `xorm:"extends"`
 	PlatformAvailability    `xorm:"-"`
 	// Logo is the image logo of the App.
-	Logo sql.NullString `xorm:"'Logo' varchar(255)"`
-}
-
-func (p *App) TableName() string {
-	return "Apps"
+	Logo sql.NullString
 }
 
 // IsValid checks if the current user information follows the pre-defined business rules

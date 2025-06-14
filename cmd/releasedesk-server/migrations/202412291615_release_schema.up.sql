@@ -2,7 +2,7 @@ CREATE TABLE Releases
 (
     ID            INTEGER PRIMARY KEY AUTOINCREMENT,
     AppID         INTEGER
-        CONSTRAINT Releases_Apps_ID_fk REFERENCES Apps,
+        CONSTRAINT Releases_Apps_ID_fk REFERENCES app,
     Version       TEXT     NOT NULL,
     TargetChannel INTEGER
         CONSTRAINT Releases_Channel_ID_fk REFERENCES Channels,

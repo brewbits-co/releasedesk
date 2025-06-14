@@ -4,7 +4,7 @@ DROP TABLE Platforms;
 
 DROP TABLE Channels;
 
-DROP TABLE Apps;
+DROP TABLE app;
 
 DROP TABLE Builds;
 

@@ -19,14 +19,11 @@ type appRepository struct {
 }
 
 func (r *appRepository) Save(app *app.App) error {
-	_ = app.BeforeCreate()
-
 	_, err := r.engine.Insert(app)
 	if err != nil {
 		return err
 	}
 
-	_ = app.AfterCreate()
 	return nil
 }
 
@@ -56,28 +53,20 @@ func (r *appRepository) FindBySlug(slug values.Slug) (app.App, error) {
 }
 
 func (r *appRepository) Update(app app.App) error {
-	_ = app.BeforeUpdate()
-
-	q := `UPDATE Apps SET 
-			Name = :Name, 
-			Slug = :Slug, 
-			Description = :Description,
-			Private = :Private,
-           	VersionFormat = :VersionFormat, 
-			SetupGuideCompleted = :SetupGuideCompleted WHERE ID = :ID`
-
-	_, err := r.db.NamedExec(q, app)
+	_, err := r.engine.ID(app.ID).Update(&app)
 	if err != nil {
 		return err
 	}
 
-	_ = app.AfterUpdate()
 	return nil
 }
 
 func (r *appRepository) Delete(app app.App) error {
-	//TODO implement me
-	panic("implement me")
+	_, err := r.engine.ID(app.ID).Delete(&app)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (r *appRepository) SaveSetupGuide(guide app.SetupGuide) error {
@@ -86,7 +75,7 @@ func (r *appRepository) SaveSetupGuide(guide app.SetupGuide) error {
 		return err
 	}
 
-	q := "UPDATE Apps SET VersionFormat = $1, SetupGuideCompleted = true WHERE ID = $2"
+	q := "UPDATE app SET version_format = $1, setup_guide_completed = true WHERE ID = $2"
 	_, err = tx.Exec(q, guide.VersionFormat, guide.AppID)
 	if err != nil {
 		_ = tx.Rollback()
@@ -111,44 +100,28 @@ func (r *appRepository) SaveSetupGuide(guide app.SetupGuide) error {
 }
 
 func (r *appRepository) GetPlatformAvailability(app *app.App) error {
-	q := `SELECT 
-    EXISTS (
-        SELECT 1 
-        FROM Platforms a 
-        WHERE a.AppID = p.ID AND a.OS = 'Android'
-    ) AS HasAndroid,
-    EXISTS (
-        SELECT 1 
-        FROM Platforms a 
-        WHERE a.AppID = p.ID AND a.OS = 'iOS'
-    ) AS HasIOS,
-    EXISTS (
-        SELECT 1 
-        FROM Platforms a 
-        WHERE a.AppID = p.ID AND a.OS = 'Windows'
-    ) AS HasWindows,
-    EXISTS (
-        SELECT 1 
-        FROM Platforms a 
-        WHERE a.AppID = p.ID AND a.OS = 'Linux'
-    ) AS HasLinux,
-    EXISTS (
-        SELECT 1 
-        FROM Platforms a 
-        WHERE a.AppID = p.ID AND a.OS = 'macOS'
-    ) AS HasMacOS FROM Apps p WHERE ID = $1`
-
-	row := r.db.QueryRow(q, app.ID)
-
-	err := row.Scan(
-		&app.HasAndroid,
-		&app.HasIOS,
-		&app.HasWindows,
-		&app.HasLinux,
-		&app.HasMacOS,
-	)
+	platforms := make([]string, 0)
+	err := r.engine.Table("Platforms").
+		Where("AppID = ?", app.ID).
+		Cols("OS").
+		Find(&platforms)
 	if err != nil {
 		return err
+	}
+
+	for _, platform := range platforms {
+		switch platform {
+		case "Android":
+			app.HasAndroid = true
+		case "iOS":
+			app.HasIOS = true
+		case "Windows":
+			app.HasWindows = true
+		case "Linux":
+			app.HasLinux = true
+		case "macOS":
+			app.HasMacOS = true
+		}
 	}
 
 	return nil

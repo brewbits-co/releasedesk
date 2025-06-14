@@ -19,11 +19,11 @@ func NewAuditable() Auditable {
 // Auditable struct holds common timestamp and formatted fields for creation and updates
 type Auditable struct {
 	// CreatedAt is the timestamp when the entity was created.
-	CreatedAt time.Time `xorm:"'CreatedAt' created"`
+	CreatedAt time.Time `db:"CreatedAt" xorm:"created"`
 	// CreatedAtFormatted is a human-readable version of CreatedAt.
 	CreatedAtFormatted string `xorm:"-"`
 	// UpdatedAt is the timestamp when the entity was last updated.
-	UpdatedAt time.Time `xorm:"'UpdatedAt' updated"`
+	UpdatedAt time.Time `db:"UpdatedAt" xorm:"updated"`
 	// UpdatedAtFormatted is a human-readable version of UpdatedAt.
 	UpdatedAtFormatted string `xorm:"-"`
 }
