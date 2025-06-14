@@ -3,7 +3,7 @@ package sql
 import (
 	"errors"
 	"github.com/brewbits-co/releasedesk/internal/domains/user"
-	"github.com/jmoiron/sqlx"
+	"xorm.io/xorm"
 )
 
 var (
@@ -11,31 +11,33 @@ var (
 )
 
 // NewUserRepository is the constructor for userRepository
-func NewUserRepository(db *sqlx.DB) user.UserRepository {
-	return &userRepository{db: db}
+func NewUserRepository(engine *xorm.Engine) user.UserRepository {
+	return &userRepository{engine: engine}
 }
 
 // userRepository is the implementation of user.UserRepository
 type userRepository struct {
-	db *sqlx.DB
+	engine *xorm.Engine
 }
 
 func (r *userRepository) FindByID(id int) (user.User, error) {
 	var userEntity user.User
-	err := r.db.QueryRowx("SELECT * FROM users WHERE ID = $1 LIMIT 1", id).StructScan(&userEntity)
-	if err != nil {
+	found, err := r.engine.ID(id).Get(&userEntity)
+	if err != nil || !found {
 		return user.User{}, ErrUserNotFound
 	}
+	userEntity.FormatAuditable()
 
 	return userEntity, nil
 }
 
 func (r *userRepository) FindByUsername(username string) (user.User, error) {
 	var userEntity user.User
-	err := r.db.QueryRowx("SELECT * FROM users WHERE Username = $1 LIMIT 1", username).StructScan(&userEntity)
-	if err != nil {
+	found, err := r.engine.Where("username = ?", username).Get(&userEntity)
+	if err != nil || !found {
 		return user.User{}, ErrUserNotFound
 	}
+	userEntity.FormatAuditable()
 
 	return userEntity, nil
 }
