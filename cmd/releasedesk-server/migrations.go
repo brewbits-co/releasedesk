@@ -14,7 +14,7 @@ import (
 	"xorm.io/xorm/migrate"
 )
 
-func applyMigrations(engine *xorm.Engine, err error) {
+func applyMigrations(engine *xorm.Engine) error {
 	var migrations = []*migrate.Migration{
 		{
 			ID: "202506142200",
@@ -117,5 +117,5 @@ func applyMigrations(engine *xorm.Engine, err error) {
 		IDColumnName: "id",
 	}, migrations)
 
-	err = m.Migrate()
+	return m.Migrate()
 }
