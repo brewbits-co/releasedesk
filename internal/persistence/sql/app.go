@@ -76,7 +76,7 @@ func (r *appRepository) SaveSetupGuide(guide app.SetupGuide) error {
 	}
 
 	_, err := session.Table("app").
-		Where("ID = ?", guide.AppID).
+		Where("id = ?", guide.AppID).
 		Update(map[string]interface{}{
 			"version_format":        guide.VersionFormat,
 			"setup_guide_completed": true,

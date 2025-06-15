@@ -1,25 +1,24 @@
 package sql
 
 import (
+	"database/sql"
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
-	"github.com/jmoiron/sqlx"
 	"xorm.io/xorm"
 )
 
 // NewReleaseRepository is the constructor for releaseRepository
-func NewReleaseRepository(db *sqlx.DB, engine *xorm.Engine) release.ReleaseRepository {
-	return &releaseRepository{db: db, engine: engine}
+func NewReleaseRepository(engine *xorm.Engine) release.ReleaseRepository {
+	return &releaseRepository{engine: engine}
 }
 
 // releaseRepository is the implementation of release.ReleaseRepository
 type releaseRepository struct {
-	db     *sqlx.DB
 	engine *xorm.Engine
 }
 
 func (r *releaseRepository) FindChannelsByAppID(appID int) ([]release.Channel, error) {
 	var channels []release.Channel
-	err := r.engine.Where("app_id = ?", appID).OrderBy("id").Find(&channels)
+	err := r.engine.Where("app_id = ?", appID).Asc("id").Find(&channels)
 	if err != nil {
 		return nil, err
 	}
@@ -27,50 +26,27 @@ func (r *releaseRepository) FindChannelsByAppID(appID int) ([]release.Channel, e
 }
 
 func (r *releaseRepository) Save(release *release.Release) error {
-	_ = release.BeforeCreate()
-
-	q := `INSERT INTO Releases (AppID, Version, TargetChannel, Status, CreatedAt, UpdatedAt) 
-			VALUES (:AppID, :Version, :TargetChannel, :Status, :CreatedAt, :UpdatedAt)`
-
-	exec, err := r.db.NamedExec(q, release)
+	_, err := r.engine.Insert(release)
 	if err != nil {
 		return err
 	}
 
-	insertId, _ := exec.LastInsertId()
-	release.ID = int(insertId)
-
-	_ = release.AfterCreate()
 	return nil
 }
 
 func (r *releaseRepository) FindByAppIDAndChannel(appID int, channelID int) ([]release.BasicInfo, error) {
-	// Execute the database query
-	q := `SELECT ID, AppID, Version, TargetChannel, Status, CreatedAt, UpdatedAt 
-			FROM Releases WHERE AppID = $1 AND TargetChannel = $2 ORDER BY CreatedAt DESC`
-	rows, err := r.db.Queryx(q, appID, channelID)
-	if err != nil {
-		return nil, err // Return an error if the query fails
-	}
-	defer rows.Close() // Ensure the cursor is closed when the function exits
-
-	// Declare a slice to store the releases
+	// Execute the database query using xorm
 	var releases []release.BasicInfo
-
-	// Iterate over the result set
-	for rows.Next() {
-		var releaseEntity release.BasicInfo
-		// Map the row's data to the build struct
-		if err := rows.StructScan(&releaseEntity); err != nil {
-			return nil, err // Return an error if mapping fails
-		}
-		releaseEntity.FormatAuditable()
-		releases = append(releases, releaseEntity) // Add the build to the slice
+	err := r.engine.Table("release").Where("app_id = ? AND target_channel = ?", appID, channelID).
+		Desc("created_at").
+		Find(&releases)
+	if err != nil {
+		return nil, err
 	}
 
-	// Check for errors during iteration
-	if err := rows.Err(); err != nil {
-		return nil, err
+	// Format the auditable fields for each release
+	for i := range releases {
+		releases[i].FormatAuditable()
 	}
 
 	return releases, nil
@@ -79,13 +55,13 @@ func (r *releaseRepository) FindByAppIDAndChannel(appID int, channelID int) ([]r
 func (r *releaseRepository) GetByAppIDAndVersion(appID int, version string) (release.Release, error) {
 	var releaseSummary release.Release
 
-	// Execute the database query
-	q := `SELECT ID, AppID, Version, TargetChannel, Status, CreatedAt, UpdatedAt 
-			FROM Releases WHERE AppID = $1 AND Version = $2 LIMIT 1`
-
-	err := r.db.QueryRowx(q, appID, version).StructScan(&releaseSummary)
+	// Execute the database query using xorm
+	has, err := r.engine.Where("app_id = ? AND version = ?", appID, version).Get(&releaseSummary)
 	if err != nil {
 		return release.Release{}, err
+	}
+	if !has {
+		return release.Release{}, sql.ErrNoRows
 	}
 
 	releaseSummary.Auditable.FormatAuditable()

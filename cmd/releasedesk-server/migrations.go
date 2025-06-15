@@ -88,6 +88,28 @@ func applyMigrations(engine *xorm.Engine, err error) {
 				return tx.DropTables(&user.User{})
 			},
 		},
+		{
+			ID: "202506142206",
+			Migrate: func(tx *xorm.Engine) error {
+				return tx.Sync2(&release.Release{})
+			},
+			Rollback: func(tx *xorm.Engine) error {
+				return tx.DropTables(&release.Release{})
+			},
+		},
+		{
+			ID: "202506142207",
+			Migrate: func(tx *xorm.Engine) error {
+				type Release struct {
+					ReleaseNotes string `xorm:"longtext"`
+				}
+
+				return tx.Sync2(&release.Changelog{}, &Release{})
+			},
+			Rollback: func(tx *xorm.Engine) error {
+				return tx.DropTables(&release.Changelog{})
+			},
+		},
 	}
 
 	m := migrate.New(engine, &migrate.Options{
