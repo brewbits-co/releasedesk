@@ -3,6 +3,7 @@ package sql
 import (
 	"database/sql"
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
+	"time"
 	"xorm.io/xorm"
 )
 
@@ -39,6 +40,7 @@ func (r *releaseNotesRepository) Save(releaseNotes *release.ReleaseNotes) error 
 		Where("id = ?", releaseNotes.ReleaseID).
 		Update(map[string]interface{}{
 			"release_notes": releaseNotes.Text,
+			"updated_at":    time.Now(),
 		}); err != nil {
 		return err
 	}
