@@ -12,6 +12,7 @@ type ReleaseController interface {
 	RenderReleaseNotes(w http.ResponseWriter, r *http.Request)
 	HandleCreateRelease(w http.ResponseWriter, r *http.Request)
 	HandleSaveReleaseNotes(w http.ResponseWriter, r *http.Request)
+	HandleUpdateBasicInfo(w http.ResponseWriter, r *http.Request)
 }
 
 func NewReleaseController(service release.Service, appService app.Service) ReleaseController {

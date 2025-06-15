@@ -34,6 +34,15 @@ func (r *releaseRepository) Save(release *release.Release) error {
 	return nil
 }
 
+func (r *releaseRepository) Update(release *release.Release) error {
+	_, err := r.engine.Update(release)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (r *releaseRepository) FindByAppIDAndChannel(appID int, channelID int) ([]release.BasicInfo, error) {
 	// Execute the database query using xorm
 	var releases []release.BasicInfo

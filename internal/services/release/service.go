@@ -14,6 +14,7 @@ type Service interface {
 	GetReleaseChannels(appID int) ([]release.Channel, error)
 	SaveReleaseNotes(releaseID int, text string, changelogs []release.Changelog) (release.ReleaseNotes, error)
 	GetReleaseNotes(releaseID int) (release.ReleaseNotes, error)
+	UpdateReleaseBasicInfo(appID int, version string, info release.BasicInfo) (release.Release, error)
 }
 
 // NewReleaseService initializes a new instance of the release Service using the provided dependencies.
