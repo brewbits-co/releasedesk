@@ -35,6 +35,8 @@ type BasicInfo struct {
 	VersionFormat values.VersionFormat `xorm:"varchar(20)"`
 	// SetupGuideCompleted marks the starting guide as completed.
 	SetupGuideCompleted bool `xorm:"not null default false"`
+	// Logo is the image logo of the App.
+	Logo sql.NullString
 }
 
 type PlatformAvailability struct {
@@ -50,8 +52,6 @@ type App struct {
 	fields.Auditable        `xorm:"extends"`
 	BasicInfo               `xorm:"extends"`
 	PlatformAvailability    `xorm:"-"`
-	// Logo is the image logo of the App.
-	Logo sql.NullString
 }
 
 // IsValid checks if the current user information follows the pre-defined business rules
