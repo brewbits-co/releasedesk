@@ -45,7 +45,7 @@ func (s *service) SaveReleaseNotes(releaseID int, text string, changelogs []rele
 
 // GetReleaseNotes retrieves release notes and associated changelogs for a release
 func (s *service) GetReleaseNotes(releaseID int) (release.ReleaseNotes, error) {
-	releaseNotes, err := s.releaseNotesRepo.FindByReleaseID(releaseID)
+	releaseNotes, err := s.releaseNotesRepo.GetByReleaseID(releaseID)
 	if err != nil {
 		return release.ReleaseNotes{}, err
 	}

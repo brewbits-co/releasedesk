@@ -7,7 +7,7 @@ import (
 )
 
 func (s *service) ApplyAppSetupGuide(slug values.Slug, format values.VersionFormat, channels app.SetupChannelsOption, customChannels []string) error {
-	appEntity, err := s.appRepo.FindBySlug(slug)
+	appEntity, err := s.appRepo.GetBySlug(slug)
 	if err != nil {
 		return app.ErrAppNotFound
 	}

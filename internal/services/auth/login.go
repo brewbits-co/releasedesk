@@ -5,7 +5,7 @@ import (
 )
 
 func (s *service) Login(username string, plainTextPassword string) (user.User, error) {
-	userEntity, err := s.userRepo.FindByUsername(username)
+	userEntity, err := s.userRepo.GetByUsername(username)
 	if err != nil {
 		return user.User{}, user.ErrWrongCredentials
 	}

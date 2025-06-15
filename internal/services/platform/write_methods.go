@@ -7,7 +7,7 @@ import (
 )
 
 func (s *service) AddPlatformToApp(slug values.Slug, info platform.BasicInfo) (platform.Platform, error) {
-	appEntity, err := s.appRepo.FindBySlug(slug)
+	appEntity, err := s.appRepo.GetBySlug(slug)
 	if err != nil {
 		return platform.Platform{}, app.ErrAppNotFound
 	}

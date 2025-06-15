@@ -20,7 +20,7 @@ type userRepository struct {
 	engine *xorm.Engine
 }
 
-func (r *userRepository) FindByID(id int) (user.User, error) {
+func (r *userRepository) GetByID(id int) (user.User, error) {
 	var userEntity user.User
 	found, err := r.engine.ID(id).Get(&userEntity)
 	if err != nil || !found {
@@ -31,7 +31,7 @@ func (r *userRepository) FindByID(id int) (user.User, error) {
 	return userEntity, nil
 }
 
-func (r *userRepository) FindByUsername(username string) (user.User, error) {
+func (r *userRepository) GetByUsername(username string) (user.User, error) {
 	var userEntity user.User
 	found, err := r.engine.Where("username = ?", username).Get(&userEntity)
 	if err != nil || !found {

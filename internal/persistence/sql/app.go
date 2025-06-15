@@ -39,7 +39,7 @@ func (r *appRepository) Find() ([]app.App, error) {
 	return apps, nil // Return the list of apps
 }
 
-func (r *appRepository) FindBySlug(slug values.Slug) (app.App, error) {
+func (r *appRepository) GetBySlug(slug values.Slug) (app.App, error) {
 	var p app.App
 	p.Slug = slug
 	_, err := r.engine.Get(&p)

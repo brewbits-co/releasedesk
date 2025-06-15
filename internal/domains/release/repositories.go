@@ -9,6 +9,6 @@ type ReleaseRepository interface {
 
 type ReleaseNotesRepository interface {
 	Save(releaseNotes *ReleaseNotes) error
-	FindByReleaseID(releaseID int) (ReleaseNotes, error)
+	GetByReleaseID(releaseID int) (ReleaseNotes, error)
 	FindChangelogsByReleaseID(releaseID int) ([]Changelog, error)
 }

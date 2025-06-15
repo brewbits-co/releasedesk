@@ -23,7 +23,7 @@ func (s *service) GetUserAccessibleApps(userID int) ([]app.App, error) {
 }
 
 func (s *service) GetAppOverview(slug values.Slug) (app.Overview, error) {
-	applicationEntity, err := s.appRepo.FindBySlug(slug)
+	applicationEntity, err := s.appRepo.GetBySlug(slug)
 	if err != nil {
 		return app.Overview{}, err
 	}
@@ -36,7 +36,7 @@ func (s *service) GetAppOverview(slug values.Slug) (app.Overview, error) {
 }
 
 func (s *service) GetCurrentAppData(slug values.Slug) (session.CurrentAppData, error) {
-	applicationEntity, err := s.appRepo.FindBySlug(slug)
+	applicationEntity, err := s.appRepo.GetBySlug(slug)
 	if err != nil {
 		return session.CurrentAppData{}, err
 	}

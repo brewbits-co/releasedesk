@@ -6,7 +6,7 @@ import (
 )
 
 func (s *service) CreateRelease(slug values.Slug, info release.BasicInfo) (release.Release, error) {
-	appEntity, err := s.appRepo.FindBySlug(slug)
+	appEntity, err := s.appRepo.GetBySlug(slug)
 	if err != nil {
 		return release.Release{}, err
 	}

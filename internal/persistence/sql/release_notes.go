@@ -72,7 +72,7 @@ func (r *releaseNotesRepository) Save(releaseNotes *release.ReleaseNotes) error 
 }
 
 // FindByReleaseID retrieves a ReleaseNotes entity by its ReleaseID along with its Changelogs
-func (r *releaseNotesRepository) FindByReleaseID(releaseID int) (release.ReleaseNotes, error) {
+func (r *releaseNotesRepository) GetByReleaseID(releaseID int) (release.ReleaseNotes, error) {
 	var releaseNotes release.ReleaseNotes
 
 	// Get release notes text
