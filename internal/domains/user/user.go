@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/brewbits-co/releasedesk/pkg/fields"
-	"github.com/brewbits-co/releasedesk/pkg/hooks"
 	"github.com/brewbits-co/releasedesk/pkg/validator"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -35,24 +34,23 @@ func NewUser(username string, firstName string, lastName string, email string, p
 }
 
 type User struct {
-	hooks.BaseHooks
-	validator.BaseValidator
-	fields.Auditable
+	validator.BaseValidator `xorm:"-"`
+	fields.Auditable        `xorm:"extends"`
 	// ID is the unique identifier of a User.
-	ID int `db:"ID"`
+	ID int `xorm:"pk autoincr"`
 	// Username is a unique identifier of the user.
-	Username string `db:"Username"`
+	Username string `xorm:"not null unique"`
 	// Email is the email address of the user.
-	Email sql.NullString `db:"Email"`
+	Email sql.NullString
 	// Password is the bcrypt hashed password of the user.
 	// It is excluded from JSON serialization for security reasons.
-	Password values.HashedPassword `json:"-" db:"Password"`
+	Password values.HashedPassword `json:"-" xorm:"not null"`
 	// FirstName is the first name of the user.
-	FirstName sql.NullString `db:"FirstName"`
+	FirstName sql.NullString
 	// LastName is the last name of the user.
-	LastName sql.NullString `db:"LastName"`
+	LastName sql.NullString
 	// Role represents the user's role in the system.
-	Role values.Role `db:"Role"`
+	Role values.Role `xorm:"not null"`
 }
 
 // IsValid checks if the current user information follows the pre-defined business rules

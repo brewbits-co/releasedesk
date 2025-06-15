@@ -3,23 +3,26 @@ package sql
 import (
 	"database/sql"
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
-	"github.com/jmoiron/sqlx"
+	"xorm.io/xorm"
 )
 
 // NewReleaseNotesRepository is the constructor for releaseNotesRepository
-func NewReleaseNotesRepository(db *sqlx.DB) release.ReleaseNotesRepository {
-	return &releaseNotesRepository{db: db}
+func NewReleaseNotesRepository(engine *xorm.Engine) release.ReleaseNotesRepository {
+	return &releaseNotesRepository{engine: engine}
 }
 
 // releaseNotesRepository is the implementation of release.ReleaseNotesRepository
 type releaseNotesRepository struct {
-	db *sqlx.DB
+	engine *xorm.Engine
 }
 
 // Save persists a ReleaseNotes entity and its Changelogs to the database in a single transaction
 func (r *releaseNotesRepository) Save(releaseNotes *release.ReleaseNotes) error {
 	// Start a transaction
-	tx, err := r.db.Beginx()
+	session := r.engine.NewSession()
+	defer session.Close()
+
+	err := session.Begin()
 	if err != nil {
 		return err
 	}
@@ -27,14 +30,16 @@ func (r *releaseNotesRepository) Save(releaseNotes *release.ReleaseNotes) error 
 	// Defer a rollback in case anything fails
 	defer func() {
 		if err != nil {
-			tx.Rollback()
+			session.Rollback()
 		}
 	}()
 
 	// Update the ReleaseNotes text in the Releases table
-	q := `UPDATE Releases SET ReleaseNotes = :Text WHERE ID = :ReleaseID`
-	_, err = tx.NamedExec(q, releaseNotes)
-	if err != nil {
+	if _, err = session.Table("release").
+		Where("id = ?", releaseNotes.ReleaseID).
+		Update(map[string]interface{}{
+			"release_notes": releaseNotes.Text,
+		}); err != nil {
 		return err
 	}
 
@@ -45,30 +50,25 @@ func (r *releaseNotesRepository) Save(releaseNotes *release.ReleaseNotes) error 
 
 		if changelog.ID > 0 {
 			// Update existing changelog
-			q := `UPDATE Changelogs SET Text = :Text, ChangeType = :ChangeType 
-				WHERE ID = :ID AND ReleaseID = :ReleaseID`
-			_, err = tx.NamedExec(q, changelog)
-		} else {
-			// Insert new changelog
-			q := `INSERT INTO Changelogs (ReleaseID, Text, ChangeType) 
-				VALUES (:ReleaseID, :Text, :ChangeType)`
-			var exec sql.Result
-			exec, err = tx.NamedExec(q, changelog)
-			if err != nil {
+			if _, err = session.Table("changelog").
+				Where("id = ? AND release_id = ?", changelog.ID, changelog.ReleaseID).
+				Update(map[string]interface{}{
+					"text":        changelog.Text,
+					"change_type": changelog.ChangeType,
+				}); err != nil {
 				return err
 			}
-
-			insertId, _ := exec.LastInsertId()
-			changelog.ID = int(insertId)
-		}
-
-		if err != nil {
-			return err
+		} else {
+			// Insert new changelog
+			if _, err = session.Table("changelog").
+				Insert(changelog); err != nil {
+				return err
+			}
 		}
 	}
 
 	// Commit the transaction
-	return tx.Commit()
+	return session.Commit()
 }
 
 // FindByReleaseID retrieves a ReleaseNotes entity by its ReleaseID along with its Changelogs
@@ -76,13 +76,16 @@ func (r *releaseNotesRepository) FindByReleaseID(releaseID int) (release.Release
 	var releaseNotes release.ReleaseNotes
 
 	// Get release notes text
-	q := `SELECT ID, ReleaseNotes as Text FROM Releases WHERE ID = $1 LIMIT 1`
-	err := r.db.QueryRowx(q, releaseID).Scan(&releaseNotes.ReleaseID, &releaseNotes.Text)
+	has, err := r.engine.Table("release").
+		Select("id as release_id, release_notes as text").
+		Where("id = ?", releaseID).
+		Get(&releaseNotes)
 	if err != nil {
 		return release.ReleaseNotes{}, err
 	}
-
-	releaseNotes.ReleaseID = releaseID
+	if !has {
+		return release.ReleaseNotes{}, sql.ErrNoRows
+	}
 
 	// Get changelogs
 	changelogs, err := r.FindChangelogsByReleaseID(releaseID)
@@ -96,26 +99,11 @@ func (r *releaseNotesRepository) FindByReleaseID(releaseID int) (release.Release
 
 // FindChangelogsByReleaseID retrieves all Changelog entities for a specific ReleaseID
 func (r *releaseNotesRepository) FindChangelogsByReleaseID(releaseID int) ([]release.Changelog, error) {
-	q := `SELECT ID, ReleaseID, Text, ChangeType FROM Changelogs WHERE ReleaseID = $1 ORDER BY ID`
-	rows, err := r.db.Queryx(q, releaseID)
+	session := r.engine.Where("release_id = ?", releaseID).OrderBy("ID")
+	var changelogs []release.Changelog
+	err := session.Find(&changelogs)
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
-
-	var changelogs []release.Changelog
-
-	for rows.Next() {
-		var changelog release.Changelog
-		if err := rows.StructScan(&changelog); err != nil {
-			return nil, err
-		}
-		changelogs = append(changelogs, changelog)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-
 	return changelogs, nil
 }
