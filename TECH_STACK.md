@@ -9,6 +9,7 @@
 ## Backend
 
 - Chi
+- XORM
 - SQLite
 
 ## DevOps & Infrastructure
