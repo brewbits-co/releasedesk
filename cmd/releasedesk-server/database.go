@@ -10,9 +10,15 @@ import (
 
 // Initialize the SQLite connection and return *xorm.Engine
 func newDBEngine() (*xorm.Engine, error) {
-	engine, err := xorm.NewEngine("sqlite3", "./_data/releasedesk.db")
+	engine, err := xorm.NewEngine("sqlite3", "./_data/releasedesk.db?_pragma=journal_mode(WAL)")
 	if err != nil {
 		log.Fatalf("Failed to start database engine: %v", err)
+	}
+
+	// Ping the database to verify the connection is alive
+	err = engine.Ping()
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
 	engine.SetMapper(names.GonicMapper{})
