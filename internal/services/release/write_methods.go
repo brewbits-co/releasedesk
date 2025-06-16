@@ -13,6 +13,7 @@ func (s *service) CreateRelease(slug values.Slug, info release.BasicInfo) (relea
 
 	info.AppID = appEntity.ID
 	info.Status = release.Unpublished
+	info.BuildSelection = release.Last
 
 	newRelease := release.NewRelease(info)
 

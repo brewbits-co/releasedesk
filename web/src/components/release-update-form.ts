@@ -24,6 +24,9 @@ export class ReleaseUpdateForm extends LitElement {
   @property({type: String})
   status = '';
 
+  @property({type: String})
+  buildSelection = 'Last';
+
   @property({type: Array})
   channels: Channel[] = [];
 
@@ -34,6 +37,13 @@ export class ReleaseUpdateForm extends LitElement {
 
   @state()
   errorData: {message: string, helpTexts: string[]} = {message: '', helpTexts: []};
+
+  handleBuildSelectionChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target.checked) {
+      this.buildSelection = target.value;
+    }
+  }
 
   handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -88,6 +98,25 @@ export class ReleaseUpdateForm extends LitElement {
           </select>
         </div>
 
+        <div class="col-span-full mt-4">
+          <label class="block text-sm/6 font-medium text-violet-900 mb-2">Build Selection</label>
+
+          <fieldset>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              ${radioOption('BuildSelection', 'Last', 'Last', 'Always use the latest build.', this.buildSelection === 'Last', this.handleBuildSelectionChange)}
+              ${radioOption('BuildSelection', 'Manual', 'Manual', 'Select builds manually.', this.buildSelection === 'Manual', this.handleBuildSelectionChange)}
+            </div>
+          </fieldset>
+        </div>
+          
+        ${this.buildSelection === 'Manual' ? html`
+          <div class="col-span-full mt-4">
+            <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+              
+            </div>
+          </div>
+        ` : ''}
+
         <div class="mt-6 flex items-center justify-end gap-x-6">
           <button type="submit" class="rounded-md bg-violet-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">
             Save
@@ -107,6 +136,28 @@ export class ReleaseUpdateForm extends LitElement {
     `;
   }
 }
+
+const radioOption = (name: string, value: string, title: string, subtitle: string, checked: boolean = false, handler?: any) => html`
+  <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none">
+    <input type="radio" name="${name}" value="${value}" class="peer sr-only" @change="${handler}" required
+           ?checked="${checked}">
+        <span class="flex flex-1">
+            <span class="flex flex-col">
+                <span class="block text-sm font-medium text-gray-900">${title}</span>
+                <span class="mt-1 flex items-center text-sm text-gray-500">${subtitle}</span>
+            </span>
+        </span>
+
+        <svg class="size-5 text-violet-800 hidden peer-checked:block" viewBox="0 0 20 20" fill="currentColor"
+             aria-hidden="true" data-slot="icon">
+            <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+                  clip-rule="evenodd"/>
+        </svg>
+        <span class="pointer-events-none absolute -inset-px rounded-lg border-2 peer-checked:border-violet-800"
+              aria-hidden="true"></span>
+    </label>
+`
 
 declare global {
   interface HTMLElementTagNameMap {
