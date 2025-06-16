@@ -16,6 +16,7 @@ func (s *service) UpdateReleaseBasicInfo(info release.BasicInfo) (release.Releas
 	// Update only the fields that are allowed to be updated
 	existingRelease.TargetChannel = info.TargetChannel
 	existingRelease.Status = info.Status
+	existingRelease.BuildSelection = info.BuildSelection
 
 	// Save the updated release
 	err = s.releaseRepo.Update(&existingRelease)

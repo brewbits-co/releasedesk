@@ -110,6 +110,31 @@ func applyMigrations(engine *xorm.Engine) error {
 				return tx.DropTables(&release.Changelog{})
 			},
 		},
+		{
+			ID: "202506162330",
+			Migrate: func(tx *xorm.Engine) error {
+				type Release struct {
+					BuildSelection string `xorm:"varchar(10) not null default 'Last'"`
+				}
+
+				// Create LinkedBuilds table
+				err := tx.Sync2(&release.LinkedBuilds{}, &Release{})
+				if err != nil {
+					return err
+				}
+
+				return nil
+			},
+			Rollback: func(tx *xorm.Engine) error {
+				// Drop LinkedBuilds table
+				err := tx.DropTables(&release.LinkedBuilds{})
+				if err != nil {
+					return err
+				}
+
+				return nil
+			},
+		},
 	}
 
 	m := migrate.New(engine, &migrate.Options{

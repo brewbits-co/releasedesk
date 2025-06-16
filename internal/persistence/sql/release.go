@@ -2,7 +2,9 @@ package sql
 
 import (
 	"database/sql"
+	"github.com/brewbits-co/releasedesk/internal/domains/build"
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
+	"github.com/brewbits-co/releasedesk/internal/values"
 	"xorm.io/xorm"
 )
 
@@ -75,6 +77,28 @@ func (r *releaseRepository) GetByAppIDAndVersion(appID int, version string) (rel
 
 	releaseSummary.Auditable.FormatAuditable()
 
+	// Initialize the Builds map
+	releaseSummary.Builds = make(map[values.OS]build.BasicInfo)
+
+	// Get linked builds
+	var linkedBuilds []release.LinkedBuilds
+	err = r.engine.Where("release_id = ?", releaseSummary.ID).Find(&linkedBuilds)
+	if err != nil {
+		return release.Release{}, err
+	}
+
+	// For each linked build, get the build info and add it to the Builds map
+	for _, linkedBuild := range linkedBuilds {
+		var buildInfo build.BasicInfo
+		has, err := r.engine.ID(linkedBuild.BuildID).Get(&buildInfo)
+		if err != nil {
+			return release.Release{}, err
+		}
+		if has {
+			releaseSummary.Builds[linkedBuild.OS] = buildInfo
+		}
+	}
+
 	return releaseSummary, nil
 }
 
@@ -93,5 +117,51 @@ func (r *releaseRepository) GetByID(id int) (release.Release, error) {
 
 	releaseSummary.Auditable.FormatAuditable()
 
+	// Initialize the Builds map
+	releaseSummary.Builds = make(map[values.OS]build.BasicInfo)
+
+	// Get linked builds
+	var linkedBuilds []release.LinkedBuilds
+	err = r.engine.Where("release_id = ?", releaseSummary.ID).Find(&linkedBuilds)
+	if err != nil {
+		return release.Release{}, err
+	}
+
+	// For each linked build, get the build info and add it to the Builds map
+	for _, linkedBuild := range linkedBuilds {
+		var buildInfo build.BasicInfo
+		has, err := r.engine.ID(linkedBuild.BuildID).Get(&buildInfo)
+		if err != nil {
+			return release.Release{}, err
+		}
+		if has {
+			releaseSummary.Builds[linkedBuild.OS] = buildInfo
+		}
+	}
+
 	return releaseSummary, nil
+}
+
+// LinkBuild links a build to a release for a specific OS
+func (r *releaseRepository) LinkBuild(releaseID int, buildID int, os values.OS) error {
+	linkedBuild := release.LinkedBuilds{
+		ReleaseID: releaseID,
+		BuildID:   buildID,
+		OS:        os,
+	}
+
+	_, err := r.engine.Insert(&linkedBuild)
+	return err
+}
+
+// UnlinkBuild unlinks a build from a release for a specific OS
+func (r *releaseRepository) UnlinkBuild(releaseID int, buildID int, os values.OS) error {
+	linkedBuild := release.LinkedBuilds{
+		ReleaseID: releaseID,
+		BuildID:   buildID,
+		OS:        os,
+	}
+
+	_, err := r.engine.Delete(&linkedBuild)
+	return err
 }
