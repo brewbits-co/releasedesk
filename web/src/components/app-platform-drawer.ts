@@ -3,6 +3,7 @@ import {customElement, property, state} from 'lit/decorators.js';
 import {encodeFormData} from "../utils";
 import {Ref, createRef, ref} from 'lit/directives/ref.js';
 import {map} from 'lit/directives/map.js';
+import "./headless-drawer";
 
 @customElement('app-platform-drawer')
 export class AppPlatformDrawer extends LitElement {
@@ -190,6 +191,6 @@ export class AppPlatformDrawer extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'app-creation-drawer': AppPlatformDrawer;
+        'app-platform-drawer': AppPlatformDrawer;
     }
 }

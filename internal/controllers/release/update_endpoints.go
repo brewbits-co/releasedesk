@@ -46,6 +46,9 @@ func (c *releaseController) HandleUpdateBasicInfo(w http.ResponseWriter, r *http
 		return
 	}
 
-	// Redirect back to the release summary page
-	http.Redirect(w, r, r.Header.Get("Referer"), http.StatusSeeOther)
+	// Return a 200 OK status
+	render.Status(r, http.StatusOK)
+	render.JSON(w, r, map[string]interface{}{
+		"success": true,
+	})
 }
