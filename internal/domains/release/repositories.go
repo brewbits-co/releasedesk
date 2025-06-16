@@ -6,6 +6,7 @@ type ReleaseRepository interface {
 	FindByAppIDAndChannel(appID int, channelID int) ([]BasicInfo, error)
 	FindChannelsByAppID(appID int) ([]Channel, error)
 	GetByAppIDAndVersion(appID int, version string) (Release, error)
+	GetByID(id int) (Release, error)
 }
 
 type ReleaseNotesRepository interface {

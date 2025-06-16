@@ -6,9 +6,9 @@ import (
 
 // UpdateReleaseBasicInfo updates the BasicInfo of a release
 // The ID, AppID, and Version fields cannot be updated.
-func (s *service) UpdateReleaseBasicInfo(appID int, version string, info release.BasicInfo) (release.Release, error) {
-	// Get the existing release
-	existingRelease, err := s.releaseRepo.GetByAppIDAndVersion(appID, version)
+func (s *service) UpdateReleaseBasicInfo(info release.BasicInfo) (release.Release, error) {
+	// Get the existing release by ID
+	existingRelease, err := s.releaseRepo.GetByID(info.ID)
 	if err != nil {
 		return release.Release{}, err
 	}

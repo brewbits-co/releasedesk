@@ -15,11 +15,8 @@ export class ReleaseUpdateForm extends LitElement {
     return this;
   }
 
-  @property({type: String})
-  appSlug = '';
-
-  @property({type: String})
-  version = '';
+  @property({type: Number})
+  releaseID = 0;
 
   @property({type: Number})
   targetChannel = 0;
@@ -44,7 +41,7 @@ export class ReleaseUpdateForm extends LitElement {
 
     const formData = new FormData(event.target as HTMLFormElement);
 
-    fetch(`/internal/apps/${this.appSlug}/releases/${this.version}`, {
+    fetch(`/internal/releases/${this.releaseID}`, {
       method: 'PUT',
       body: encodeFormData(formData),
       credentials: 'include',
@@ -61,7 +58,7 @@ export class ReleaseUpdateForm extends LitElement {
         this.errorAlertRef.value?.scrollIntoView();
       } else {
         // Redirect back to the release summary page
-        window.location.href = `/dashboard/${this.appSlug}/releases/${this.version}`;
+        window.location.reload();
       }
     });
   }

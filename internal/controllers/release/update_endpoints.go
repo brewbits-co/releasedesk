@@ -2,12 +2,12 @@ package release
 
 import (
 	"github.com/brewbits-co/releasedesk/internal/domains/release"
-	"github.com/brewbits-co/releasedesk/internal/values"
 	"github.com/brewbits-co/releasedesk/pkg/schemas"
 	"github.com/brewbits-co/releasedesk/pkg/utils"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"net/http"
+	"strconv"
 )
 
 // HandleUpdateBasicInfo handles the update of a release's BasicInfo
@@ -20,17 +20,16 @@ func (c *releaseController) HandleUpdateBasicInfo(w http.ResponseWriter, r *http
 		return
 	}
 
-	slug := chi.URLParam(r, "slug")
-	version := chi.URLParam(r, "version")
-
-	currentApp, err := c.appService.GetCurrentAppData(values.Slug(slug))
+	// Extract the release ID from the URL
+	releaseID, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
-		render.Status(r, http.StatusNotFound)
-		render.JSON(w, r, schemas.NewErrorResponse("App not found", []string{err.Error()}))
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, schemas.NewErrorResponse("Invalid release ID", []string{err.Error()}))
 		return
 	}
 
 	var updateRequest release.BasicInfo
+	updateRequest.ID = releaseID
 
 	err = utils.NewDecoder().Decode(&updateRequest, r.Form)
 	if err != nil {
@@ -39,7 +38,7 @@ func (c *releaseController) HandleUpdateBasicInfo(w http.ResponseWriter, r *http
 		return
 	}
 
-	_, err = c.service.UpdateReleaseBasicInfo(currentApp.AppID, version, updateRequest)
+	_, err = c.service.UpdateReleaseBasicInfo(updateRequest)
 	if err != nil {
 		render.Status(r, http.StatusInternalServerError)
 		render.JSON(w, r, schemas.NewErrorResponse("Failed to update release", []string{err.Error()}))

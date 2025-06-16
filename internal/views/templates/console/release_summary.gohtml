@@ -48,8 +48,7 @@
         </div>
 
         <release-update-form
-            appSlug="{{.CurrentAppData.AppSlug}}"
-            version="{{.Release.BasicInfo.Version}}"
+            releaseID="{{.Release.BasicInfo.ID}}"
             targetChannel="{{.Release.BasicInfo.TargetChannel}}"
             status="{{.Release.BasicInfo.Status}}"
             channels="{{json .Channels}}">

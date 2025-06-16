@@ -77,3 +77,21 @@ func (r *releaseRepository) GetByAppIDAndVersion(appID int, version string) (rel
 
 	return releaseSummary, nil
 }
+
+// GetByID retrieves a release by its ID
+func (r *releaseRepository) GetByID(id int) (release.Release, error) {
+	var releaseSummary release.Release
+
+	// Execute the database query using xorm
+	has, err := r.engine.ID(id).Get(&releaseSummary)
+	if err != nil {
+		return release.Release{}, err
+	}
+	if !has {
+		return release.Release{}, sql.ErrNoRows
+	}
+
+	releaseSummary.Auditable.FormatAuditable()
+
+	return releaseSummary, nil
+}

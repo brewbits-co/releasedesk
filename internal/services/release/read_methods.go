@@ -28,3 +28,13 @@ func (s *service) GetReleaseSummary(appID int, version string) (release.Release,
 
 	return releaseEntity, nil
 }
+
+// GetReleaseByID retrieves a release by its ID
+func (s *service) GetReleaseByID(releaseID int) (release.Release, error) {
+	releaseEntity, err := s.releaseRepo.GetByID(releaseID)
+	if err != nil {
+		return release.Release{}, err
+	}
+
+	return releaseEntity, nil
+}
