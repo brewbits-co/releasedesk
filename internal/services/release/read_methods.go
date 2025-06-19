@@ -38,3 +38,23 @@ func (s *service) GetReleaseByID(releaseID int) (release.Release, error) {
 
 	return releaseEntity, nil
 }
+
+// GetReleaseNotes retrieves release notes and associated changelogs for a release
+func (s *service) GetReleaseNotes(releaseID int) (release.ReleaseNotes, error) {
+	releaseNotes, err := s.releaseNotesRepo.GetByReleaseID(releaseID)
+	if err != nil {
+		return release.ReleaseNotes{}, err
+	}
+
+	return releaseNotes, nil
+}
+
+// GetReleaseChecklist retrieves checklist items for a specific release
+func (s *service) GetReleaseChecklist(releaseID int) ([]release.ChecklistItem, error) {
+	checklistItems, err := s.checklistRepo.FindByReleaseID(releaseID)
+	if err != nil {
+		return nil, err
+	}
+
+	return checklistItems, nil
+}

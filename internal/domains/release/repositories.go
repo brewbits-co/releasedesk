@@ -20,3 +20,10 @@ type ReleaseNotesRepository interface {
 	GetByReleaseID(releaseID int) (ReleaseNotes, error)
 	FindChangelogsByReleaseID(releaseID int) ([]Changelog, error)
 }
+
+type ChecklistRepository interface {
+	FindByReleaseID(releaseID int) ([]ChecklistItem, error)
+	Save(item *ChecklistItem) error
+	Update(item *ChecklistItem) error
+	Delete(itemID int) error
+}

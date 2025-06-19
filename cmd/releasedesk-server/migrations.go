@@ -135,6 +135,15 @@ func applyMigrations(engine *xorm.Engine) error {
 				return nil
 			},
 		},
+		{
+			ID: "202506191930",
+			Migrate: func(tx *xorm.Engine) error {
+				return tx.Sync2(&release.ChecklistItem{})
+			},
+			Rollback: func(tx *xorm.Engine) error {
+				return tx.DropTables(&release.ChecklistItem{})
+			},
+		},
 	}
 
 	m := migrate.New(engine, &migrate.Options{

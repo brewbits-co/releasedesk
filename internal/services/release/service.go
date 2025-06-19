@@ -16,13 +16,15 @@ type Service interface {
 	GetReleaseNotes(releaseID int) (release.ReleaseNotes, error)
 	GetReleaseByID(releaseID int) (release.Release, error)
 	UpdateReleaseBasicInfo(info release.BasicInfo) (release.Release, error)
+	GetReleaseChecklist(releaseID int) ([]release.ChecklistItem, error)
 }
 
 // NewReleaseService initializes a new instance of the release Service using the provided dependencies.
-func NewReleaseService(releaseRepo release.ReleaseRepository, releaseNotesRepo release.ReleaseNotesRepository, appRepo app.AppRepository) Service {
+func NewReleaseService(releaseRepo release.ReleaseRepository, releaseNotesRepo release.ReleaseNotesRepository, checklistRepo release.ChecklistRepository, appRepo app.AppRepository) Service {
 	return &service{
 		releaseRepo:      releaseRepo,
 		releaseNotesRepo: releaseNotesRepo,
+		checklistRepo:    checklistRepo,
 		appRepo:          appRepo,
 	}
 }
@@ -30,27 +32,6 @@ func NewReleaseService(releaseRepo release.ReleaseRepository, releaseNotesRepo r
 type service struct {
 	releaseRepo      release.ReleaseRepository
 	releaseNotesRepo release.ReleaseNotesRepository
+	checklistRepo    release.ChecklistRepository
 	appRepo          app.AppRepository
-}
-
-// SaveReleaseNotes saves release notes and associated changelogs for a release
-func (s *service) SaveReleaseNotes(releaseID int, text string, changelogs []release.Changelog) (release.ReleaseNotes, error) {
-	releaseNotes := release.NewReleaseNotes(releaseID, text)
-	releaseNotes.Changelogs = changelogs
-
-	if err := s.releaseNotesRepo.Save(&releaseNotes); err != nil {
-		return release.ReleaseNotes{}, err
-	}
-
-	return releaseNotes, nil
-}
-
-// GetReleaseNotes retrieves release notes and associated changelogs for a release
-func (s *service) GetReleaseNotes(releaseID int) (release.ReleaseNotes, error) {
-	releaseNotes, err := s.releaseNotesRepo.GetByReleaseID(releaseID)
-	if err != nil {
-		return release.ReleaseNotes{}, err
-	}
-
-	return releaseNotes, nil
 }

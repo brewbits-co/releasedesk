@@ -24,3 +24,15 @@ func (s *service) CreateRelease(slug values.Slug, info release.BasicInfo) (relea
 
 	return newRelease, nil
 }
+
+// SaveReleaseNotes saves release notes and associated changelogs for a release
+func (s *service) SaveReleaseNotes(releaseID int, text string, changelogs []release.Changelog) (release.ReleaseNotes, error) {
+	releaseNotes := release.NewReleaseNotes(releaseID, text)
+	releaseNotes.Changelogs = changelogs
+
+	if err := s.releaseNotesRepo.Save(&releaseNotes); err != nil {
+		return release.ReleaseNotes{}, err
+	}
+
+	return releaseNotes, nil
+}
