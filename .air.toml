@@ -31,12 +31,6 @@ tmp_dir = "_tmp"
 [misc]
   clean_on_exit = false
 
-# Enable live-reloading on the browser.
-[proxy]
-  enabled = true
-  proxy_port = 8090
-  app_port = 8080
-
 [screen]
   clear_on_rebuild = false
   keep_scroll = true
