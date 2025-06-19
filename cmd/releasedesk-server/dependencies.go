@@ -35,6 +35,7 @@ func buildContainer() *dig.Container {
 	container.Provide(sql.NewBuildRepository)
 	container.Provide(sql.NewReleaseRepository)
 	container.Provide(sql.NewReleaseNotesRepository)
+	container.Provide(sql.NewChecklistRepository)
 	// Services
 	container.Provide(auth.NewAuthService)
 	container.Provide(app.NewAppService)
